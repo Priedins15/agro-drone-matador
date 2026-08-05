@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Agrofloat · Agricultural Spray Drone Configurator</title>
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="preconnect" href="https://cdn.jsdelivr.net" />
+  <script type="importmap">
+    {
+      "imports": {
+        "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js",
+        "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"
+      }
+    }
+  </script>
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand">
+      <span class="brand-dot"></span>
+      <h1>Agrofloat <span class="sub">agricultural spray drone · Zoo Engine API</span></h1>
+    </div>
+    <div class="modes">
+      <button id="mode-live" class="mode-btn">Live engine</button>
+      <button id="mode-offline" class="mode-btn">Offline variants</button>
+    </div>
+    <div class="tokenbox" title="Your Zoo API token is only ever stored in this browser's localStorage — it is never sent anywhere but api.zoo.dev and never committed.">
+      <input id="token" type="password" placeholder="Zoo API token (optional for live mode)" autocomplete="off" />
+      <button id="connect" class="btn btn-primary">Connect</button>
+    </div>
+  </header>
+
+  <main class="layout">
+    <section class="viewport-panel">
+      <div id="viewport"></div>
+      <div id="overlay" class="overlay">
+        <div class="overlay-card">
+          <h2>Load a configuration</h2>
+          <p id="overlay-text">Add your Zoo API token for <strong>live parametric rendering</strong>, or generate the offline GLB variants first (see the README).</p>
+          <div id="overlay-actions"></div>
+        </div>
+      </div>
+      <div class="statusbar">
+        <span id="status" class="status">idle</span>
+        <span id="metrics" class="metrics"></span>
+      </div>
+    </section>
+
+    <aside class="control-panel">
+      <section class="panel-block">
+        <h2>Parameters</h2>
+        <div id="sliders" class="sliders"><p class="hint">Connect live or load variants to enable.</p></div>
+      </section>
+
+      <section class="panel-block">
+        <h2>Design check</h2>
+        <ul id="checks" class="checks"><li class="check-none">—</li></ul>
+      </section>
+
+      <section class="panel-block" id="variants-block">
+        <h2>Variants <span class="muted">(offline)</span></h2>
+        <div id="variants" class="variants"><p class="hint">Run <code>npm run build:variants</code> to generate.</p></div>
+      </section>
+
+      <section class="panel-block">
+        <h2>Export</h2>
+        <div class="btn-row">
+          <button id="dl-glb" class="btn" disabled>GLB</button>
+          <button id="dl-step" class="btn" disabled>STEP</button>
+          <button id="dl-stl" class="btn" disabled>STL</button>
+        </div>
+        <p class="hint">Live mode exports the <em>current</em> engine scene; offline mode downloads the current GLB.</p>
+      </section>
+
+      <section class="panel-block log-block">
+        <h2>Log</h2>
+        <pre id="log" class="log"></pre>
+      </section>
+    </aside>
+  </main>
+
+  <footer class="footbar">
+    <span>KCL source in the repo root · docs in <code>docs/</code> · built for the <a href="https://zoo.dev/events/api-makeathon" target="_blank" rel="noopener">Zoo API Makeathon</a></span>
+  </footer>
+
+  <script type="module" src="js/app.js"></script>
+</body>
+</html>

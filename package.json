@@ -1,0 +1,14 @@
+{
+  "name": "agrofloat",
+  "version": "1.0.0",
+  "description": "Agrofloat — parametric agricultural spray drone (Zoo API Makeathon). KCL source + browser configurator + Engine API variant pipeline.",
+  "type": "module",
+  "private": true,
+  "scripts": {
+    "bundle:kcl": "node scripts/bundle-kcl.mjs",
+    "build:variants": "node scripts/build_variants.mjs"
+  },
+  "dependencies": {
+    "@msgpack/msgpack": "^3.0.0"
+  }
+}

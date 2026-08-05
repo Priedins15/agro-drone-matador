@@ -59,7 +59,7 @@ frontLeftEsc = flatten([
   clone(mountEarRight),
   clone(statusLed)
 ])
-  |> rotate(axis = Z, angle = -150.312deg, global = true)
+  |> rotate(axis = Z, angle = -rearArmYaw, global = true)
   |> translate(
        x = -escX,
        y = -escY,
@@ -121,7 +121,7 @@ rearLeftEsc = flatten([
   clone(mountEarRight),
   clone(statusLed)
 ])
-  |> rotate(axis = Z, angle = 150.312deg, global = true)
+  |> rotate(axis = Z, angle = rearArmYaw, global = true)
   |> translate(
        x = -escX,
        y = escY,

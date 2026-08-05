@@ -1,9 +1,8 @@
-// Reference-matched upper fuselage shell
-// Low hollow canopy with molded nose, shoulder fairings, service lid, and access pads.
+// Integrated upper fuselage shell
+// Hollow canopy with a lofted camera hood, tapered shoulder fairings, service lid, and access pads.
 @settings(defaultLengthUnit = mm, kclVersion = 2.0, experimentalFeatures = allow)
 
 import unitBlock from "unitBlock.kcl"
-import unitSphere from "unitSphere.kcl"
 import * from "parameters.kcl"
 
 shellBaseSketch = sketch(on = offsetPlane(XY, offset = -18mm)) {
@@ -69,34 +68,248 @@ bottomOpeningCutter = clone(unitBlock)
      )
   |> translate(z = -55mm, global = true)
 mainCanopy = subtract(shellOuter, tools = [shellInner, bottomOpeningCutter])
-  |> appearance(color = shellWhite, roughness = 48, metalness = 4)
 
-forwardNoseFairing = clone(unitSphere)
-  |> scale(
-       x = 220,
-       y = 98,
-       z = 52,
-       global = false,
-     )
-  |> translate(y = -118mm, z = 30mm, global = true)
-  |> appearance(color = shellWhite, roughness = 48, metalness = 4)
+noseTipSketch = sketch(on = offsetPlane(XZ, offset = -216mm)) {
+  outerArc = arc(start = [var 42mm, var 24mm], end = [var -42mm, var 24mm], center = [var 0mm, var -38mm])
+  leftBridge = line(start = [var -42mm, var 24mm], end = [var -26mm, var 12mm])
+  innerArc = arc(start = [var -26mm, var 12mm], end = [var 26mm, var 12mm], center = [var 0mm, var 48mm])
+  rightBridge = line(start = [var 26mm, var 12mm], end = [var 42mm, var 24mm])
+  coincident([outerArc.end, leftBridge.start])
+  coincident([leftBridge.end, innerArc.start])
+  coincident([innerArc.end, rightBridge.start])
+  coincident([rightBridge.end, outerArc.start])
+  horizontal([outerArc.start, outerArc.end])
+  horizontal([innerArc.start, innerArc.end])
+  horizontalDistance([ORIGIN, outerArc.start]) == 42mm
+  verticalDistance([ORIGIN, outerArc.start]) == 24mm
+  horizontalDistance([ORIGIN, outerArc.end]) == -42mm
+  verticalDistance([ORIGIN, outerArc.end]) == 24mm
+  horizontalDistance([ORIGIN, outerArc.center]) == 0mm
+  verticalDistance([ORIGIN, outerArc.center]) == -38mm
+  horizontalDistance([ORIGIN, innerArc.start]) == -26mm
+  verticalDistance([ORIGIN, innerArc.start]) == 12mm
+  horizontalDistance([ORIGIN, innerArc.end]) == 26mm
+  verticalDistance([ORIGIN, innerArc.end]) == 12mm
+  horizontalDistance([ORIGIN, innerArc.center]) == 0mm
+  verticalDistance([ORIGIN, innerArc.center]) == 48mm
+}
+noseForwardSketch = sketch(on = offsetPlane(XZ, offset = -194mm)) {
+  outerArc = arc(start = [var 72mm, var 26mm], end = [var -72mm, var 26mm], center = [var 0mm, var -105mm])
+  leftBridge = line(start = [var -72mm, var 26mm], end = [var -48mm, var 15mm])
+  innerArc = arc(start = [var -48mm, var 15mm], end = [var 48mm, var 15mm], center = [var 0mm, var 82mm])
+  rightBridge = line(start = [var 48mm, var 15mm], end = [var 72mm, var 26mm])
+  coincident([outerArc.end, leftBridge.start])
+  coincident([leftBridge.end, innerArc.start])
+  coincident([innerArc.end, rightBridge.start])
+  coincident([rightBridge.end, outerArc.start])
+  horizontal([outerArc.start, outerArc.end])
+  horizontal([innerArc.start, innerArc.end])
+  horizontalDistance([ORIGIN, outerArc.start]) == 72mm
+  verticalDistance([ORIGIN, outerArc.start]) == 26mm
+  horizontalDistance([ORIGIN, outerArc.end]) == -72mm
+  verticalDistance([ORIGIN, outerArc.end]) == 26mm
+  horizontalDistance([ORIGIN, outerArc.center]) == 0mm
+  verticalDistance([ORIGIN, outerArc.center]) == -105mm
+  horizontalDistance([ORIGIN, innerArc.start]) == -48mm
+  verticalDistance([ORIGIN, innerArc.start]) == 15mm
+  horizontalDistance([ORIGIN, innerArc.end]) == 48mm
+  verticalDistance([ORIGIN, innerArc.end]) == 15mm
+  horizontalDistance([ORIGIN, innerArc.center]) == 0mm
+  verticalDistance([ORIGIN, innerArc.center]) == 82mm
+}
+noseMidSketch = sketch(on = offsetPlane(XZ, offset = -164mm)) {
+  outerArc = arc(start = [var 102mm, var 32mm], end = [var -102mm, var 32mm], center = [var 0mm, var -155mm])
+  leftBridge = line(start = [var -102mm, var 32mm], end = [var -66mm, var 20mm])
+  innerArc = arc(start = [var -66mm, var 20mm], end = [var 66mm, var 20mm], center = [var 0mm, var 118mm])
+  rightBridge = line(start = [var 66mm, var 20mm], end = [var 102mm, var 32mm])
+  coincident([outerArc.end, leftBridge.start])
+  coincident([leftBridge.end, innerArc.start])
+  coincident([innerArc.end, rightBridge.start])
+  coincident([rightBridge.end, outerArc.start])
+  horizontal([outerArc.start, outerArc.end])
+  horizontal([innerArc.start, innerArc.end])
+  horizontalDistance([ORIGIN, outerArc.start]) == 102mm
+  verticalDistance([ORIGIN, outerArc.start]) == 32mm
+  horizontalDistance([ORIGIN, outerArc.end]) == -102mm
+  verticalDistance([ORIGIN, outerArc.end]) == 32mm
+  horizontalDistance([ORIGIN, outerArc.center]) == 0mm
+  verticalDistance([ORIGIN, outerArc.center]) == -155mm
+  horizontalDistance([ORIGIN, innerArc.start]) == -66mm
+  verticalDistance([ORIGIN, innerArc.start]) == 20mm
+  horizontalDistance([ORIGIN, innerArc.end]) == 66mm
+  verticalDistance([ORIGIN, innerArc.end]) == 20mm
+  horizontalDistance([ORIGIN, innerArc.center]) == 0mm
+  verticalDistance([ORIGIN, innerArc.center]) == 118mm
+}
+noseJoinSketch = sketch(on = offsetPlane(XZ, offset = -134mm)) {
+  outerArc = arc(start = [var 132mm, var 42mm], end = [var -132mm, var 42mm], center = [var 0mm, var -210mm])
+  leftBridge = line(start = [var -132mm, var 42mm], end = [var -84mm, var 28mm])
+  innerArc = arc(start = [var -84mm, var 28mm], end = [var 84mm, var 28mm], center = [var 0mm, var 170mm])
+  rightBridge = line(start = [var 84mm, var 28mm], end = [var 132mm, var 42mm])
+  coincident([outerArc.end, leftBridge.start])
+  coincident([leftBridge.end, innerArc.start])
+  coincident([innerArc.end, rightBridge.start])
+  coincident([rightBridge.end, outerArc.start])
+  horizontal([outerArc.start, outerArc.end])
+  horizontal([innerArc.start, innerArc.end])
+  horizontalDistance([ORIGIN, outerArc.start]) == 132mm
+  verticalDistance([ORIGIN, outerArc.start]) == 42mm
+  horizontalDistance([ORIGIN, outerArc.end]) == -132mm
+  verticalDistance([ORIGIN, outerArc.end]) == 42mm
+  horizontalDistance([ORIGIN, outerArc.center]) == 0mm
+  verticalDistance([ORIGIN, outerArc.center]) == -210mm
+  horizontalDistance([ORIGIN, innerArc.start]) == -84mm
+  verticalDistance([ORIGIN, innerArc.start]) == 28mm
+  horizontalDistance([ORIGIN, innerArc.end]) == 84mm
+  verticalDistance([ORIGIN, innerArc.end]) == 28mm
+  horizontalDistance([ORIGIN, innerArc.center]) == 0mm
+  verticalDistance([ORIGIN, innerArc.center]) == 170mm
+}
 
-leftShoulderFairing = clone(unitSphere)
-  |> scale(
-       x = 112,
-       y = 166,
-       z = 56,
-       global = false,
-     )
-  |> translate(
-       x = -122mm,
-       y = -4mm,
-       z = 31mm,
-       global = true,
-     )
-  |> appearance(color = shellWhite, roughness = 48, metalness = 4)
+noseTipRegion = region(
+  segments = [
+    noseTipSketch.outerArc,
+    noseTipSketch.leftBridge,
+    noseTipSketch.innerArc,
+    noseTipSketch.rightBridge
+  ],
+  intersectionIndex = -1,
+  direction = CCW,
+)
+noseForwardRegion = region(
+  segments = [
+    noseForwardSketch.outerArc,
+    noseForwardSketch.leftBridge,
+    noseForwardSketch.innerArc,
+    noseForwardSketch.rightBridge
+  ],
+  intersectionIndex = -1,
+  direction = CCW,
+)
+noseMidRegion = region(
+  segments = [
+    noseMidSketch.outerArc,
+    noseMidSketch.leftBridge,
+    noseMidSketch.innerArc,
+    noseMidSketch.rightBridge
+  ],
+  intersectionIndex = -1,
+  direction = CCW,
+)
+noseJoinRegion = region(
+  segments = [
+    noseJoinSketch.outerArc,
+    noseJoinSketch.leftBridge,
+    noseJoinSketch.innerArc,
+    noseJoinSketch.rightBridge
+  ],
+  intersectionIndex = -1,
+  direction = CCW,
+)
+loftedCameraHood = loft(
+  [
+    noseTipRegion,
+    noseForwardRegion,
+    noseMidRegion,
+    noseJoinRegion
+  ],
+  vDegree = 3,
+  bezApproximateRational = true,
+)
+
+leftShoulderFrontSketch = sketch(on = offsetPlane(XZ, offset = -78mm)) {
+  upperArc = arc(start = [var -126mm, var 38mm], end = [var -190mm, var 38mm], center = [var -158mm, var 12mm])
+  lowerArc = arc(start = [var -190mm, var 38mm], end = [var -126mm, var 38mm], center = [var -158mm, var 55mm])
+  coincident([upperArc.end, lowerArc.start])
+  coincident([lowerArc.end, upperArc.start])
+  horizontal([upperArc.start, upperArc.end])
+  horizontalDistance([ORIGIN, upperArc.start]) == -126mm
+  verticalDistance([ORIGIN, upperArc.start]) == 38mm
+  horizontalDistance([ORIGIN, upperArc.end]) == -190mm
+  verticalDistance([ORIGIN, upperArc.end]) == 38mm
+  horizontalDistance([ORIGIN, upperArc.center]) == -158mm
+  verticalDistance([ORIGIN, upperArc.center]) == 12mm
+  horizontalDistance([ORIGIN, lowerArc.center]) == -158mm
+  verticalDistance([ORIGIN, lowerArc.center]) == 55mm
+}
+leftShoulderMidSketch = sketch(on = offsetPlane(XZ, offset = -5mm)) {
+  upperArc = arc(start = [var -110mm, var 42mm], end = [var -206mm, var 42mm], center = [var -158mm, var 3mm])
+  lowerArc = arc(start = [var -206mm, var 42mm], end = [var -110mm, var 42mm], center = [var -158mm, var 68mm])
+  coincident([upperArc.end, lowerArc.start])
+  coincident([lowerArc.end, upperArc.start])
+  horizontal([upperArc.start, upperArc.end])
+  horizontalDistance([ORIGIN, upperArc.start]) == -110mm
+  verticalDistance([ORIGIN, upperArc.start]) == 42mm
+  horizontalDistance([ORIGIN, upperArc.end]) == -206mm
+  verticalDistance([ORIGIN, upperArc.end]) == 42mm
+  horizontalDistance([ORIGIN, upperArc.center]) == -158mm
+  verticalDistance([ORIGIN, upperArc.center]) == 3mm
+  horizontalDistance([ORIGIN, lowerArc.center]) == -158mm
+  verticalDistance([ORIGIN, lowerArc.center]) == 68mm
+}
+leftShoulderRearSketch = sketch(on = offsetPlane(XZ, offset = 78mm)) {
+  upperArc = arc(start = [var -130mm, var 34mm], end = [var -186mm, var 34mm], center = [var -158mm, var 15mm])
+  lowerArc = arc(start = [var -186mm, var 34mm], end = [var -130mm, var 34mm], center = [var -158mm, var 48mm])
+  coincident([upperArc.end, lowerArc.start])
+  coincident([lowerArc.end, upperArc.start])
+  horizontal([upperArc.start, upperArc.end])
+  horizontalDistance([ORIGIN, upperArc.start]) == -130mm
+  verticalDistance([ORIGIN, upperArc.start]) == 34mm
+  horizontalDistance([ORIGIN, upperArc.end]) == -186mm
+  verticalDistance([ORIGIN, upperArc.end]) == 34mm
+  horizontalDistance([ORIGIN, upperArc.center]) == -158mm
+  verticalDistance([ORIGIN, upperArc.center]) == 15mm
+  horizontalDistance([ORIGIN, lowerArc.center]) == -158mm
+  verticalDistance([ORIGIN, lowerArc.center]) == 48mm
+}
+
+leftShoulderFrontRegion = region(
+  segments = [
+    leftShoulderFrontSketch.upperArc,
+    leftShoulderFrontSketch.lowerArc
+  ],
+  intersectionIndex = -1,
+  direction = CCW,
+)
+leftShoulderMidRegion = region(
+  segments = [
+    leftShoulderMidSketch.upperArc,
+    leftShoulderMidSketch.lowerArc
+  ],
+  intersectionIndex = -1,
+  direction = CCW,
+)
+leftShoulderRearRegion = region(
+  segments = [
+    leftShoulderRearSketch.upperArc,
+    leftShoulderRearSketch.lowerArc
+  ],
+  intersectionIndex = -1,
+  direction = CCW,
+)
+leftShoulderFairing = loft(
+  [
+    leftShoulderFrontRegion,
+    leftShoulderMidRegion,
+    leftShoulderRearRegion
+  ],
+  vDegree = 2,
+  bezApproximateRational = true,
+)
 rightShoulderFairing = clone(leftShoulderFairing)
-  |> translate(x = 244mm, global = true)
+  |> translate(x = 316mm, global = true)
+
+finishedShellSurfaces = appearance(
+  [
+    mainCanopy,
+    loftedCameraHood,
+    leftShoulderFairing,
+    rightShoulderFairing
+  ],
+  color = shellWhite,
+  roughness = 48,
+  metalness = 4,
+)
 
 serviceLid = clone(unitBlock)
   |> scale(
@@ -124,17 +337,21 @@ leftAccessPad = clone(unitBlock)
 rightAccessPad = clone(leftAccessPad)
   |> translate(x = 146mm, global = true)
 
-export allBodies = [
-  mainCanopy,
-  forwardNoseFairing,
-  leftShoulderFairing,
-  rightShoulderFairing,
+export allBodies = flatten([
+  finishedShellSurfaces,
   serviceLid,
   leftAccessPad,
   rightAccessPad
-]
+])
 
 hide(shellBaseSketch)
 hide(shellLowerSketch)
 hide(shellShoulderSketch)
 hide(shellCrownSketch)
+hide(noseTipSketch)
+hide(noseForwardSketch)
+hide(noseMidSketch)
+hide(noseJoinSketch)
+hide(leftShoulderFrontSketch)
+hide(leftShoulderMidSketch)
+hide(leftShoulderRearSketch)

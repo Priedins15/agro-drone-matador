@@ -64,7 +64,7 @@ frontLeftArmHose = clone(unitCylinder)
        global = false,
      )
   |> rotate(axis = Y, angle = 90deg, global = true)
-  |> rotate(axis = Z, angle = -150.312deg, global = true)
+  |> rotate(axis = Z, angle = -rearArmYaw, global = true)
   |> translate(
        x = -334mm,
        y = -190mm,
@@ -96,7 +96,7 @@ rearLeftArmHose = clone(unitCylinder)
        global = false,
      )
   |> rotate(axis = Y, angle = 90deg, global = true)
-  |> rotate(axis = Z, angle = 150.312deg, global = true)
+  |> rotate(axis = Z, angle = rearArmYaw, global = true)
   |> translate(
        x = -334mm,
        y = 190mm,

@@ -1,5 +1,5 @@
-// Anti-drip spray nozzle assembly
-// Inlet barb, valve body, strainer envelope, tip holder, true orifice, and deflector.
+// Anti-drip spray nozzle with driven rotary sprinkler head
+// Inlet barb, valve body, strainer envelope, tip holder, orifice, deflector, and rotor detail.
 @settings(defaultLengthUnit = mm, kclVersion = 2.0)
 
 import unitBlock from "unitBlock.kcl"
@@ -116,6 +116,105 @@ export deflector = clone(unitBlock)
   |> translate(z = -94mm, global = true)
   |> appearance(color = warningOrange, metalness = 10, roughness = 52)
 
+// Rotary sprinkler drive stack. The spindle overlaps the deflector and hub so the rotor is not a floating detail.
+export sprinklerDriveSpindle = clone(unitCylinder)
+  |> scale(
+       x = 6,
+       y = 6,
+       z = 24,
+       global = false,
+     )
+  |> translate(z = -105mm, global = true)
+  |> appearance(color = hardwareSteel, metalness = 88, roughness = 22)
+export sprinklerUpperBearing = clone(unitCylinder)
+  |> scale(
+       x = 14,
+       y = 14,
+       z = 5,
+       global = false,
+     )
+  |> translate(z = -100mm, global = true)
+  |> appearance(color = hardwareBlack, metalness = 52, roughness = 38)
+export sprinklerLowerBearing = clone(unitCylinder)
+  |> scale(
+       x = 16,
+       y = 16,
+       z = 5,
+       global = false,
+     )
+  |> translate(z = -113mm, global = true)
+  |> appearance(color = hardwareBlack, metalness = 52, roughness = 38)
+rotorHubBlank = clone(unitCylinder)
+  |> scale(
+       x = 24,
+       y = 24,
+       z = 9,
+       global = false,
+     )
+  |> translate(z = -119mm, global = true)
+rotorHubBore = clone(unitCylinder)
+  |> scale(
+       x = 6.5,
+       y = 6.5,
+       z = 14,
+       global = false,
+     )
+  |> translate(z = -119mm, global = true)
+export sprinklerRotorHub = subtract(rotorHubBlank, tools = [rotorHubBore])
+  |> appearance(color = hardwareBlack, metalness = 60, roughness = 34)
+export sprinklerRotorArmSeed = clone(unitBlock)
+  |> scale(
+       x = 9,
+       y = 58,
+       z = 5,
+       global = false,
+     )
+  |> translate(y = 25mm, z = -121mm, global = true)
+  |> appearance(color = warningOrange, metalness = 18, roughness = 44)
+export sprinklerRotorArms = patternCircular3d(
+  sprinklerRotorArmSeed,
+  instances = 3,
+  axis = Z,
+  center = [0mm, 0mm, -121mm],
+  arcDegrees = 360deg,
+  rotateDuplicates = true,
+)
+export sprinklerJetSeed = clone(unitCylinder)
+  |> scale(
+       x = 6,
+       y = 6,
+       z = 12,
+       global = false,
+     )
+  |> rotate(axis = X, angle = 90deg, global = true)
+  |> translate(y = 55mm, z = -121mm, global = true)
+  |> appearance(color = hardwareSteel, metalness = 82, roughness = 24)
+export sprinklerJets = patternCircular3d(
+  sprinklerJetSeed,
+  instances = 3,
+  axis = Z,
+  center = [0mm, 0mm, -121mm],
+  arcDegrees = 360deg,
+  rotateDuplicates = true,
+)
+export sprinklerJetCapSeed = clone(unitCylinder)
+  |> scale(
+       x = 8,
+       y = 8,
+       z = 4,
+       global = false,
+     )
+  |> translate(y = 62mm, z = -121mm, global = true)
+  |> appearance(color = hardwareSteel, metalness = 86, roughness = 22)
+export sprinklerJetCaps = patternCircular3d(
+  sprinklerJetCapSeed,
+  instances = 3,
+  axis = Z,
+  center = [0mm, 0mm, -121mm],
+  arcDegrees = 360deg,
+  rotateDuplicates = true,
+)
+
 export allBodies = flatten([
   valveBody,
   inletBarb,
@@ -124,7 +223,17 @@ export allBodies = flatten([
   meshDisk,
   tipHolder,
   orificePlate,
-  deflector
+  deflector,
+  sprinklerDriveSpindle,
+  sprinklerUpperBearing,
+  sprinklerLowerBearing,
+  sprinklerRotorHub,
+  sprinklerRotorArms,
+  sprinklerJets,
+  sprinklerJetCaps
 ])
 
 hiddenBarbRings = hide(barbRings)
+hiddenSprinklerRotorArmSeed = hide(sprinklerRotorArmSeed)
+hiddenSprinklerJetSeed = hide(sprinklerJetSeed)
+hiddenSprinklerJetCapSeed = hide(sprinklerJetCapSeed)

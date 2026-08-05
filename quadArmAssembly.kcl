@@ -14,7 +14,7 @@ frontRightArm = clone(armTube)
        global = true,
      )
 frontLeftArm = clone(armTube)
-  |> rotate(axis = Z, angle = -150.312deg, global = true)
+  |> rotate(axis = Z, angle = -rearArmYaw, global = true)
   |> translate(
        x = -armCenterX,
        y = -armCenterY,
@@ -30,7 +30,7 @@ rearRightArm = clone(armTube)
        global = true,
      )
 rearLeftArm = clone(armTube)
-  |> rotate(axis = Z, angle = 150.312deg, global = true)
+  |> rotate(axis = Z, angle = rearArmYaw, global = true)
   |> translate(
        x = -armCenterX,
        y = armCenterY,

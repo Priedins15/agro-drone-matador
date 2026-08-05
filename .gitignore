@@ -1,0 +1,11 @@
+# Node
+node_modules/
+
+# Generated build artifacts (regenerate with npm run build:variants)
+# configurator/models/*.glb
+# configurator/models/index.json
+
+# Secrets — never commit tokens/keys
+.env
+.env.*
+*.pem

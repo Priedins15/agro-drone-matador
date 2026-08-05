@@ -14,7 +14,7 @@ frontRightInnerClamp = clone(clampSource)
        global = true,
      )
 frontLeftInnerClamp = clone(clampSource)
-  |> rotate(axis = Z, angle = -150.312deg, global = true)
+  |> rotate(axis = Z, angle = -rearArmYaw, global = true)
   |> translate(
        x = -innerClampX,
        y = -innerClampY,
@@ -30,7 +30,7 @@ rearRightInnerClamp = clone(clampSource)
        global = true,
      )
 rearLeftInnerClamp = clone(clampSource)
-  |> rotate(axis = Z, angle = 150.312deg, global = true)
+  |> rotate(axis = Z, angle = rearArmYaw, global = true)
   |> translate(
        x = -innerClampX,
        y = innerClampY,
@@ -47,7 +47,7 @@ frontRightOuterClamp = clone(clampSource)
        global = true,
      )
 frontLeftOuterClamp = clone(clampSource)
-  |> rotate(axis = Z, angle = -150.312deg, global = true)
+  |> rotate(axis = Z, angle = -rearArmYaw, global = true)
   |> translate(
        x = -outerClampX,
        y = -outerClampY,
@@ -63,7 +63,7 @@ rearRightOuterClamp = clone(clampSource)
        global = true,
      )
 rearLeftOuterClamp = clone(clampSource)
-  |> rotate(axis = Z, angle = 150.312deg, global = true)
+  |> rotate(axis = Z, angle = rearArmYaw, global = true)
   |> translate(
        x = -outerClampX,
        y = outerClampY,

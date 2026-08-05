@@ -1,5 +1,5 @@
-// Reference-matched lower fuselage fairings
-// Compact belly deck, side skirts, molded front shroud, rear cover, and camera hardpoint.
+// Integrated lower fuselage fairings
+// Belly deck with streamlined front camera shroud, verified gimbal cutout, side skirts, rear cover, and hardpoint.
 @settings(defaultLengthUnit = mm, kclVersion = 2.0)
 
 import unitSphere from "unitSphere.kcl"
@@ -31,15 +31,60 @@ leftBellyFairing = clone(unitSphere)
   |> appearance(color = shellWhite, roughness = 50, metalness = 3)
 rightBellyFairing = clone(leftBellyFairing)
   |> translate(x = 216mm, global = true)
-frontEquipmentShroud = clone(unitSphere)
-  |> scale(
-       x = 250,
-       y = 96,
-       z = 90,
-       global = false,
-     )
-  |> translate(y = -112mm, z = -42mm, global = true)
+
+frontShroudSketch = sketch(on = XZ) {
+  outerArc = arc(start = [var 125mm, var -15mm], end = [var -125mm, var -15mm], center = [var 0mm, var -180mm])
+  leftBridge = line(start = [var -125mm, var -15mm], end = [var -66mm, var -42mm])
+  innerArc = arc(start = [var -66mm, var -42mm], end = [var 66mm, var -42mm], center = [var 0mm, var 75mm])
+  rightBridge = line(start = [var 66mm, var -42mm], end = [var 125mm, var -15mm])
+
+  coincident([outerArc.end, leftBridge.start])
+  coincident([leftBridge.end, innerArc.start])
+  coincident([innerArc.end, rightBridge.start])
+  coincident([rightBridge.end, outerArc.start])
+  horizontal([outerArc.start, outerArc.end])
+  horizontal([innerArc.start, innerArc.end])
+  horizontalDistance([ORIGIN, outerArc.start]) == 125mm
+  verticalDistance([ORIGIN, outerArc.start]) == -15mm
+  horizontalDistance([ORIGIN, outerArc.end]) == -125mm
+  verticalDistance([ORIGIN, outerArc.end]) == -15mm
+  horizontalDistance([ORIGIN, outerArc.center]) == 0mm
+  verticalDistance([ORIGIN, outerArc.center]) == -180mm
+  horizontalDistance([ORIGIN, innerArc.start]) == -66mm
+  verticalDistance([ORIGIN, innerArc.start]) == -42mm
+  horizontalDistance([ORIGIN, innerArc.end]) == 66mm
+  verticalDistance([ORIGIN, innerArc.end]) == -42mm
+  horizontalDistance([ORIGIN, innerArc.center]) == 0mm
+  verticalDistance([ORIGIN, innerArc.center]) == 75mm
+}
+frontShroudRegion = region(
+  segments = [
+    frontShroudSketch.outerArc,
+    frontShroudSketch.leftBridge,
+    frontShroudSketch.innerArc,
+    frontShroudSketch.rightBridge
+  ],
+  intersectionIndex = -1,
+  direction = CCW,
+)
+frontEquipmentShroudBlank = extrude(frontShroudRegion, length = 110mm, symmetric = true)
+  |> translate(y = -112mm, global = true)
+
+gimbalClearanceSketch = sketch(on = offsetPlane(XY, offset = -135mm)) {
+  clearanceCircle = circle(start = [var 62mm, var -177mm], center = [var 0mm, var -177mm])
+  horizontalDistance([ORIGIN, clearanceCircle.center]) == 0mm
+  verticalDistance([ORIGIN, clearanceCircle.center]) == -177mm
+  horizontal([
+    clearanceCircle.center,
+    clearanceCircle.start
+  ])
+  radius(clearanceCircle) == 62mm
+}
+gimbalClearanceRegion = region(segments = [gimbalClearanceSketch.clearanceCircle])
+gimbalClearanceCutter = extrude(gimbalClearanceRegion, length = 150mm)
+frontEquipmentShroud = subtract(frontEquipmentShroudBlank, tools = [gimbalClearanceCutter])
   |> appearance(color = shellWhite, roughness = 50, metalness = 3)
+
 rearServiceFairing = clone(unitSphere)
   |> scale(
        x = 210,
@@ -67,3 +112,6 @@ export allBodies = [
   rearServiceFairing,
   forwardSensorMount
 ]
+
+hide(frontShroudSketch)
+hide(gimbalClearanceSketch)

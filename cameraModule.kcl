@@ -1,5 +1,5 @@
-// Detailed forward camera and stabilized gimbal module
-// Layered optics, pitch/yaw drives, vibration isolation, fasteners, cooling, and service connections.
+// Compact stabilized camera and gimbal module
+// Layered optics with narrowed pitch drives, lighter fork arms, compact yaw stack, dampers, and service connections.
 @settings(defaultLengthUnit = mm, kclVersion = 2.0)
 
 import unitBlock from "unitBlock.kcl"
@@ -260,8 +260,8 @@ rearCableGland = clone(unitCylinder)
 
 leftPitchAxle = clone(unitCylinder)
   |> scale(
-       x = 9,
-       y = 9,
+       x = 7,
+       y = 7,
        z = 5,
        global = false,
      )
@@ -272,127 +272,127 @@ rightPitchAxle = clone(leftPitchAxle)
   |> translate(x = 54mm, global = true)
 leftPitchMotor = clone(unitCylinder)
   |> scale(
-       x = 19,
-       y = 19,
-       z = 11,
+       x = 16,
+       y = 16,
+       z = 9,
        global = false,
      )
   |> rotate(axis = Y, angle = 90deg, global = true)
-  |> translate(x = -33mm, global = true)
+  |> translate(x = -30mm, global = true)
   |> appearance(color = aluminumDark, metalness = 80, roughness = 26)
 rightPitchMotor = clone(leftPitchMotor)
-  |> translate(x = 66mm, global = true)
+  |> translate(x = 60mm, global = true)
 leftMotorCap = clone(unitCylinder)
   |> scale(
-       x = 22,
-       y = 22,
-       z = 3,
+       x = 18,
+       y = 18,
+       z = 2.5,
        global = false,
      )
   |> rotate(axis = Y, angle = 90deg, global = true)
-  |> translate(x = -40mm, global = true)
+  |> translate(x = -35.5mm, global = true)
   |> appearance(color = hardwareSteel, metalness = 88, roughness = 22)
 rightMotorCap = clone(leftMotorCap)
-  |> translate(x = 80mm, global = true)
+  |> translate(x = 71mm, global = true)
 leftEncoderRing = clone(unitCylinder)
   |> scale(
-       x = 13,
-       y = 13,
-       z = 2,
+       x = 11,
+       y = 11,
+       z = 1.8,
        global = false,
      )
   |> rotate(axis = Y, angle = 90deg, global = true)
-  |> translate(x = -42.5mm, global = true)
+  |> translate(x = -37.7mm, global = true)
   |> appearance(color = "#252b2f", metalness = 42, roughness = 40)
 rightEncoderRing = clone(leftEncoderRing)
-  |> translate(x = 85mm, global = true)
+  |> translate(x = 75.4mm, global = true)
 
 leftGimbalArm = clone(unitBlock)
   |> scale(
-       x = 6,
-       y = 14,
-       z = 30,
+       x = 5,
+       y = 11,
+       z = 27,
        global = false,
      )
-  |> translate(x = -33mm, z = 21mm, global = true)
+  |> translate(x = -29.5mm, z = 20mm, global = true)
   |> appearance(color = hardwareBlack, metalness = 60, roughness = 38)
 rightGimbalArm = clone(leftGimbalArm)
-  |> translate(x = 66mm, global = true)
+  |> translate(x = 59mm, global = true)
 gimbalCrossBridge = clone(unitBlock)
   |> scale(
-       x = 72,
-       y = 18,
-       z = 8,
+       x = 62,
+       y = 14,
+       z = 6,
        global = false,
      )
-  |> translate(z = 36mm, global = true)
+  |> translate(z = 34.5mm, global = true)
   |> appearance(color = hardwareBlack, metalness = 62, roughness = 36)
 yawBearingRing = clone(unitCylinder)
   |> scale(
-       x = 34,
-       y = 34,
+       x = 29,
+       y = 29,
        z = 4,
        global = false,
      )
-  |> translate(z = 41mm, global = true)
+  |> translate(z = 39mm, global = true)
   |> appearance(color = hardwareSteel, metalness = 86, roughness = 22)
 yawMotor = clone(unitCylinder)
   |> scale(
-       x = 27,
-       y = 27,
-       z = 14,
+       x = 23,
+       y = 23,
+       z = 12,
        global = false,
      )
-  |> translate(z = 49mm, global = true)
+  |> translate(z = 47mm, global = true)
   |> appearance(color = aluminumDark, metalness = 80, roughness = 26)
 yawEncoderCap = clone(unitCylinder)
   |> scale(
-       x = 31,
-       y = 31,
+       x = 26,
+       y = 26,
        z = 3,
        global = false,
      )
-  |> translate(z = 57.5mm, global = true)
+  |> translate(z = 54.5mm, global = true)
   |> appearance(color = hardwareBlack, metalness = 54, roughness = 38)
 gimbalHanger = clone(unitBlock)
   |> scale(
-       x = 12,
-       y = 12,
+       x = 10,
+       y = 10,
        z = 8,
        global = false,
      )
-  |> translate(z = 62mm, global = true)
+  |> translate(z = 60mm, global = true)
   |> appearance(color = hardwareBlack, metalness = 62, roughness = 38)
 lowerMountPlate = clone(unitBlock)
   |> scale(
-       x = 70,
-       y = 44,
+       x = 64,
+       y = 40,
        z = 4,
        global = false,
      )
-  |> translate(z = 68mm, global = true)
+  |> translate(z = 66mm, global = true)
   |> appearance(color = aluminumDark, metalness = 72, roughness = 30)
 
 frontLeftDamper = clone(unitCylinder)
   |> scale(
-       x = 9,
-       y = 9,
-       z = 6,
+       x = 8,
+       y = 8,
+       z = 8,
        global = false,
      )
   |> translate(
-       x = -26mm,
-       y = -16mm,
-       z = 73mm,
+       x = -23mm,
+       y = -14mm,
+       z = 72mm,
        global = true,
      )
   |> appearance(color = "#15191b", metalness = 2, roughness = 84)
 frontRightDamper = clone(frontLeftDamper)
-  |> translate(x = 52mm, global = true)
+  |> translate(x = 46mm, global = true)
 rearLeftDamper = clone(frontLeftDamper)
-  |> translate(y = 32mm, global = true)
+  |> translate(y = 28mm, global = true)
 rearRightDamper = clone(frontRightDamper)
-  |> translate(y = 32mm, global = true)
+  |> translate(y = 28mm, global = true)
 aircraftMountPlate = clone(unitBlock)
   |> scale(
        x = 80,

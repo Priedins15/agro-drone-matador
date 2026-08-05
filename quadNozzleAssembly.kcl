@@ -1,8 +1,8 @@
-// Four-nozzle spray subassembly
-// Detailed anti-drip nozzle sets mounted just inboard of the four motors.
+// Four-nozzle spray assembly with driven rotary sprinkler heads
+// Detailed anti-drip nozzle sets, fluid riser interfaces, and three-jet rotor stations.
 @settings(defaultLengthUnit = mm, kclVersion = 2.0)
 
-import valveBody, inletBarb, barbRingSeed, strainerCup, meshDisk, tipHolder, orificePlate, deflector from "sprayNozzle.kcl"
+import valveBody, inletBarb, barbRingSeed, strainerCup, meshDisk, tipHolder, orificePlate, deflector, sprinklerDriveSpindle, sprinklerUpperBearing, sprinklerLowerBearing, sprinklerRotorHub, sprinklerRotorArmSeed, sprinklerJetSeed, sprinklerJetCapSeed from "sprayNozzle.kcl"
 import * from "parameters.kcl"
 
 frontRightRings = patternLinear3d(
@@ -10,6 +10,30 @@ frontRightRings = patternLinear3d(
   instances = 4,
   distance = 9mm,
   axis = Z,
+)
+frontRightRotorArms = patternCircular3d(
+  clone(sprinklerRotorArmSeed),
+  instances = 3,
+  axis = Z,
+  center = [0mm, 0mm, -121mm],
+  arcDegrees = 360deg,
+  rotateDuplicates = true,
+)
+frontRightJets = patternCircular3d(
+  clone(sprinklerJetSeed),
+  instances = 3,
+  axis = Z,
+  center = [0mm, 0mm, -121mm],
+  arcDegrees = 360deg,
+  rotateDuplicates = true,
+)
+frontRightJetCaps = patternCircular3d(
+  clone(sprinklerJetCapSeed),
+  instances = 3,
+  axis = Z,
+  center = [0mm, 0mm, -121mm],
+  arcDegrees = 360deg,
+  rotateDuplicates = true,
 )
 frontRightNozzle = flatten([
   clone(valveBody),
@@ -19,8 +43,16 @@ frontRightNozzle = flatten([
   clone(meshDisk),
   clone(tipHolder),
   clone(orificePlate),
-  clone(deflector)
+  clone(deflector),
+  clone(sprinklerDriveSpindle),
+  clone(sprinklerUpperBearing),
+  clone(sprinklerLowerBearing),
+  clone(sprinklerRotorHub),
+  frontRightRotorArms,
+  frontRightJets,
+  frontRightJetCaps
 ])
+  |> rotate(axis = Z, angle = 10deg, global = true)
   |> translate(
        x = nozzleX,
        y = -nozzleY,
@@ -34,6 +66,30 @@ frontLeftRings = patternLinear3d(
   distance = 9mm,
   axis = Z,
 )
+frontLeftRotorArms = patternCircular3d(
+  clone(sprinklerRotorArmSeed),
+  instances = 3,
+  axis = Z,
+  center = [0mm, 0mm, -121mm],
+  arcDegrees = 360deg,
+  rotateDuplicates = true,
+)
+frontLeftJets = patternCircular3d(
+  clone(sprinklerJetSeed),
+  instances = 3,
+  axis = Z,
+  center = [0mm, 0mm, -121mm],
+  arcDegrees = 360deg,
+  rotateDuplicates = true,
+)
+frontLeftJetCaps = patternCircular3d(
+  clone(sprinklerJetCapSeed),
+  instances = 3,
+  axis = Z,
+  center = [0mm, 0mm, -121mm],
+  arcDegrees = 360deg,
+  rotateDuplicates = true,
+)
 frontLeftNozzle = flatten([
   clone(valveBody),
   clone(inletBarb),
@@ -42,8 +98,16 @@ frontLeftNozzle = flatten([
   clone(meshDisk),
   clone(tipHolder),
   clone(orificePlate),
-  clone(deflector)
+  clone(deflector),
+  clone(sprinklerDriveSpindle),
+  clone(sprinklerUpperBearing),
+  clone(sprinklerLowerBearing),
+  clone(sprinklerRotorHub),
+  frontLeftRotorArms,
+  frontLeftJets,
+  frontLeftJetCaps
 ])
+  |> rotate(axis = Z, angle = 130deg, global = true)
   |> translate(
        x = -nozzleX,
        y = -nozzleY,
@@ -57,6 +121,30 @@ rearRightRings = patternLinear3d(
   distance = 9mm,
   axis = Z,
 )
+rearRightRotorArms = patternCircular3d(
+  clone(sprinklerRotorArmSeed),
+  instances = 3,
+  axis = Z,
+  center = [0mm, 0mm, -121mm],
+  arcDegrees = 360deg,
+  rotateDuplicates = true,
+)
+rearRightJets = patternCircular3d(
+  clone(sprinklerJetSeed),
+  instances = 3,
+  axis = Z,
+  center = [0mm, 0mm, -121mm],
+  arcDegrees = 360deg,
+  rotateDuplicates = true,
+)
+rearRightJetCaps = patternCircular3d(
+  clone(sprinklerJetCapSeed),
+  instances = 3,
+  axis = Z,
+  center = [0mm, 0mm, -121mm],
+  arcDegrees = 360deg,
+  rotateDuplicates = true,
+)
 rearRightNozzle = flatten([
   clone(valveBody),
   clone(inletBarb),
@@ -65,8 +153,16 @@ rearRightNozzle = flatten([
   clone(meshDisk),
   clone(tipHolder),
   clone(orificePlate),
-  clone(deflector)
+  clone(deflector),
+  clone(sprinklerDriveSpindle),
+  clone(sprinklerUpperBearing),
+  clone(sprinklerLowerBearing),
+  clone(sprinklerRotorHub),
+  rearRightRotorArms,
+  rearRightJets,
+  rearRightJetCaps
 ])
+  |> rotate(axis = Z, angle = 250deg, global = true)
   |> translate(
        x = nozzleX,
        y = nozzleY,
@@ -80,6 +176,30 @@ rearLeftRings = patternLinear3d(
   distance = 9mm,
   axis = Z,
 )
+rearLeftRotorArms = patternCircular3d(
+  clone(sprinklerRotorArmSeed),
+  instances = 3,
+  axis = Z,
+  center = [0mm, 0mm, -121mm],
+  arcDegrees = 360deg,
+  rotateDuplicates = true,
+)
+rearLeftJets = patternCircular3d(
+  clone(sprinklerJetSeed),
+  instances = 3,
+  axis = Z,
+  center = [0mm, 0mm, -121mm],
+  arcDegrees = 360deg,
+  rotateDuplicates = true,
+)
+rearLeftJetCaps = patternCircular3d(
+  clone(sprinklerJetCapSeed),
+  instances = 3,
+  axis = Z,
+  center = [0mm, 0mm, -121mm],
+  arcDegrees = 360deg,
+  rotateDuplicates = true,
+)
 rearLeftNozzle = flatten([
   clone(valveBody),
   clone(inletBarb),
@@ -88,8 +208,16 @@ rearLeftNozzle = flatten([
   clone(meshDisk),
   clone(tipHolder),
   clone(orificePlate),
-  clone(deflector)
+  clone(deflector),
+  clone(sprinklerDriveSpindle),
+  clone(sprinklerUpperBearing),
+  clone(sprinklerLowerBearing),
+  clone(sprinklerRotorHub),
+  rearLeftRotorArms,
+  rearLeftJets,
+  rearLeftJetCaps
 ])
+  |> rotate(axis = Z, angle = 10deg, global = true)
   |> translate(
        x = -nozzleX,
        y = nozzleY,
@@ -112,3 +240,10 @@ hide(meshDisk)
 hide(tipHolder)
 hide(orificePlate)
 hide(deflector)
+hide(sprinklerDriveSpindle)
+hide(sprinklerUpperBearing)
+hide(sprinklerLowerBearing)
+hide(sprinklerRotorHub)
+hide(sprinklerRotorArmSeed)
+hide(sprinklerJetSeed)
+hide(sprinklerJetCapSeed)

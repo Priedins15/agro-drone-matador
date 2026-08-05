@@ -7,6 +7,7 @@ export motorY = 325mm
 export motorZ = 55mm
 export propellerZ = 110mm
 export armYaw = 29.688deg
+export rearArmYaw = 180deg - armYaw
 export armTubeLength = 512mm
 export armTubeOuterDiameter = 38mm
 export armTubeInnerDiameter = 32mm

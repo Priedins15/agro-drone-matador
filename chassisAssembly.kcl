@@ -56,7 +56,7 @@ frontLeftBeam = clone(unitBlock)
        z = 34,
        global = false,
      )
-  |> rotate(axis = Z, angle = -150.312deg, global = true)
+  |> rotate(axis = Z, angle = -rearArmYaw, global = true)
   |> translate(
        x = -83mm,
        y = -47mm,
@@ -86,7 +86,7 @@ rearLeftBeam = clone(unitBlock)
        z = 34,
        global = false,
      )
-  |> rotate(axis = Z, angle = 150.312deg, global = true)
+  |> rotate(axis = Z, angle = rearArmYaw, global = true)
   |> translate(
        x = -83mm,
        y = 47mm,

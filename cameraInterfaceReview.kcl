@@ -1,14 +1,20 @@
 // Camera-to-fuselage interface review
-// Focused inspection aid for the relocated camera hardpoint and unobstructed gimbal envelope.
+// Focused upper/lower shell and compact gimbal inspection aid for clearance and surface integration.
 @settings(defaultLengthUnit = mm, kclVersion = 2.0)
 
+import allBodies as upperShellSet from "upperFuselageShell.kcl"
 import allBodies as lowerShellSet from "lowerFuselageShell.kcl"
 import allBodies as cameraSet from "cameraModule.kcl"
 
+upperFuselage = upperShellSet
 lowerFuselage = lowerShellSet
 forwardCamera = cameraSet
   |> translate(y = -177mm, z = -78mm, global = true)
 
-export allBodies = flatten([lowerFuselage, forwardCamera])
+export allBodies = flatten([
+  upperFuselage,
+  lowerFuselage,
+  forwardCamera
+])
 
 allBodies
