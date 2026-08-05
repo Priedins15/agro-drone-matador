@@ -1,0 +1,27 @@
+// Unit sphere primitive
+// Origin-centered one-millimeter sphere made from a solver arc and revolve.
+@settings(defaultLengthUnit = mm, kclVersion = 2.0)
+
+unitSphereSketch = sketch(on = XZ) {
+  rightArc = arc(start = [var 0mm, var -0.5mm], end = [var 0mm, var 0.5mm], center = [var 0mm, var 0mm])
+  axisEdge = line(start = [var 0mm, var 0.5mm], end = [var 0mm, var -0.5mm])
+
+  coincident([rightArc.center, ORIGIN])
+  coincident([rightArc.end, axisEdge.start])
+  coincident([rightArc.start, axisEdge.end])
+  vertical(axisEdge)
+  midpoint(axisEdge, point = ORIGIN)
+  distance([axisEdge.start, axisEdge.end]) == 1mm
+  radius(rightArc) == 0.5mm
+}
+
+unitSphereRegion = region(
+  segments = [
+    unitSphereSketch.rightArc,
+    unitSphereSketch.axisEdge
+  ],
+  intersectionIndex = -1,
+  direction = CCW,
+)
+export unitSphere = revolve(unitSphereRegion, axis = Y)
+hiddenUnitSphereSketch = hide(unitSphereSketch)

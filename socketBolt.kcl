@@ -1,0 +1,49 @@
+// Generic socket-head bolt
+// Cosmetic M6 fastener envelope with shank, washer, head, and dark socket mark.
+@settings(defaultLengthUnit = mm, kclVersion = 2.0)
+
+import unitCylinder from "unitCylinder.kcl"
+
+boltShank = clone(unitCylinder)
+  |> scale(
+       x = 6,
+       y = 6,
+       z = 24,
+       global = false,
+     )
+  |> translate(z = -10mm, global = true)
+  |> appearance(color = "#8f989e", metalness = 88, roughness = 24)
+boltWasher = clone(unitCylinder)
+  |> scale(
+       x = 12,
+       y = 12,
+       z = 1.5,
+       global = false,
+     )
+  |> translate(z = 1mm, global = true)
+  |> appearance(color = "#b9c0c4", metalness = 90, roughness = 22)
+boltHead = clone(unitCylinder)
+  |> scale(
+       x = 10,
+       y = 10,
+       z = 6,
+       global = false,
+     )
+  |> translate(z = 4.75mm, global = true)
+  |> appearance(color = "#9da5aa", metalness = 90, roughness = 20)
+boltSocketMark = clone(unitCylinder)
+  |> scale(
+       x = 4.5,
+       y = 4.5,
+       z = 0.8,
+       global = false,
+     )
+  |> translate(z = 8.1mm, global = true)
+  |> appearance(color = "#1b1f22", metalness = 25, roughness = 52)
+
+export allBodies = [
+  boltShank,
+  boltWasher,
+  boltHead,
+  boltSocketMark
+]

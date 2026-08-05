@@ -1,0 +1,72 @@
+// Four reference-matched propeller sets
+// Compact two-blade rotors remain parallel and clear adjacent rotor disks.
+@settings(defaultLengthUnit = mm, kclVersion = 2.0)
+
+import allBodies as propellerSource from "propellerAssembly.kcl"
+import * from "parameters.kcl"
+
+frontRightPropeller = clone(propellerSource)
+  |> scale(
+       x = 0.90,
+       y = 0.86,
+       z = 0.86,
+       global = false,
+     )
+  |> rotate(axis = Z, angle = 4deg, global = true)
+  |> translate(
+       x = motorX,
+       y = -motorY,
+       z = propellerZ,
+       global = true,
+     )
+frontLeftPropeller = clone(propellerSource)
+  |> scale(
+       x = 0.90,
+       y = 0.86,
+       z = 0.86,
+       global = false,
+     )
+  |> rotate(axis = Z, angle = -4deg, global = true)
+  |> translate(
+       x = -motorX,
+       y = -motorY,
+       z = propellerZ,
+       global = true,
+     )
+rearRightPropeller = clone(propellerSource)
+  |> scale(
+       x = 0.90,
+       y = 0.86,
+       z = 0.86,
+       global = false,
+     )
+  |> rotate(axis = Z, angle = -2deg, global = true)
+  |> translate(
+       x = motorX,
+       y = motorY,
+       z = propellerZ,
+       global = true,
+     )
+rearLeftPropeller = clone(propellerSource)
+  |> scale(
+       x = 0.90,
+       y = 0.86,
+       z = 0.86,
+       global = false,
+     )
+  |> rotate(axis = Z, angle = 2deg, global = true)
+  |> translate(
+       x = -motorX,
+       y = motorY,
+       z = propellerZ,
+       global = true,
+     )
+
+export allBodies = flatten([
+  frontRightPropeller,
+  frontLeftPropeller,
+  rearRightPropeller,
+  rearLeftPropeller
+])
+
+hide(propellerSource)

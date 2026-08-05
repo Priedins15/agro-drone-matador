@@ -1,0 +1,48 @@
+// Four-arm structural subassembly
+// Hollow carbon tubes share the reference rotor and chassis datums.
+@settings(defaultLengthUnit = mm, kclVersion = 2.0)
+
+import armTube from "armTube.kcl"
+import * from "parameters.kcl"
+
+frontRightArm = clone(armTube)
+  |> rotate(axis = Z, angle = -armYaw, global = true)
+  |> translate(
+       x = armCenterX,
+       y = -armCenterY,
+       z = armZ,
+       global = true,
+     )
+frontLeftArm = clone(armTube)
+  |> rotate(axis = Z, angle = -150.312deg, global = true)
+  |> translate(
+       x = -armCenterX,
+       y = -armCenterY,
+       z = armZ,
+       global = true,
+     )
+rearRightArm = clone(armTube)
+  |> rotate(axis = Z, angle = armYaw, global = true)
+  |> translate(
+       x = armCenterX,
+       y = armCenterY,
+       z = armZ,
+       global = true,
+     )
+rearLeftArm = clone(armTube)
+  |> rotate(axis = Z, angle = 150.312deg, global = true)
+  |> translate(
+       x = -armCenterX,
+       y = armCenterY,
+       z = armZ,
+       global = true,
+     )
+
+export allBodies = [
+  frontRightArm,
+  frontLeftArm,
+  rearRightArm,
+  rearLeftArm
+]
+
+hide(armTube)

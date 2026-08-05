@@ -1,0 +1,34 @@
+// Landing gear longitudinal runner
+// Fore-aft lower tube with sleeves at both hoop intersections.
+@settings(defaultLengthUnit = mm, kclVersion = 2.0)
+
+import unitCylinder from "unitCylinder.kcl"
+import * from "parameters.kcl"
+
+crossbarTube = clone(unitCylinder)
+  |> scale(
+       x = 11,
+       y = 11,
+       z = 190,
+       global = false,
+     )
+  |> rotate(axis = X, angle = 90deg, global = true)
+  |> appearance(color = carbonBlack, metalness = 50, roughness = 40)
+frontClampSleeve = clone(unitCylinder)
+  |> scale(
+       x = 18,
+       y = 18,
+       z = 22,
+       global = false,
+     )
+  |> rotate(axis = X, angle = 90deg, global = true)
+  |> translate(y = -85mm, global = true)
+  |> appearance(color = hardwareBlack, metalness = 78, roughness = 34)
+rearClampSleeve = clone(frontClampSleeve)
+  |> translate(y = 170mm, global = true)
+
+export allBodies = [
+  crossbarTube,
+  frontClampSleeve,
+  rearClampSleeve
+]

@@ -1,0 +1,87 @@
+// Reference-matched agricultural quadcopter drone
+// Clean part-level assembly with compact propulsion, payload, landing gear, avionics, and spray hardware.
+@settings(defaultLengthUnit = mm, kclVersion = 2.0, experimentalFeatures = allow)
+
+import allBodies as upperShellSet from "upperFuselageShell.kcl"
+import allBodies as lowerShellSet from "lowerFuselageShell.kcl"
+import allBodies as chassisSet from "chassisAssembly.kcl"
+import allBodies as armSet from "quadArmAssembly.kcl"
+import allBodies as clampSet from "armClampPlacement.kcl"
+import allBodies as motorSet from "quadMotorAssembly.kcl"
+import allBodies as escSet from "quadEscAssembly.kcl"
+import allBodies as propellerSet from "quadPropellerAssembly.kcl"
+import allBodies as tankSet from "chemicalTank.kcl"
+import allBodies as tankCapSet from "tankCap.kcl"
+import allBodies as tankCradleSet from "tankCradle.kcl"
+import allBodies as pumpSet from "pumpModule.kcl"
+import allBodies as nozzleSet from "quadNozzleAssembly.kcl"
+import allBodies as plumbingSet from "sprayPlumbing.kcl"
+import allBodies as navigationSet from "navigationModule.kcl"
+import allBodies as cameraSet from "cameraModule.kcl"
+import allBodies as batterySet from "batteryPack.kcl"
+import allBodies as controllerSet from "controllerStack.kcl"
+import allBodies as landingGearSet from "landingGearAssembly.kcl"
+import allBodies as fastenerSet from "chassisFastenerAssembly.kcl"
+
+upperFuselage = upperShellSet
+lowerFuselage = lowerShellSet
+centralChassis = chassisSet
+arms = armSet
+armClamps = clampSet
+motors = motorSet
+escPods = escSet
+propellers = propellerSet
+
+navigationModule = navigationSet
+  |> translate(y = 22mm, z = 100mm, global = true)
+forwardCamera = cameraSet
+  |> translate(y = -177mm, z = -78mm, global = true)
+flightController = controllerSet
+  |> translate(y = -82mm, z = 18mm, global = true)
+mainBattery = batterySet
+  |> translate(y = 70mm, z = 25mm, global = true)
+
+chemicalTank = tankSet
+  |> translate(z = -180mm, global = true)
+tankCap = tankCapSet
+  |> rotate(axis = X, angle = 90deg, global = true)
+  |> translate(y = -132mm, z = -110mm, global = true)
+tankCradle = tankCradleSet
+  |> translate(z = -180mm, global = true)
+sprayPump = pumpSet
+  |> translate(
+       x = 175mm,
+       y = 55mm,
+       z = -166mm,
+       global = true,
+     )
+sprayPlumbing = plumbingSet
+sprayNozzles = nozzleSet
+
+landingGear = landingGearSet
+chassisFasteners = fastenerSet
+
+export agriculturalDroneAssembly = flatten([
+  upperFuselage,
+  lowerFuselage,
+  centralChassis,
+  arms,
+  armClamps,
+  motors,
+  escPods,
+  propellers,
+  navigationModule,
+  forwardCamera,
+  flightController,
+  mainBattery,
+  chemicalTank,
+  tankCap,
+  tankCradle,
+  sprayPump,
+  sprayPlumbing,
+  sprayNozzles,
+  landingGear,
+  chassisFasteners
+])
+
+agriculturalDroneAssembly

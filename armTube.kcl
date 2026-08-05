@@ -1,0 +1,30 @@
+// Carbon-fiber arm tube
+// Hollow structural boom centered at the origin with its longitudinal axis along X.
+@settings(defaultLengthUnit = mm, kclVersion = 2.0)
+
+import * from "parameters.kcl"
+
+armOuterSketch = sketch(on = YZ) {
+  outerCircle = circle(start = [var 21mm, var 0mm], center = [var 0mm, var 0mm])
+  coincident([outerCircle.center, ORIGIN])
+  horizontal([outerCircle.center, outerCircle.start])
+  diameter(outerCircle) == armTubeOuterDiameter
+}
+
+armInnerSketch = sketch(on = YZ) {
+  innerCircle = circle(start = [var 18mm, var 0mm], center = [var 0mm, var 0mm])
+  coincident([innerCircle.center, ORIGIN])
+  horizontal([innerCircle.center, innerCircle.start])
+  diameter(innerCircle) == armTubeInnerDiameter
+}
+
+armOuterRegion = region(segments = [armOuterSketch.outerCircle])
+armInnerRegion = region(segments = [armInnerSketch.innerCircle])
+armOuterBody = extrude(armOuterRegion, length = armTubeLength, symmetric = true)
+armInnerCutter = extrude(armInnerRegion, length = armTubeLength + 4mm, symmetric = true)
+
+export armTube = subtract(armOuterBody, tools = [armInnerCutter])
+  |> appearance(color = carbonBlack, metalness = 32, roughness = 48)
+
+hiddenArmOuterSketch = hide(armOuterSketch)
+hiddenArmInnerSketch = hide(armInnerSketch)

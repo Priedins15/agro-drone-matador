@@ -1,0 +1,128 @@
+// Flight controller electronics stack
+// Power board, autopilot, IMU isolation, telemetry board, heatsink, and standoffs.
+@settings(defaultLengthUnit = mm, kclVersion = 2.0)
+
+import unitBlock from "unitBlock.kcl"
+import unitCylinder from "unitCylinder.kcl"
+import * from "parameters.kcl"
+
+powerBoard = clone(unitBlock)
+  |> scale(
+       x = 190,
+       y = 150,
+       z = 5,
+       global = false,
+     )
+  |> translate(z = -44mm, global = true)
+  |> appearance(color = pcbGreen, metalness = 16, roughness = 58)
+autopilotBoard = clone(unitBlock)
+  |> scale(
+       x = 150,
+       y = 118,
+       z = 6,
+       global = false,
+     )
+  |> translate(z = -4mm, global = true)
+  |> appearance(color = "#2d3f57", metalness = 14, roughness = 56)
+telemetryBoard = clone(unitBlock)
+  |> scale(
+       x = 124,
+       y = 82,
+       z = 5,
+       global = false,
+     )
+  |> translate(z = 36mm, global = true)
+  |> appearance(color = pcbGreen, metalness = 16, roughness = 58)
+imuBlock = clone(unitBlock)
+  |> scale(
+       x = 54,
+       y = 54,
+       z = 30,
+       global = false,
+     )
+  |> translate(z = 16mm, global = true)
+  |> appearance(color = hardwareBlack, metalness = 22, roughness = 54)
+
+standoffSeed = clone(unitCylinder)
+  |> scale(
+       x = 9,
+       y = 9,
+       z = 82,
+       global = false,
+     )
+  |> translate(
+       x = -76mm,
+       y = -56mm,
+       z = -4mm,
+       global = true,
+     )
+  |> appearance(color = hardwareSteel, metalness = 86, roughness = 24)
+frontStandoffs = patternLinear3d(
+  standoffSeed,
+  instances = 2,
+  distance = 152mm,
+  axis = X,
+)
+rearStandoffSeed = clone(standoffSeed)
+  |> translate(y = 112mm, global = true)
+rearStandoffs = patternLinear3d(
+  rearStandoffSeed,
+  instances = 2,
+  distance = 152mm,
+  axis = X,
+)
+
+heatsinkBase = clone(unitBlock)
+  |> scale(
+       x = 110,
+       y = 74,
+       z = 8,
+       global = false,
+     )
+  |> translate(z = -64mm, global = true)
+  |> appearance(color = aluminumDark, metalness = 84, roughness = 28)
+heatsinkFinSeed = clone(unitBlock)
+  |> scale(
+       x = 6,
+       y = 68,
+       z = 22,
+       global = false,
+     )
+  |> translate(x = -45mm, z = -50mm, global = true)
+  |> appearance(color = aluminumDark, metalness = 84, roughness = 28)
+heatsinkFins = patternLinear3d(
+  heatsinkFinSeed,
+  instances = 10,
+  distance = 10mm,
+  axis = X,
+)
+
+connectorLeft = clone(unitBlock)
+  |> scale(
+       x = 36,
+       y = 18,
+       z = 18,
+       global = false,
+     )
+  |> translate(
+       x = -102mm,
+       y = -40mm,
+       z = -42mm,
+       global = true,
+     )
+  |> appearance(color = "#dedede", metalness = 10, roughness = 48)
+connectorRight = clone(connectorLeft)
+  |> translate(y = 80mm, global = true)
+
+export allBodies = [
+  powerBoard,
+  autopilotBoard,
+  telemetryBoard,
+  imuBlock,
+  frontStandoffs,
+  rearStandoffs,
+  heatsinkBase,
+  heatsinkFins,
+  connectorLeft,
+  connectorRight
+]

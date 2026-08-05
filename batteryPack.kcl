@@ -1,0 +1,119 @@
+// Compact high-voltage battery pack
+// Serviceable tray, lid, twelve cell cans, connector, fuse, and carry handle.
+@settings(defaultLengthUnit = mm, kclVersion = 2.0)
+
+import unitBlock from "unitBlock.kcl"
+import unitCylinder from "unitCylinder.kcl"
+import * from "parameters.kcl"
+
+batteryFloor = clone(unitBlock)
+  |> scale(
+       x = 216,
+       y = 122,
+       z = 8,
+       global = false,
+     )
+  |> translate(z = -38mm, global = true)
+  |> appearance(color = hardwareBlack, metalness = 32, roughness = 50)
+leftWall = clone(unitBlock)
+  |> scale(
+       x = 8,
+       y = 122,
+       z = 72,
+       global = false,
+     )
+  |> translate(x = -104mm, global = true)
+  |> appearance(color = hardwareBlack, metalness = 32, roughness = 50)
+rightWall = clone(leftWall)
+  |> translate(x = 208mm, global = true)
+frontWall = clone(unitBlock)
+  |> scale(
+       x = 200,
+       y = 8,
+       z = 72,
+       global = false,
+     )
+  |> translate(y = -57mm, global = true)
+  |> appearance(color = hardwareBlack, metalness = 32, roughness = 50)
+rearWall = clone(frontWall)
+  |> translate(y = 114mm, global = true)
+batteryLid = clone(unitBlock)
+  |> scale(
+       x = 216,
+       y = 122,
+       z = 8,
+       global = false,
+     )
+  |> translate(z = 38mm, global = true)
+  |> appearance(color = "#343a3e", metalness = 38, roughness = 46)
+
+cellSeed = clone(unitCylinder)
+  |> scale(
+       x = 26,
+       y = 26,
+       z = 60,
+       global = false,
+     )
+  |> translate(x = -75mm, y = -27mm, global = true)
+  |> appearance(color = "#4a7f61", metalness = 18, roughness = 54)
+cellRowFront = patternLinear3d(
+  cellSeed,
+  instances = 6,
+  distance = 30mm,
+  axis = X,
+)
+cellRearSeed = clone(cellSeed)
+  |> translate(y = 54mm, global = true)
+cellRowRear = patternLinear3d(
+  cellRearSeed,
+  instances = 6,
+  distance = 30mm,
+  axis = X,
+)
+
+powerConnector = clone(unitBlock)
+  |> scale(
+       x = 36,
+       y = 20,
+       z = 22,
+       global = false,
+     )
+  |> translate(y = -72mm, z = 8mm, global = true)
+  |> appearance(color = warningOrange, metalness = 10, roughness = 48)
+mainFuse = clone(unitBlock)
+  |> scale(
+       x = 28,
+       y = 14,
+       z = 14,
+       global = false,
+     )
+  |> translate(
+       x = 52mm,
+       y = -70mm,
+       z = 16mm,
+       global = true,
+     )
+  |> appearance(color = "#f0c643", metalness = 10, roughness = 44)
+carryHandle = clone(unitBlock)
+  |> scale(
+       x = 92,
+       y = 18,
+       z = 10,
+       global = false,
+     )
+  |> translate(z = 50mm, global = true)
+  |> appearance(color = hardwareBlack, metalness = 28, roughness = 54)
+
+export allBodies = [
+  batteryFloor,
+  leftWall,
+  rightWall,
+  frontWall,
+  rearWall,
+  batteryLid,
+  cellRowFront,
+  cellRowRear,
+  powerConnector,
+  mainFuse,
+  carryHandle
+]

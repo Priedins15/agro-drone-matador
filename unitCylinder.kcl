@@ -1,0 +1,14 @@
+// Unit cylinder primitive
+// Origin-centered one-millimeter cylinder with its axis along global Z.
+@settings(defaultLengthUnit = mm, kclVersion = 2.0)
+
+unitCylinderSketch = sketch(on = XY) {
+  outerCircle = circle(start = [var 0.5mm, var 0mm], center = [var 0mm, var 0mm])
+  coincident([outerCircle.center, ORIGIN])
+  horizontal([outerCircle.center, outerCircle.start])
+  diameter(outerCircle) == 1mm
+}
+
+unitCylinderRegion = region(segments = [unitCylinderSketch.outerCircle])
+export unitCylinder = extrude(unitCylinderRegion, length = 1mm, symmetric = true)
+hiddenUnitCylinderSketch = hide(unitCylinderSketch)

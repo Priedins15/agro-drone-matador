@@ -1,0 +1,43 @@
+// Chassis fastener set
+// Four independent socket-head bolt stacks located on the compact carbon plate.
+@settings(defaultLengthUnit = mm, kclVersion = 2.0)
+
+import allBodies as boltSource from "socketBolt.kcl"
+
+frontRightBolt = clone(boltSource)
+  |> translate(
+       x = 140mm,
+       y = -115mm,
+       z = 0mm,
+       global = true,
+     )
+frontLeftBolt = clone(boltSource)
+  |> translate(
+       x = -140mm,
+       y = -115mm,
+       z = 0mm,
+       global = true,
+     )
+rearRightBolt = clone(boltSource)
+  |> translate(
+       x = 140mm,
+       y = 115mm,
+       z = 0mm,
+       global = true,
+     )
+rearLeftBolt = clone(boltSource)
+  |> translate(
+       x = -140mm,
+       y = 115mm,
+       z = 0mm,
+       global = true,
+     )
+
+export allBodies = flatten([
+  frontRightBolt,
+  frontLeftBolt,
+  rearRightBolt,
+  rearLeftBolt
+])
+
+hide(boltSource)

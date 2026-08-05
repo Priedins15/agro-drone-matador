@@ -1,0 +1,140 @@
+// Reference-matched upper fuselage shell
+// Low hollow canopy with molded nose, shoulder fairings, service lid, and access pads.
+@settings(defaultLengthUnit = mm, kclVersion = 2.0, experimentalFeatures = allow)
+
+import unitBlock from "unitBlock.kcl"
+import unitSphere from "unitSphere.kcl"
+import * from "parameters.kcl"
+
+shellBaseSketch = sketch(on = offsetPlane(XY, offset = -18mm)) {
+  outline = circle(start = [var 170mm, var 0mm], center = [var 0mm, var 0mm])
+  coincident([outline.center, ORIGIN])
+  horizontal([outline.center, outline.start])
+  radius(outline) == 170mm
+}
+shellLowerSketch = sketch(on = offsetPlane(XY, offset = 10mm)) {
+  outline = circle(start = [var 195mm, var 0mm], center = [var 0mm, var 0mm])
+  coincident([outline.center, ORIGIN])
+  horizontal([outline.center, outline.start])
+  radius(outline) == 195mm
+}
+shellShoulderSketch = sketch(on = offsetPlane(XY, offset = 58mm)) {
+  outline = circle(start = [var 175mm, var 0mm], center = [var 0mm, var 0mm])
+  coincident([outline.center, ORIGIN])
+  horizontal([outline.center, outline.start])
+  radius(outline) == 175mm
+}
+shellCrownSketch = sketch(on = offsetPlane(XY, offset = 94mm)) {
+  outline = circle(start = [var 105mm, var 0mm], center = [var 0mm, var 0mm])
+  coincident([outline.center, ORIGIN])
+  horizontal([outline.center, outline.start])
+  radius(outline) == 105mm
+}
+
+shellBaseRegion = region(segments = [shellBaseSketch.outline])
+shellLowerRegion = region(segments = [shellLowerSketch.outline])
+shellShoulderRegion = region(segments = [shellShoulderSketch.outline])
+shellCrownRegion = region(segments = [shellCrownSketch.outline])
+shellRoundLoft = loft(
+  [
+    shellBaseRegion,
+    shellLowerRegion,
+    shellShoulderRegion,
+    shellCrownRegion
+  ],
+  vDegree = 3,
+  bezApproximateRational = true,
+)
+shellOuter = scale(
+  shellRoundLoft,
+  x = 1,
+  y = 0.78,
+  z = 1,
+  global = false,
+)
+shellInner = clone(shellOuter)
+  |> scale(
+       x = 0.90,
+       y = 0.88,
+       z = 0.78,
+       global = false,
+     )
+  |> translate(z = -7mm, global = true)
+bottomOpeningCutter = clone(unitBlock)
+  |> scale(
+       x = 450,
+       y = 360,
+       z = 90,
+       global = false,
+     )
+  |> translate(z = -55mm, global = true)
+mainCanopy = subtract(shellOuter, tools = [shellInner, bottomOpeningCutter])
+  |> appearance(color = shellWhite, roughness = 48, metalness = 4)
+
+forwardNoseFairing = clone(unitSphere)
+  |> scale(
+       x = 220,
+       y = 98,
+       z = 52,
+       global = false,
+     )
+  |> translate(y = -118mm, z = 30mm, global = true)
+  |> appearance(color = shellWhite, roughness = 48, metalness = 4)
+
+leftShoulderFairing = clone(unitSphere)
+  |> scale(
+       x = 112,
+       y = 166,
+       z = 56,
+       global = false,
+     )
+  |> translate(
+       x = -122mm,
+       y = -4mm,
+       z = 31mm,
+       global = true,
+     )
+  |> appearance(color = shellWhite, roughness = 48, metalness = 4)
+rightShoulderFairing = clone(leftShoulderFairing)
+  |> translate(x = 244mm, global = true)
+
+serviceLid = clone(unitBlock)
+  |> scale(
+       x = 150,
+       y = 108,
+       z = 8,
+       global = false,
+     )
+  |> translate(y = 12mm, z = 96mm, global = true)
+  |> appearance(color = shellShadow, roughness = 46, metalness = 8)
+leftAccessPad = clone(unitBlock)
+  |> scale(
+       x = 56,
+       y = 82,
+       z = 7,
+       global = false,
+     )
+  |> translate(
+       x = -73mm,
+       y = 13mm,
+       z = 104mm,
+       global = true,
+     )
+  |> appearance(color = hardwareBlack, roughness = 58, metalness = 18)
+rightAccessPad = clone(leftAccessPad)
+  |> translate(x = 146mm, global = true)
+
+export allBodies = [
+  mainCanopy,
+  forwardNoseFairing,
+  leftShoulderFairing,
+  rightShoulderFairing,
+  serviceLid,
+  leftAccessPad,
+  rightAccessPad
+]
+
+hide(shellBaseSketch)
+hide(shellLowerSketch)
+hide(shellShoulderSketch)
+hide(shellCrownSketch)

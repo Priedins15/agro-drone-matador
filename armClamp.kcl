@@ -1,0 +1,64 @@
+// Split arm clamp kit
+// Separate fitted collar, mounting foot, and compression lugs for 38 mm arm tubes.
+@settings(defaultLengthUnit = mm, kclVersion = 2.0)
+
+import unitBlock from "unitBlock.kcl"
+import * from "parameters.kcl"
+
+clampOuterSketch = sketch(on = YZ) {
+  outerCircle = circle(start = [var 26mm, var 0mm], center = [var 0mm, var 0mm])
+  coincident([outerCircle.center, ORIGIN])
+  horizontal([outerCircle.center, outerCircle.start])
+  diameter(outerCircle) == 52mm
+}
+clampBoreSketch = sketch(on = YZ) {
+  boreCircle = circle(start = [var 19.75mm, var 0mm], center = [var 0mm, var 0mm])
+  coincident([boreCircle.center, ORIGIN])
+  horizontal([boreCircle.center, boreCircle.start])
+  diameter(boreCircle) == 39.5mm
+}
+
+clampRingBlank = extrude(region(segments = [clampOuterSketch.outerCircle]), length = 42mm, symmetric = true)
+clampBoreCutter = extrude(region(segments = [clampBoreSketch.boreCircle]), length = 46mm, symmetric = true)
+clampRingBored = subtract(clampRingBlank, tools = [clampBoreCutter])
+splitCutter = clone(unitBlock)
+  |> scale(
+       x = 48,
+       y = 4,
+       z = 44,
+       global = false,
+     )
+  |> translate(z = 29mm, global = true)
+clampRing = subtract(clampRingBored, tools = [splitCutter])
+  |> appearance(color = hardwareBlack, metalness = 78, roughness = 34)
+
+clampFoot = clone(unitBlock)
+  |> scale(
+       x = 42,
+       y = 72,
+       z = 15,
+       global = false,
+     )
+  |> translate(z = -30mm, global = true)
+  |> appearance(color = hardwareBlack, metalness = 78, roughness = 34)
+clampLugLeft = clone(unitBlock)
+  |> scale(
+       x = 42,
+       y = 15,
+       z = 20,
+       global = false,
+     )
+  |> translate(y = -21mm, z = 17mm, global = true)
+  |> appearance(color = hardwareBlack, metalness = 78, roughness = 34)
+clampLugRight = clone(clampLugLeft)
+  |> translate(y = 42mm, global = true)
+
+export allBodies = [
+  clampRing,
+  clampFoot,
+  clampLugLeft,
+  clampLugRight
+]
+
+hide(clampOuterSketch)
+hide(clampBoreSketch)

@@ -1,0 +1,179 @@
+// Outrunner motor subassembly
+// Vented bell, stator, copper windings, bearings, shaft, adapter, plate, and fasteners.
+@settings(defaultLengthUnit = mm, kclVersion = 2.0)
+
+import unitBlock from "unitBlock.kcl"
+import unitCylinder from "unitCylinder.kcl"
+import * from "parameters.kcl"
+
+bellOuterSketch = sketch(on = XY) {
+  outerCircle = circle(start = [var 44mm, var 0mm], center = [var 0mm, var 0mm])
+  coincident([outerCircle.center, ORIGIN])
+  horizontal([outerCircle.center, outerCircle.start])
+  diameter(outerCircle) == 88mm
+}
+bellInnerSketch = sketch(on = XY) {
+  innerCircle = circle(start = [var 39mm, var 0mm], center = [var 0mm, var 0mm])
+  coincident([innerCircle.center, ORIGIN])
+  horizontal([innerCircle.center, innerCircle.start])
+  diameter(innerCircle) == 78mm
+}
+bellOuterRegion = region(segments = [bellOuterSketch.outerCircle])
+bellInnerRegion = region(segments = [bellInnerSketch.innerCircle])
+bellBlank = extrude(bellOuterRegion, length = 48mm, symmetric = true)
+bellCavity = extrude(bellInnerRegion, length = 52mm, symmetric = true)
+export motorBell = subtract(bellBlank, tools = [bellCavity])
+  |> translate(z = 4mm, global = true)
+  |> appearance(color = aluminumDark, metalness = 82, roughness = 30)
+
+export bellTopCap = clone(unitCylinder)
+  |> scale(
+       x = 88,
+       y = 88,
+       z = 6,
+       global = false,
+     )
+  |> translate(z = 31mm, global = true)
+  |> appearance(color = aluminumDark, metalness = 84, roughness = 28)
+export lowerMotorBase = clone(unitCylinder)
+  |> scale(
+       x = 72,
+       y = 72,
+       z = 10,
+       global = false,
+     )
+  |> translate(z = -30mm, global = true)
+  |> appearance(color = hardwareBlack, metalness = 78, roughness = 34)
+export motorMountPlate = clone(unitBlock)
+  |> scale(
+       x = 112,
+       y = 112,
+       z = 8,
+       global = false,
+     )
+  |> translate(z = -39mm, global = true)
+  |> appearance(color = hardwareBlack, metalness = 76, roughness = 36)
+
+export statorCore = clone(unitCylinder)
+  |> scale(
+       x = 58,
+       y = 58,
+       z = 24,
+       global = false,
+     )
+  |> translate(z = -6mm, global = true)
+  |> appearance(color = "#3b4247", metalness = 72, roughness = 36)
+export coilSeed = clone(unitBlock)
+  |> scale(
+       x = 14,
+       y = 8,
+       z = 26,
+       global = false,
+     )
+  |> translate(x = 30mm, z = -6mm, global = true)
+  |> appearance(color = copperColor, metalness = 78, roughness = 28)
+export statorWindings = patternCircular3d(
+  coilSeed,
+  instances = 12,
+  axis = Z,
+  center = [0mm, 0mm, -6mm],
+  arcDegrees = 360deg,
+  rotateDuplicates = true,
+)
+
+export motorShaft = clone(unitCylinder)
+  |> scale(
+       x = 10,
+       y = 10,
+       z = 96,
+       global = false,
+     )
+  |> translate(z = 8mm, global = true)
+  |> appearance(color = hardwareSteel, metalness = 92, roughness = 18)
+export lowerBearing = clone(unitCylinder)
+  |> scale(
+       x = 24,
+       y = 24,
+       z = 8,
+       global = false,
+     )
+  |> translate(z = -23mm, global = true)
+  |> appearance(color = hardwareSteel, metalness = 90, roughness = 20)
+export upperBearing = clone(lowerBearing)
+  |> translate(z = 46mm, global = true)
+export propAdapter = clone(unitCylinder)
+  |> scale(
+       x = 30,
+       y = 30,
+       z = 18,
+       global = false,
+     )
+  |> translate(z = 42mm, global = true)
+  |> appearance(color = hardwareSteel, metalness = 90, roughness = 20)
+export propRetainingNut = clone(unitCylinder)
+  |> scale(
+       x = 24,
+       y = 24,
+       z = 10,
+       global = false,
+     )
+  |> translate(z = 56mm, global = true)
+  |> appearance(color = hardwareSteel, metalness = 92, roughness = 18)
+
+export ventFinSeed = clone(unitBlock)
+  |> scale(
+       x = 5,
+       y = 2.5,
+       z = 28,
+       global = false,
+     )
+  |> translate(x = 45mm, z = 4mm, global = true)
+  |> appearance(color = "#171b1d", metalness = 58, roughness = 42)
+export bellVentFins = patternCircular3d(
+  ventFinSeed,
+  instances = 12,
+  axis = Z,
+  center = [0mm, 0mm, 4mm],
+  arcDegrees = 360deg,
+  rotateDuplicates = true,
+)
+
+export mountScrewSeed = clone(unitCylinder)
+  |> scale(
+       x = 8,
+       y = 8,
+       z = 6,
+       global = false,
+     )
+  |> translate(x = 40mm, z = -45mm, global = true)
+  |> appearance(color = hardwareSteel, metalness = 90, roughness = 20)
+export motorMountScrews = patternCircular3d(
+  mountScrewSeed,
+  instances = 4,
+  axis = Z,
+  center = [0mm, 0mm, -45mm],
+  arcDegrees = 360deg,
+  rotateDuplicates = false,
+)
+
+export allBodies = flatten([
+  motorBell,
+  bellTopCap,
+  lowerMotorBase,
+  motorMountPlate,
+  statorCore,
+  statorWindings,
+  motorShaft,
+  lowerBearing,
+  upperBearing,
+  propAdapter,
+  propRetainingNut,
+  bellVentFins,
+  motorMountScrews
+])
+
+hiddenBellOuterSketch = hide(bellOuterSketch)
+hiddenBellInnerSketch = hide(bellInnerSketch)
+hiddenStatorWindings = hide(statorWindings)
+hiddenBellVentFins = hide(bellVentFins)
+hiddenMotorMountScrews = hide(motorMountScrews)

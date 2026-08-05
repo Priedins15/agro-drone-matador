@@ -1,0 +1,41 @@
+// Tank interface review assembly
+// Central chassis, sealed tank, structural cradle, rail-mounted pump, routed plumbing, and landing gear.
+@settings(defaultLengthUnit = mm, kclVersion = 2.0, experimentalFeatures = allow)
+
+import allBodies as chassisSet from "chassisAssembly.kcl"
+import allBodies as tankSet from "chemicalTank.kcl"
+import allBodies as tankCapSet from "tankCap.kcl"
+import allBodies as cradleSet from "tankCradle.kcl"
+import allBodies as pumpSet from "pumpModule.kcl"
+import allBodies as plumbingSet from "sprayPlumbing.kcl"
+import allBodies as landingSet from "landingGearAssembly.kcl"
+
+centralChassis = chassisSet
+chemicalTank = tankSet
+  |> translate(z = -180mm, global = true)
+tankCap = tankCapSet
+  |> rotate(axis = X, angle = 90deg, global = true)
+  |> translate(y = -132mm, z = -110mm, global = true)
+tankCradle = cradleSet
+  |> translate(z = -180mm, global = true)
+sprayPump = pumpSet
+  |> translate(
+       x = 175mm,
+       y = 55mm,
+       z = -166mm,
+       global = true,
+     )
+sprayPlumbing = plumbingSet
+landingGear = landingSet
+
+export tankInterfaceReview = flatten([
+  centralChassis,
+  chemicalTank,
+  tankCap,
+  tankCradle,
+  sprayPump,
+  sprayPlumbing,
+  landingGear
+])
+
+tankInterfaceReview

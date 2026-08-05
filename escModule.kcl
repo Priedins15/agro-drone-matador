@@ -1,0 +1,103 @@
+// Compact electronic speed controller pod
+// Sealed case, heatsink, capacitors, phase leads, mounting ears, and status lamp.
+@settings(defaultLengthUnit = mm, kclVersion = 2.0)
+
+import unitBlock from "unitBlock.kcl"
+import unitCylinder from "unitCylinder.kcl"
+import * from "parameters.kcl"
+
+export escCase = clone(unitBlock)
+  |> scale(
+       x = 68,
+       y = 42,
+       z = 20,
+       global = false,
+     )
+  |> appearance(color = hardwareBlack, metalness = 42, roughness = 46)
+export escTopPlate = clone(unitBlock)
+  |> scale(
+       x = 64,
+       y = 38,
+       z = 3,
+       global = false,
+     )
+  |> translate(z = 11.5mm, global = true)
+  |> appearance(color = aluminumDark, metalness = 82, roughness = 28)
+export finSeed = clone(unitBlock)
+  |> scale(
+       x = 52,
+       y = 2.2,
+       z = 9,
+       global = false,
+     )
+  |> translate(y = -15mm, z = 16mm, global = true)
+  |> appearance(color = aluminumDark, metalness = 84, roughness = 28)
+export heatsinkFins = patternLinear3d(
+  finSeed,
+  instances = 8,
+  distance = 4.3mm,
+  axis = Y,
+)
+export capacitorLeft = clone(unitCylinder)
+  |> scale(
+       x = 12,
+       y = 12,
+       z = 22,
+       global = false,
+     )
+  |> rotate(axis = Y, angle = 90deg, global = true)
+  |> translate(x = -40mm, y = -9mm, global = true)
+  |> appearance(color = "#30363a", metalness = 20, roughness = 52)
+export capacitorRight = clone(capacitorLeft)
+  |> translate(y = 18mm, global = true)
+export phaseLeadSeed = clone(unitCylinder)
+  |> scale(
+       x = 4.5,
+       y = 4.5,
+       z = 50,
+       global = false,
+     )
+  |> rotate(axis = Y, angle = 90deg, global = true)
+  |> translate(x = 56mm, y = -11.5mm, global = true)
+  |> appearance(color = "#1b1c1d", roughness = 68)
+export phaseLeads = patternLinear3d(
+  phaseLeadSeed,
+  instances = 3,
+  distance = 11.5mm,
+  axis = Y,
+)
+export mountEarLeft = clone(unitBlock)
+  |> scale(
+       x = 13,
+       y = 55,
+       z = 4,
+       global = false,
+     )
+  |> translate(x = -34.5mm, z = -12mm, global = true)
+  |> appearance(color = hardwareBlack, metalness = 58, roughness = 42)
+export mountEarRight = clone(mountEarLeft)
+  |> translate(x = 69mm, global = true)
+export statusLed = clone(unitCylinder)
+  |> scale(
+       x = 4,
+       y = 4,
+       z = 1.5,
+       global = false,
+     )
+  |> translate(x = 20mm, z = 14mm, global = true)
+  |> appearance(color = "#2bcf62", roughness = 18)
+
+export allBodies = flatten([
+  escCase,
+  escTopPlate,
+  heatsinkFins,
+  capacitorLeft,
+  capacitorRight,
+  phaseLeads,
+  mountEarLeft,
+  mountEarRight,
+  statusLed
+])
+
+hide(heatsinkFins)
+hide(phaseLeads)

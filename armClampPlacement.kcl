@@ -1,0 +1,85 @@
+// Eight arm-clamp placement subassembly
+// Split collars locate every tube at the chassis and motor-support stations.
+@settings(defaultLengthUnit = mm, kclVersion = 2.0)
+
+import allBodies as clampSource from "armClamp.kcl"
+import * from "parameters.kcl"
+
+frontRightInnerClamp = clone(clampSource)
+  |> rotate(axis = Z, angle = -armYaw, global = true)
+  |> translate(
+       x = innerClampX,
+       y = -innerClampY,
+       z = armZ,
+       global = true,
+     )
+frontLeftInnerClamp = clone(clampSource)
+  |> rotate(axis = Z, angle = -150.312deg, global = true)
+  |> translate(
+       x = -innerClampX,
+       y = -innerClampY,
+       z = armZ,
+       global = true,
+     )
+rearRightInnerClamp = clone(clampSource)
+  |> rotate(axis = Z, angle = armYaw, global = true)
+  |> translate(
+       x = innerClampX,
+       y = innerClampY,
+       z = armZ,
+       global = true,
+     )
+rearLeftInnerClamp = clone(clampSource)
+  |> rotate(axis = Z, angle = 150.312deg, global = true)
+  |> translate(
+       x = -innerClampX,
+       y = innerClampY,
+       z = armZ,
+       global = true,
+     )
+
+frontRightOuterClamp = clone(clampSource)
+  |> rotate(axis = Z, angle = -armYaw, global = true)
+  |> translate(
+       x = outerClampX,
+       y = -outerClampY,
+       z = armZ,
+       global = true,
+     )
+frontLeftOuterClamp = clone(clampSource)
+  |> rotate(axis = Z, angle = -150.312deg, global = true)
+  |> translate(
+       x = -outerClampX,
+       y = -outerClampY,
+       z = armZ,
+       global = true,
+     )
+rearRightOuterClamp = clone(clampSource)
+  |> rotate(axis = Z, angle = armYaw, global = true)
+  |> translate(
+       x = outerClampX,
+       y = outerClampY,
+       z = armZ,
+       global = true,
+     )
+rearLeftOuterClamp = clone(clampSource)
+  |> rotate(axis = Z, angle = 150.312deg, global = true)
+  |> translate(
+       x = -outerClampX,
+       y = outerClampY,
+       z = armZ,
+       global = true,
+     )
+
+export allBodies = flatten([
+  frontRightInnerClamp,
+  frontLeftInnerClamp,
+  rearRightInnerClamp,
+  rearLeftInnerClamp,
+  frontRightOuterClamp,
+  frontLeftOuterClamp,
+  rearRightOuterClamp,
+  rearLeftOuterClamp
+])
+
+hide(clampSource)

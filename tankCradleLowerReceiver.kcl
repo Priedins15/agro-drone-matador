@@ -1,0 +1,80 @@
+// Lower tank-cradle receiver joint
+// Lightweight two-way socket node for a 14 mm upright and 18 x 10 mm lower crossmember.
+@settings(defaultLengthUnit = mm, kclVersion = 2.0)
+
+import unitBlock from "unitBlock.kcl"
+import unitCylinder from "unitCylinder.kcl"
+import * from "parameters.kcl"
+
+horizontalSleeveOuter = clone(unitBlock)
+  |> scale(
+       x = 32,
+       y = 24.6,
+       z = 16.6,
+       global = false,
+     )
+  |> translate(x = 14mm, global = true)
+verticalSleeveOuter = clone(unitBlock)
+  |> scale(
+       x = 20.6,
+       y = 20.6,
+       z = 32,
+       global = false,
+     )
+  |> translate(z = 14mm, global = true)
+frontDiagonalRib = clone(unitBlock)
+  |> scale(
+       x = 24,
+       y = 3,
+       z = 4,
+       global = false,
+     )
+  |> rotate(axis = Y, angle = -45deg, global = true)
+  |> translate(
+       x = 7mm,
+       y = -9mm,
+       z = 10mm,
+       global = true,
+     )
+rearDiagonalRib = clone(frontDiagonalRib)
+  |> translate(y = 18mm, global = true)
+
+receiverOuter = horizontalSleeveOuter + verticalSleeveOuter + frontDiagonalRib + rearDiagonalRib
+
+horizontalSocketCutter = clone(unitBlock)
+  |> scale(
+       x = 34,
+       y = 18.6,
+       z = 10.6,
+       global = false,
+     )
+  |> translate(x = 16mm, global = true)
+verticalSocketCutter = clone(unitBlock)
+  |> scale(
+       x = 14.6,
+       y = 14.6,
+       z = 34,
+       global = false,
+     )
+  |> translate(z = 16mm, global = true)
+horizontalBoltHoleCutter = clone(unitCylinder)
+  |> scale(
+       x = 5.5,
+       y = 5.5,
+       z = 30,
+       global = false,
+     )
+  |> rotate(axis = X, angle = 90deg, global = true)
+  |> translate(x = 21mm, global = true)
+verticalBoltHoleCutter = clone(unitCylinder)
+  |> scale(
+       x = 5.5,
+       y = 5.5,
+       z = 30,
+       global = false,
+     )
+  |> rotate(axis = Y, angle = 90deg, global = true)
+  |> translate(z = 21mm, global = true)
+
+export lowerReceiver = receiverOuter - horizontalSocketCutter - verticalSocketCutter - horizontalBoltHoleCutter - verticalBoltHoleCutter
+  |> appearance(color = hardwareSteel, metalness = 84, roughness = 28)

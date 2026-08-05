@@ -1,0 +1,151 @@
+// Compact central chassis assembly
+// Reference-matched carbon plates, arm-root beams, standoffs, and equipment rails.
+@settings(defaultLengthUnit = mm, kclVersion = 2.0)
+
+import unitBlock from "unitBlock.kcl"
+import unitCylinder from "unitCylinder.kcl"
+import * from "parameters.kcl"
+
+upperCarbonPlate = clone(unitBlock)
+  |> scale(
+       x = 350,
+       y = 300,
+       z = 10,
+       global = false,
+     )
+  |> translate(z = -5mm, global = true)
+  |> appearance(color = carbonBlack, metalness = 34, roughness = 46)
+lowerCarbonPlate = clone(unitBlock)
+  |> scale(
+       x = 300,
+       y = 250,
+       z = 8,
+       global = false,
+     )
+  |> translate(z = -55mm, global = true)
+  |> appearance(color = carbonBlack, metalness = 34, roughness = 46)
+centralSpine = clone(unitBlock)
+  |> scale(
+       x = 72,
+       y = 220,
+       z = 36,
+       global = false,
+     )
+  |> translate(z = -30mm, global = true)
+  |> appearance(color = aluminumDark, metalness = 78, roughness = 34)
+
+frontRightBeam = clone(unitBlock)
+  |> scale(
+       x = 190,
+       y = 54,
+       z = 34,
+       global = false,
+     )
+  |> rotate(axis = Z, angle = -armYaw, global = true)
+  |> translate(
+       x = 83mm,
+       y = -47mm,
+       z = 12mm,
+       global = true,
+     )
+  |> appearance(color = hardwareBlack, metalness = 72, roughness = 38)
+frontLeftBeam = clone(unitBlock)
+  |> scale(
+       x = 190,
+       y = 54,
+       z = 34,
+       global = false,
+     )
+  |> rotate(axis = Z, angle = -150.312deg, global = true)
+  |> translate(
+       x = -83mm,
+       y = -47mm,
+       z = 12mm,
+       global = true,
+     )
+  |> appearance(color = hardwareBlack, metalness = 72, roughness = 38)
+rearRightBeam = clone(unitBlock)
+  |> scale(
+       x = 190,
+       y = 54,
+       z = 34,
+       global = false,
+     )
+  |> rotate(axis = Z, angle = armYaw, global = true)
+  |> translate(
+       x = 83mm,
+       y = 47mm,
+       z = 12mm,
+       global = true,
+     )
+  |> appearance(color = hardwareBlack, metalness = 72, roughness = 38)
+rearLeftBeam = clone(unitBlock)
+  |> scale(
+       x = 190,
+       y = 54,
+       z = 34,
+       global = false,
+     )
+  |> rotate(axis = Z, angle = 150.312deg, global = true)
+  |> translate(
+       x = -83mm,
+       y = 47mm,
+       z = 12mm,
+       global = true,
+     )
+  |> appearance(color = hardwareBlack, metalness = 72, roughness = 38)
+
+standoffSeed = clone(unitCylinder)
+  |> scale(
+       x = 14,
+       y = 14,
+       z = 50,
+       global = false,
+     )
+  |> translate(
+       x = -125mm,
+       y = -95mm,
+       z = -30mm,
+       global = true,
+     )
+  |> appearance(color = hardwareSteel, metalness = 88, roughness = 24)
+frontStandoffs = patternLinear3d(
+  standoffSeed,
+  instances = 2,
+  distance = 250mm,
+  axis = X,
+)
+rearStandoffSeed = clone(standoffSeed)
+  |> translate(y = 190mm, global = true)
+rearStandoffs = patternLinear3d(
+  rearStandoffSeed,
+  instances = 2,
+  distance = 250mm,
+  axis = X,
+)
+
+leftEquipmentRail = clone(unitBlock)
+  |> scale(
+       x = 16,
+       y = 200,
+       z = 22,
+       global = false,
+     )
+  |> translate(x = -98mm, z = -30mm, global = true)
+  |> appearance(color = aluminumDark, metalness = 80, roughness = 32)
+rightEquipmentRail = clone(leftEquipmentRail)
+  |> translate(x = 196mm, global = true)
+
+export allBodies = [
+  upperCarbonPlate,
+  lowerCarbonPlate,
+  centralSpine,
+  frontRightBeam,
+  frontLeftBeam,
+  rearRightBeam,
+  rearLeftBeam,
+  frontStandoffs,
+  rearStandoffs,
+  leftEquipmentRail,
+  rightEquipmentRail
+]

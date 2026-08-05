@@ -1,0 +1,73 @@
+// Exploded central-stack review
+// Inspection aid for hidden fuselage, avionics, tank, pump, and landing interfaces; main.kcl remains assembled.
+@settings(defaultLengthUnit = mm, kclVersion = 2.0, experimentalFeatures = allow)
+
+import allBodies as upperShellSet from "upperFuselageShell.kcl"
+import allBodies as lowerShellSet from "lowerFuselageShell.kcl"
+import allBodies as chassisSet from "chassisAssembly.kcl"
+import allBodies as navigationSet from "navigationModule.kcl"
+import allBodies as cameraSet from "cameraModule.kcl"
+import allBodies as batterySet from "batteryPack.kcl"
+import allBodies as controllerSet from "controllerStack.kcl"
+import allBodies as tankSet from "chemicalTank.kcl"
+import allBodies as tankCapSet from "tankCap.kcl"
+import allBodies as tankCradleSet from "tankCradle.kcl"
+import allBodies as pumpSet from "pumpModule.kcl"
+import allBodies as landingGearSet from "landingGearAssembly.kcl"
+
+navigationExploded = navigationSet
+  |> translate(y = 35mm, z = 780mm, global = true)
+upperShellExploded = upperShellSet
+  |> translate(z = 560mm, global = true)
+lowerShellExploded = lowerShellSet
+  |> translate(z = 350mm, global = true)
+chassisExploded = chassisSet
+  |> translate(z = 170mm, global = true)
+controllerExploded = controllerSet
+  |> translate(
+       x = -250mm,
+       y = -40mm,
+       z = 90mm,
+       global = true,
+     )
+batteryExploded = batterySet
+  |> translate(
+       x = 250mm,
+       y = 90mm,
+       z = 90mm,
+       global = true,
+     )
+cameraExploded = cameraSet
+  |> translate(y = -520mm, z = 180mm, global = true)
+tankCapExploded = tankCapSet
+  |> translate(z = -40mm, global = true)
+tankExploded = tankSet
+  |> translate(z = -300mm, global = true)
+tankCradleExploded = tankCradleSet
+  |> translate(z = -300mm, global = true)
+pumpExploded = pumpSet
+  |> translate(
+       x = 330mm,
+       y = 25mm,
+       z = -300mm,
+       global = true,
+     )
+landingGearExploded = landingGearSet
+  |> translate(z = -300mm, global = true)
+
+export allBodies = flatten([
+  navigationExploded,
+  upperShellExploded,
+  lowerShellExploded,
+  chassisExploded,
+  controllerExploded,
+  batteryExploded,
+  cameraExploded,
+  tankCapExploded,
+  tankExploded,
+  tankCradleExploded,
+  pumpExploded,
+  landingGearExploded
+])
+
+allBodies

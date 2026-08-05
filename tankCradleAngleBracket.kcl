@@ -1,0 +1,99 @@
+// One-piece structural angle bracket for the spray tank cradle.
+// 6 mm steel flanges, 30 mm bracket width, and orthogonal through-holes.
+@settings(defaultLengthUnit = mm, kclVersion = 2.0)
+
+import unitCylinder from "unitCylinder.kcl"
+import * from "parameters.kcl"
+
+angleProfileSketch = sketch(on = XZ) {
+  bottomFlangeEdge = line(start = [var 0mm, var 0mm], end = [var 32mm, var 0mm])
+  outerEndEdge = line(start = [var 32mm, var 0mm], end = [var 32mm, var 6mm])
+  innerFlangeEdge = line(start = [var 32mm, var 6mm], end = [var 6mm, var 6mm])
+  innerUprightEdge = line(start = [var 6mm, var 6mm], end = [var 6mm, var 30mm])
+  topFlangeEdge = line(start = [var 6mm, var 30mm], end = [var 0mm, var 30mm])
+  outerUprightEdge = line(start = [var 0mm, var 30mm], end = [var 0mm, var 0mm])
+
+  coincident([
+    bottomFlangeEdge.end,
+    outerEndEdge.start
+  ])
+  coincident([
+    outerEndEdge.end,
+    innerFlangeEdge.start
+  ])
+  coincident([
+    innerFlangeEdge.end,
+    innerUprightEdge.start
+  ])
+  coincident([
+    innerUprightEdge.end,
+    topFlangeEdge.start
+  ])
+  coincident([
+    topFlangeEdge.end,
+    outerUprightEdge.start
+  ])
+  coincident([
+    outerUprightEdge.end,
+    bottomFlangeEdge.start
+  ])
+
+  horizontal(bottomFlangeEdge)
+  vertical(outerEndEdge)
+  horizontal(innerFlangeEdge)
+  vertical(innerUprightEdge)
+  horizontal(topFlangeEdge)
+  vertical(outerUprightEdge)
+
+  horizontalDistance([ORIGIN, bottomFlangeEdge.start]) == 0mm
+  verticalDistance([ORIGIN, bottomFlangeEdge.start]) == 0mm
+  horizontalDistance([
+  bottomFlangeEdge.start,
+  bottomFlangeEdge.end
+]) == 32mm
+  verticalDistance([outerEndEdge.start, outerEndEdge.end]) == 6mm
+  verticalDistance([
+  innerUprightEdge.start,
+  innerUprightEdge.end
+]) == 24mm
+  horizontalDistance([topFlangeEdge.end, topFlangeEdge.start]) == 6mm
+}
+
+angleProfileRegion = region(
+  segments = [
+    angleProfileSketch.bottomFlangeEdge,
+    angleProfileSketch.outerEndEdge,
+    angleProfileSketch.innerFlangeEdge,
+    angleProfileSketch.innerUprightEdge,
+    angleProfileSketch.topFlangeEdge,
+    angleProfileSketch.outerUprightEdge
+  ],
+  intersectionIndex = -1,
+  direction = CCW,
+)
+
+angleBracketBlank = extrude(angleProfileRegion, length = 30mm, symmetric = true)
+
+horizontalFlangeHoleCutter = clone(unitCylinder)
+  |> scale(
+       x = 6,
+       y = 6,
+       z = 12,
+       global = false,
+     )
+  |> translate(x = 18mm, z = 3mm, global = true)
+
+uprightFlangeHoleCutter = clone(unitCylinder)
+  |> scale(
+       x = 6,
+       y = 6,
+       z = 12,
+       global = false,
+     )
+  |> rotate(axis = Y, angle = 90deg, global = true)
+  |> translate(x = 3mm, z = 18mm, global = true)
+
+export angleBracket = angleBracketBlank - horizontalFlangeHoleCutter - uprightFlangeHoleCutter
+  |> appearance(color = hardwareSteel, metalness = 88, roughness = 24)
+
+hiddenAngleProfileSketch = hide(angleProfileSketch)

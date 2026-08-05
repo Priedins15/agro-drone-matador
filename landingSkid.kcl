@@ -1,0 +1,63 @@
+// Reference-matched landing hoop
+// Splayed transverse U-hoop with tangent lower bends and a wide stable stance.
+@settings(defaultLengthUnit = mm, kclVersion = 2.0, experimentalFeatures = allow)
+
+import * from "parameters.kcl"
+
+skidTubeSketch = sketch(on = XY) {
+  tubeCircle = circle(start = [var 5.5mm, var 0mm], center = [var 0mm, var 0mm])
+  coincident([tubeCircle.center, ORIGIN])
+  horizontal([tubeCircle.center, tubeCircle.start])
+  diameter(tubeCircle) == 11mm
+}
+
+skidPathSketch = sketch(on = XZ) {
+  leftLeg = line(start = [var -120mm, var 0mm], end = [var -168mm, var -192mm])
+  leftBend = arc(start = [var -168mm, var -192mm], end = [var -129.194mm, var -241.701mm], center = [var -129.194mm, var -201.701mm])
+  bottomRunner = line(start = [var -129.194mm, var -241.701mm], end = [var 129.194mm, var -241.701mm])
+  rightBend = arc(start = [var 129.194mm, var -241.701mm], end = [var 168mm, var -192mm], center = [var 129.194mm, var -201.701mm])
+  rightLeg = line(start = [var 168mm, var -192mm], end = [var 120mm, var 0mm])
+
+  coincident([leftLeg.end, leftBend.start])
+  coincident([leftBend.end, bottomRunner.start])
+  coincident([bottomRunner.end, rightBend.start])
+  coincident([rightBend.end, rightLeg.start])
+
+  horizontalDistance([ORIGIN, leftLeg.start]) == -120mm
+  verticalDistance([ORIGIN, leftLeg.start]) == 0mm
+  horizontalDistance([leftLeg.start, leftLeg.end]) == -48mm
+  verticalDistance([leftLeg.start, leftLeg.end]) == -192mm
+  radius(leftBend) == 40mm
+  tangent([leftLeg, leftBend])
+  tangent([leftBend, bottomRunner])
+  horizontal(bottomRunner)
+  distance([bottomRunner.start, bottomRunner.end]) == 258.388mm
+  equalRadius([leftBend, rightBend])
+  tangent([bottomRunner, rightBend])
+  tangent([rightBend, rightLeg])
+  horizontalDistance([rightLeg.start, rightLeg.end]) == -48mm
+  verticalDistance([rightLeg.start, rightLeg.end]) == 192mm
+  horizontal([leftLeg.start, rightLeg.end])
+}
+
+skidTubeRegion = region(segments = [skidTubeSketch.tubeCircle])
+skidPath = [
+  skidPathSketch.leftLeg,
+  skidPathSketch.leftBend,
+  skidPathSketch.bottomRunner,
+  skidPathSketch.rightBend,
+  skidPathSketch.rightLeg
+]
+
+export landingSkid = sweep(
+  skidTubeRegion,
+  path = skidPath,
+  sectional = true,
+  translateProfileToPath = true,
+  orientProfilePerpendicular = true,
+  version = 2,
+)
+  |> appearance(color = carbonBlack, metalness = 52, roughness = 38)
+
+hide(skidTubeSketch)
+hide(skidPathSketch)

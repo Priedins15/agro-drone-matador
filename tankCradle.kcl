@@ -1,0 +1,756 @@
+// Structural tank cradle assembly
+// Receiver-connected perimeter rails, lower cage, compliant tank pads, hangers, and transverse fasteners.
+@settings(defaultLengthUnit = mm, kclVersion = 2.0)
+
+import unitBlock from "unitBlock.kcl"
+import unitCylinder from "unitCylinder.kcl"
+import lowerReceiver from "tankCradleLowerReceiver.kcl"
+import upperReceiver from "tankCradleUpperReceiver.kcl"
+import cornerReceiver from "tankCradleCornerReceiver.kcl"
+import * from "parameters.kcl"
+
+leftRailBlank = clone(unitBlock)
+  |> scale(
+       x = 18,
+       y = 238,
+       z = 22,
+       global = false,
+     )
+  |> translate(x = -112mm, z = 18mm, global = true)
+rightRailBlank = clone(leftRailBlank)
+  |> translate(x = 224mm, global = true)
+frontCrossTieBlank = clone(unitBlock)
+  |> scale(
+       x = 224,
+       y = 8,
+       z = 22,
+       global = false,
+     )
+  |> translate(y = -119mm, z = 18mm, global = true)
+rearCrossTieBlank = clone(frontCrossTieBlank)
+  |> translate(y = 238mm, global = true)
+frontBottomCrossmemberBlank = clone(unitBlock)
+  |> scale(
+       x = 224,
+       y = 18,
+       z = 10,
+       global = false,
+     )
+  |> translate(y = -24mm, z = -128mm, global = true)
+rearBottomCrossmemberBlank = clone(frontBottomCrossmemberBlank)
+  |> translate(y = 48mm, global = true)
+
+frontLeftLowerLegBlank = clone(unitBlock)
+  |> scale(
+       x = 14,
+       y = 14,
+       z = 135,
+       global = false,
+     )
+  |> translate(
+       x = -112mm,
+       y = -24mm,
+       z = -60.5mm,
+       global = true,
+     )
+frontRightLowerLegBlank = clone(frontLeftLowerLegBlank)
+  |> translate(x = 224mm, global = true)
+rearLeftLowerLegBlank = clone(frontLeftLowerLegBlank)
+  |> translate(y = 48mm, global = true)
+rearRightLowerLegBlank = clone(frontRightLowerLegBlank)
+  |> translate(y = 48mm, global = true)
+
+frontLeftUpperRailHole = clone(unitCylinder)
+  |> scale(
+       x = 5.8,
+       y = 5.8,
+       z = 34,
+       global = false,
+     )
+  |> rotate(axis = Y, angle = 90deg, global = true)
+  |> translate(
+       x = -112mm,
+       y = -24mm,
+       z = 18mm,
+       global = true,
+     )
+rearLeftUpperRailHole = clone(frontLeftUpperRailHole)
+  |> translate(y = 48mm, global = true)
+frontRightUpperRailHole = clone(frontLeftUpperRailHole)
+  |> translate(x = 224mm, global = true)
+rearRightUpperRailHole = clone(frontRightUpperRailHole)
+  |> translate(y = 48mm, global = true)
+frontLeftCornerRailHole = clone(unitCylinder)
+  |> scale(
+       x = 5.8,
+       y = 5.8,
+       z = 34,
+       global = false,
+     )
+  |> translate(
+       x = -112mm,
+       y = -97mm,
+       z = 18mm,
+       global = true,
+     )
+rearLeftCornerRailHole = clone(frontLeftCornerRailHole)
+  |> translate(y = 194mm, global = true)
+frontRightCornerRailHole = clone(frontLeftCornerRailHole)
+  |> translate(x = 224mm, global = true)
+rearRightCornerRailHole = clone(frontRightCornerRailHole)
+  |> translate(y = 194mm, global = true)
+leftRail = leftRailBlank - frontLeftUpperRailHole - rearLeftUpperRailHole - frontLeftCornerRailHole - rearLeftCornerRailHole
+  |> appearance(color = hardwareBlack, metalness = 72, roughness = 38)
+rightRail = rightRailBlank - frontRightUpperRailHole - rearRightUpperRailHole - frontRightCornerRailHole - rearRightCornerRailHole
+  |> appearance(color = hardwareBlack, metalness = 72, roughness = 38)
+
+frontLeftCrossTieHole = clone(unitCylinder)
+  |> scale(
+       x = 5.8,
+       y = 5.8,
+       z = 34,
+       global = false,
+     )
+  |> translate(
+       x = -90mm,
+       y = -119mm,
+       z = 18mm,
+       global = true,
+     )
+frontRightCrossTieHole = clone(frontLeftCrossTieHole)
+  |> translate(x = 180mm, global = true)
+rearLeftCrossTieHole = clone(frontLeftCrossTieHole)
+  |> translate(y = 238mm, global = true)
+rearRightCrossTieHole = clone(frontRightCrossTieHole)
+  |> translate(y = 238mm, global = true)
+frontCrossTie = frontCrossTieBlank - frontLeftCrossTieHole - frontRightCrossTieHole
+  |> appearance(color = hardwareBlack, metalness = 72, roughness = 38)
+rearCrossTie = rearCrossTieBlank - rearLeftCrossTieHole - rearRightCrossTieHole
+  |> appearance(color = hardwareBlack, metalness = 72, roughness = 38)
+
+frontLeftBottomCrossHole = clone(unitCylinder)
+  |> scale(
+       x = 5.8,
+       y = 5.8,
+       z = 34,
+       global = false,
+     )
+  |> rotate(axis = X, angle = 90deg, global = true)
+  |> translate(
+       x = -91mm,
+       y = -24mm,
+       z = -128mm,
+       global = true,
+     )
+frontRightBottomCrossHole = clone(frontLeftBottomCrossHole)
+  |> translate(x = 182mm, global = true)
+rearLeftBottomCrossHole = clone(frontLeftBottomCrossHole)
+  |> translate(y = 48mm, global = true)
+rearRightBottomCrossHole = clone(frontRightBottomCrossHole)
+  |> translate(y = 48mm, global = true)
+frontBottomCrossmember = frontBottomCrossmemberBlank - frontLeftBottomCrossHole - frontRightBottomCrossHole
+  |> appearance(color = hardwareBlack, metalness = 72, roughness = 38)
+rearBottomCrossmember = rearBottomCrossmemberBlank - rearLeftBottomCrossHole - rearRightBottomCrossHole
+  |> appearance(color = hardwareBlack, metalness = 72, roughness = 38)
+
+frontLeftLowerPostHole = clone(unitCylinder)
+  |> scale(
+       x = 5.8,
+       y = 5.8,
+       z = 34,
+       global = false,
+     )
+  |> rotate(axis = Y, angle = 90deg, global = true)
+  |> translate(
+       x = -112mm,
+       y = -24mm,
+       z = -107mm,
+       global = true,
+     )
+frontLeftUpperPostHole = clone(frontLeftLowerPostHole)
+  |> translate(z = 92mm, global = true)
+frontRightLowerPostHole = clone(frontLeftLowerPostHole)
+  |> translate(x = 224mm, global = true)
+frontRightUpperPostHole = clone(frontLeftUpperPostHole)
+  |> translate(x = 224mm, global = true)
+rearLeftLowerPostHole = clone(frontLeftLowerPostHole)
+  |> translate(y = 48mm, global = true)
+rearLeftUpperPostHole = clone(frontLeftUpperPostHole)
+  |> translate(y = 48mm, global = true)
+rearRightLowerPostHole = clone(frontRightLowerPostHole)
+  |> translate(y = 48mm, global = true)
+rearRightUpperPostHole = clone(frontRightUpperPostHole)
+  |> translate(y = 48mm, global = true)
+frontLeftLowerLeg = frontLeftLowerLegBlank - frontLeftLowerPostHole - frontLeftUpperPostHole
+  |> appearance(color = hardwareSteel, metalness = 84, roughness = 28)
+frontRightLowerLeg = frontRightLowerLegBlank - frontRightLowerPostHole - frontRightUpperPostHole
+  |> appearance(color = hardwareSteel, metalness = 84, roughness = 28)
+rearLeftLowerLeg = rearLeftLowerLegBlank - rearLeftLowerPostHole - rearLeftUpperPostHole
+  |> appearance(color = hardwareSteel, metalness = 84, roughness = 28)
+rearRightLowerLeg = rearRightLowerLegBlank - rearRightLowerPostHole - rearRightUpperPostHole
+  |> appearance(color = hardwareSteel, metalness = 84, roughness = 28)
+
+leftSidePad = clone(unitBlock)
+  |> scale(
+       x = 11,
+       y = 84,
+       z = 28,
+       global = false,
+     )
+  |> translate(x = -97.5mm, z = 18mm, global = true)
+  |> appearance(color = "#191919", roughness = 90)
+rightSidePad = clone(leftSidePad)
+  |> translate(x = 195mm, global = true)
+frontStopPad = clone(unitBlock)
+  |> scale(
+       x = 190,
+       y = 9,
+       z = 28,
+       global = false,
+     )
+  |> translate(y = -114.5mm, z = 18mm, global = true)
+  |> appearance(color = "#191919", roughness = 90)
+rearStopPad = clone(frontStopPad)
+  |> translate(y = 229mm, global = true)
+frontLeftPad = clone(unitCylinder)
+  |> scale(
+       x = 26,
+       y = 26,
+       z = 6,
+       global = false,
+     )
+  |> translate(
+       x = -25mm,
+       y = -24mm,
+       z = -121.5mm,
+       global = true,
+     )
+  |> appearance(color = "#151515", roughness = 92)
+frontRightPad = clone(frontLeftPad)
+  |> translate(x = 50mm, global = true)
+rearLeftPad = clone(frontLeftPad)
+  |> translate(y = 48mm, global = true)
+rearRightPad = clone(frontRightPad)
+  |> translate(y = 48mm, global = true)
+
+frontLeftLowerReceiver = clone(lowerReceiver)
+  |> translate(
+       x = -112mm,
+       y = -24mm,
+       z = -128mm,
+       global = true,
+     )
+frontRightLowerReceiver = clone(lowerReceiver)
+  |> rotate(axis = Z, angle = 180deg, global = true)
+  |> translate(
+       x = 112mm,
+       y = -24mm,
+       z = -128mm,
+       global = true,
+     )
+rearLeftLowerReceiver = clone(frontLeftLowerReceiver)
+  |> translate(y = 48mm, global = true)
+rearRightLowerReceiver = clone(frontRightLowerReceiver)
+  |> translate(y = 48mm, global = true)
+frontLeftUpperReceiver = clone(upperReceiver)
+  |> translate(
+       x = -112mm,
+       y = -24mm,
+       z = 7mm,
+       global = true,
+     )
+frontRightUpperReceiver = clone(upperReceiver)
+  |> translate(
+       x = 112mm,
+       y = -24mm,
+       z = 7mm,
+       global = true,
+     )
+rearLeftUpperReceiver = clone(frontLeftUpperReceiver)
+  |> translate(y = 48mm, global = true)
+rearRightUpperReceiver = clone(frontRightUpperReceiver)
+  |> translate(y = 48mm, global = true)
+frontLeftCornerReceiver = clone(cornerReceiver)
+  |> translate(
+       x = -112mm,
+       y = -119mm,
+       z = 18mm,
+       global = true,
+     )
+frontRightCornerReceiver = mirror3d([cornerReceiver], across = YZ)
+  |> translate(
+       x = 112mm,
+       y = -119mm,
+       z = 18mm,
+       global = true,
+     )
+rearLeftCornerReceiver = mirror3d([cornerReceiver], across = XZ)
+  |> translate(
+       x = -112mm,
+       y = 119mm,
+       z = 18mm,
+       global = true,
+     )
+rearRightCornerReceiver = clone(cornerReceiver)
+  |> rotate(axis = Z, angle = 180deg, global = true)
+  |> translate(
+       x = 112mm,
+       y = 119mm,
+       z = 18mm,
+       global = true,
+     )
+
+lowerCrossBoltSeed = clone(unitCylinder)
+  |> scale(
+       x = 5,
+       y = 5,
+       z = 34,
+       global = false,
+     )
+  |> rotate(axis = X, angle = 90deg, global = true)
+  |> translate(
+       x = -91mm,
+       y = -24mm,
+       z = -128mm,
+       global = true,
+     )
+  |> appearance(color = hardwareBlack, metalness = 90, roughness = 22)
+frontLowerCrossBoltShafts = patternLinear3d(
+  lowerCrossBoltSeed,
+  instances = 2,
+  distance = 182mm,
+  axis = X,
+)
+rearLowerCrossBoltSeed = clone(lowerCrossBoltSeed)
+  |> translate(y = 48mm, global = true)
+rearLowerCrossBoltShafts = patternLinear3d(
+  rearLowerCrossBoltSeed,
+  instances = 2,
+  distance = 182mm,
+  axis = X,
+)
+lowerCrossBoltHeadSeed = clone(unitCylinder)
+  |> scale(
+       x = 10,
+       y = 10,
+       z = 4,
+       global = false,
+     )
+  |> rotate(axis = X, angle = 90deg, global = true)
+  |> translate(
+       x = -91mm,
+       y = -40mm,
+       z = -128mm,
+       global = true,
+     )
+  |> appearance(color = hardwareBlack, metalness = 90, roughness = 20)
+frontLowerCrossBoltHeads = patternLinear3d(
+  lowerCrossBoltHeadSeed,
+  instances = 2,
+  distance = 182mm,
+  axis = X,
+)
+rearLowerCrossBoltHeadSeed = clone(lowerCrossBoltHeadSeed)
+  |> translate(y = 48mm, global = true)
+rearLowerCrossBoltHeads = patternLinear3d(
+  rearLowerCrossBoltHeadSeed,
+  instances = 2,
+  distance = 182mm,
+  axis = X,
+)
+
+lowerPostBoltSeed = clone(unitCylinder)
+  |> scale(
+       x = 5,
+       y = 5,
+       z = 34,
+       global = false,
+     )
+  |> rotate(axis = Y, angle = 90deg, global = true)
+  |> translate(
+       x = -112mm,
+       y = -24mm,
+       z = -107mm,
+       global = true,
+     )
+  |> appearance(color = hardwareBlack, metalness = 90, roughness = 22)
+frontLowerPostBoltShafts = patternLinear3d(
+  lowerPostBoltSeed,
+  instances = 2,
+  distance = 224mm,
+  axis = X,
+)
+rearLowerPostBoltSeed = clone(lowerPostBoltSeed)
+  |> translate(y = 48mm, global = true)
+rearLowerPostBoltShafts = patternLinear3d(
+  rearLowerPostBoltSeed,
+  instances = 2,
+  distance = 224mm,
+  axis = X,
+)
+lowerPostBoltHeadSeed = clone(unitCylinder)
+  |> scale(
+       x = 10,
+       y = 10,
+       z = 4,
+       global = false,
+     )
+  |> rotate(axis = Y, angle = 90deg, global = true)
+  |> translate(
+       x = -128mm,
+       y = -24mm,
+       z = -107mm,
+       global = true,
+     )
+  |> appearance(color = hardwareBlack, metalness = 90, roughness = 20)
+frontLowerPostBoltHeads = patternLinear3d(
+  lowerPostBoltHeadSeed,
+  instances = 2,
+  distance = 224mm,
+  axis = X,
+)
+rearLowerPostBoltHeadSeed = clone(lowerPostBoltHeadSeed)
+  |> translate(y = 48mm, global = true)
+rearLowerPostBoltHeads = patternLinear3d(
+  rearLowerPostBoltHeadSeed,
+  instances = 2,
+  distance = 224mm,
+  axis = X,
+)
+
+upperRailBoltSeed = clone(unitCylinder)
+  |> scale(
+       x = 5,
+       y = 5,
+       z = 34,
+       global = false,
+     )
+  |> rotate(axis = Y, angle = 90deg, global = true)
+  |> translate(
+       x = -112mm,
+       y = -24mm,
+       z = 18mm,
+       global = true,
+     )
+  |> appearance(color = hardwareBlack, metalness = 90, roughness = 22)
+frontUpperRailBoltShafts = patternLinear3d(
+  upperRailBoltSeed,
+  instances = 2,
+  distance = 224mm,
+  axis = X,
+)
+rearUpperRailBoltSeed = clone(upperRailBoltSeed)
+  |> translate(y = 48mm, global = true)
+rearUpperRailBoltShafts = patternLinear3d(
+  rearUpperRailBoltSeed,
+  instances = 2,
+  distance = 224mm,
+  axis = X,
+)
+upperRailBoltHeadSeed = clone(unitCylinder)
+  |> scale(
+       x = 10,
+       y = 10,
+       z = 4,
+       global = false,
+     )
+  |> rotate(axis = Y, angle = 90deg, global = true)
+  |> translate(
+       x = -128mm,
+       y = -24mm,
+       z = 18mm,
+       global = true,
+     )
+  |> appearance(color = hardwareBlack, metalness = 90, roughness = 20)
+frontUpperRailBoltHeads = patternLinear3d(
+  upperRailBoltHeadSeed,
+  instances = 2,
+  distance = 224mm,
+  axis = X,
+)
+rearUpperRailBoltHeadSeed = clone(upperRailBoltHeadSeed)
+  |> translate(y = 48mm, global = true)
+rearUpperRailBoltHeads = patternLinear3d(
+  rearUpperRailBoltHeadSeed,
+  instances = 2,
+  distance = 224mm,
+  axis = X,
+)
+
+upperPostBoltSeed = clone(upperRailBoltSeed)
+  |> translate(z = -33mm, global = true)
+frontUpperPostBoltShafts = patternLinear3d(
+  upperPostBoltSeed,
+  instances = 2,
+  distance = 224mm,
+  axis = X,
+)
+rearUpperPostBoltSeed = clone(upperPostBoltSeed)
+  |> translate(y = 48mm, global = true)
+rearUpperPostBoltShafts = patternLinear3d(
+  rearUpperPostBoltSeed,
+  instances = 2,
+  distance = 224mm,
+  axis = X,
+)
+upperPostBoltHeadSeed = clone(upperRailBoltHeadSeed)
+  |> translate(z = -33mm, global = true)
+frontUpperPostBoltHeads = patternLinear3d(
+  upperPostBoltHeadSeed,
+  instances = 2,
+  distance = 224mm,
+  axis = X,
+)
+rearUpperPostBoltHeadSeed = clone(upperPostBoltHeadSeed)
+  |> translate(y = 48mm, global = true)
+rearUpperPostBoltHeads = patternLinear3d(
+  rearUpperPostBoltHeadSeed,
+  instances = 2,
+  distance = 224mm,
+  axis = X,
+)
+
+frontCrossTieBoltSeed = clone(unitCylinder)
+  |> scale(
+       x = 5,
+       y = 5,
+       z = 34,
+       global = false,
+     )
+  |> translate(
+       x = -90mm,
+       y = -119mm,
+       z = 18mm,
+       global = true,
+     )
+  |> appearance(color = hardwareBlack, metalness = 90, roughness = 22)
+frontCrossTieBoltShafts = patternLinear3d(
+  frontCrossTieBoltSeed,
+  instances = 2,
+  distance = 180mm,
+  axis = X,
+)
+rearCrossTieBoltSeed = clone(frontCrossTieBoltSeed)
+  |> translate(y = 238mm, global = true)
+rearCrossTieBoltShafts = patternLinear3d(
+  rearCrossTieBoltSeed,
+  instances = 2,
+  distance = 180mm,
+  axis = X,
+)
+frontCrossTieBoltHeadSeed = clone(unitCylinder)
+  |> scale(
+       x = 10,
+       y = 10,
+       z = 4,
+       global = false,
+     )
+  |> translate(
+       x = -90mm,
+       y = -119mm,
+       z = 36mm,
+       global = true,
+     )
+  |> appearance(color = hardwareBlack, metalness = 90, roughness = 20)
+frontCrossTieBoltHeads = patternLinear3d(
+  frontCrossTieBoltHeadSeed,
+  instances = 2,
+  distance = 180mm,
+  axis = X,
+)
+rearCrossTieBoltHeadSeed = clone(frontCrossTieBoltHeadSeed)
+  |> translate(y = 238mm, global = true)
+rearCrossTieBoltHeads = patternLinear3d(
+  rearCrossTieBoltHeadSeed,
+  instances = 2,
+  distance = 180mm,
+  axis = X,
+)
+
+frontCornerRailBoltSeed = clone(unitCylinder)
+  |> scale(
+       x = 5,
+       y = 5,
+       z = 34,
+       global = false,
+     )
+  |> translate(
+       x = -112mm,
+       y = -97mm,
+       z = 18mm,
+       global = true,
+     )
+  |> appearance(color = hardwareBlack, metalness = 90, roughness = 22)
+frontCornerRailBoltShafts = patternLinear3d(
+  frontCornerRailBoltSeed,
+  instances = 2,
+  distance = 224mm,
+  axis = X,
+)
+rearCornerRailBoltSeed = clone(frontCornerRailBoltSeed)
+  |> translate(y = 194mm, global = true)
+rearCornerRailBoltShafts = patternLinear3d(
+  rearCornerRailBoltSeed,
+  instances = 2,
+  distance = 224mm,
+  axis = X,
+)
+frontCornerRailBoltHeadSeed = clone(unitCylinder)
+  |> scale(
+       x = 10,
+       y = 10,
+       z = 4,
+       global = false,
+     )
+  |> translate(
+       x = -112mm,
+       y = -97mm,
+       z = 36mm,
+       global = true,
+     )
+  |> appearance(color = hardwareBlack, metalness = 90, roughness = 20)
+frontCornerRailBoltHeads = patternLinear3d(
+  frontCornerRailBoltHeadSeed,
+  instances = 2,
+  distance = 224mm,
+  axis = X,
+)
+rearCornerRailBoltHeadSeed = clone(frontCornerRailBoltHeadSeed)
+  |> translate(y = 194mm, global = true)
+rearCornerRailBoltHeads = patternLinear3d(
+  rearCornerRailBoltHeadSeed,
+  instances = 2,
+  distance = 224mm,
+  axis = X,
+)
+
+frontLeftHanger = clone(unitCylinder)
+  |> scale(
+       x = 14,
+       y = 14,
+       z = 96,
+       global = false,
+     )
+  |> translate(
+       x = -112mm,
+       y = -82mm,
+       z = 75mm,
+       global = true,
+     )
+  |> appearance(color = hardwareSteel, metalness = 86, roughness = 26)
+frontRightHanger = clone(frontLeftHanger)
+  |> translate(x = 224mm, global = true)
+rearLeftHanger = clone(frontLeftHanger)
+  |> translate(y = 164mm, global = true)
+rearRightHanger = clone(frontRightHanger)
+  |> translate(y = 164mm, global = true)
+frontLeftRailBolt = clone(unitCylinder)
+  |> scale(
+       x = 8,
+       y = 8,
+       z = 28,
+       global = false,
+     )
+  |> rotate(axis = Y, angle = 90deg, global = true)
+  |> translate(
+       x = -112mm,
+       y = -82mm,
+       z = 18mm,
+       global = true,
+     )
+  |> appearance(color = hardwareSteel, metalness = 90, roughness = 22)
+frontRightRailBolt = clone(frontLeftRailBolt)
+  |> translate(x = 224mm, global = true)
+rearLeftRailBolt = clone(frontLeftRailBolt)
+  |> translate(y = 164mm, global = true)
+rearRightRailBolt = clone(frontRightRailBolt)
+  |> translate(y = 164mm, global = true)
+frontLeftFrameWasher = clone(unitCylinder)
+  |> scale(
+       x = 28,
+       y = 28,
+       z = 6,
+       global = false,
+     )
+  |> translate(
+       x = -112mm,
+       y = -82mm,
+       z = 122mm,
+       global = true,
+     )
+  |> appearance(color = hardwareSteel, metalness = 90, roughness = 22)
+frontRightFrameWasher = clone(frontLeftFrameWasher)
+  |> translate(x = 224mm, global = true)
+rearLeftFrameWasher = clone(frontLeftFrameWasher)
+  |> translate(y = 164mm, global = true)
+rearRightFrameWasher = clone(frontRightFrameWasher)
+  |> translate(y = 164mm, global = true)
+
+export allBodies = flatten([
+  leftRail,
+  rightRail,
+  frontCrossTie,
+  rearCrossTie,
+  frontBottomCrossmember,
+  rearBottomCrossmember,
+  frontLeftLowerLeg,
+  frontRightLowerLeg,
+  rearLeftLowerLeg,
+  rearRightLowerLeg,
+  leftSidePad,
+  rightSidePad,
+  frontStopPad,
+  rearStopPad,
+  frontLeftPad,
+  frontRightPad,
+  rearLeftPad,
+  rearRightPad,
+  frontLeftLowerReceiver,
+  frontRightLowerReceiver,
+  rearLeftLowerReceiver,
+  rearRightLowerReceiver,
+  frontLeftUpperReceiver,
+  frontRightUpperReceiver,
+  rearLeftUpperReceiver,
+  rearRightUpperReceiver,
+  frontLeftCornerReceiver,
+  frontRightCornerReceiver,
+  rearLeftCornerReceiver,
+  rearRightCornerReceiver,
+  frontLowerCrossBoltShafts,
+  rearLowerCrossBoltShafts,
+  frontLowerCrossBoltHeads,
+  rearLowerCrossBoltHeads,
+  frontLowerPostBoltShafts,
+  rearLowerPostBoltShafts,
+  frontLowerPostBoltHeads,
+  rearLowerPostBoltHeads,
+  frontUpperRailBoltShafts,
+  rearUpperRailBoltShafts,
+  frontUpperRailBoltHeads,
+  rearUpperRailBoltHeads,
+  frontUpperPostBoltShafts,
+  rearUpperPostBoltShafts,
+  frontUpperPostBoltHeads,
+  rearUpperPostBoltHeads,
+  frontCrossTieBoltShafts,
+  rearCrossTieBoltShafts,
+  frontCrossTieBoltHeads,
+  rearCrossTieBoltHeads,
+  frontCornerRailBoltShafts,
+  rearCornerRailBoltShafts,
+  frontCornerRailBoltHeads,
+  rearCornerRailBoltHeads,
+  frontLeftHanger,
+  frontRightHanger,
+  rearLeftHanger,
+  rearRightHanger,
+  frontLeftRailBolt,
+  frontRightRailBolt,
+  rearLeftRailBolt,
+  rearRightRailBolt,
+  frontLeftFrameWasher,
+  frontRightFrameWasher,
+  rearLeftFrameWasher,
+  rearRightFrameWasher
+])

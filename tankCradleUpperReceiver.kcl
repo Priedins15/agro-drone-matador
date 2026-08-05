@@ -1,0 +1,64 @@
+// Upper tank-cradle T receiver joint
+// Lightweight pass-through rail socket with a compact upright receiver below.
+@settings(defaultLengthUnit = mm, kclVersion = 2.0)
+
+import unitBlock from "unitBlock.kcl"
+import unitCylinder from "unitCylinder.kcl"
+import * from "parameters.kcl"
+
+railSleeveOuter = clone(unitBlock)
+  |> scale(
+       x = 24.6,
+       y = 36,
+       z = 28.6,
+       global = false,
+     )
+  |> translate(z = 11mm, global = true)
+postSleeveOuter = clone(unitBlock)
+  |> scale(
+       x = 20.6,
+       y = 20.6,
+       z = 34,
+       global = false,
+     )
+  |> translate(z = -15mm, global = true)
+
+receiverOuter = railSleeveOuter + postSleeveOuter
+
+railSocketCutter = clone(unitBlock)
+  |> scale(
+       x = 18.6,
+       y = 38,
+       z = 22.6,
+       global = false,
+     )
+  |> translate(z = 11mm, global = true)
+postSocketCutter = clone(unitBlock)
+  |> scale(
+       x = 14.6,
+       y = 14.6,
+       z = 34,
+       global = false,
+     )
+  |> translate(z = -17mm, global = true)
+railBoltHoleCutter = clone(unitCylinder)
+  |> scale(
+       x = 5.5,
+       y = 5.5,
+       z = 30,
+       global = false,
+     )
+  |> rotate(axis = Y, angle = 90deg, global = true)
+  |> translate(z = 11mm, global = true)
+postBoltHoleCutter = clone(unitCylinder)
+  |> scale(
+       x = 5.5,
+       y = 5.5,
+       z = 30,
+       global = false,
+     )
+  |> rotate(axis = Y, angle = 90deg, global = true)
+  |> translate(z = -22mm, global = true)
+
+export upperReceiver = receiverOuter - railSocketCutter - postSocketCutter - railBoltHoleCutter - postBoltHoleCutter
+  |> appearance(color = hardwareSteel, metalness = 84, roughness = 28)

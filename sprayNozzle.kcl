@@ -1,0 +1,130 @@
+// Anti-drip spray nozzle assembly
+// Inlet barb, valve body, strainer envelope, tip holder, true orifice, and deflector.
+@settings(defaultLengthUnit = mm, kclVersion = 2.0)
+
+import unitBlock from "unitBlock.kcl"
+import unitCylinder from "unitCylinder.kcl"
+import * from "parameters.kcl"
+
+valveBlank = clone(unitCylinder)
+  |> scale(
+       x = 30,
+       y = 30,
+       z = 52,
+       global = false,
+     )
+valveBoreCutter = clone(unitCylinder)
+  |> scale(
+       x = 6,
+       y = 6,
+       z = 58,
+       global = false,
+     )
+export valveBody = subtract(valveBlank, tools = [valveBoreCutter])
+  |> translate(z = 12mm, global = true)
+  |> appearance(color = hardwareBlack, metalness = 42, roughness = 46)
+export inletBarb = clone(unitCylinder)
+  |> scale(
+       x = 14,
+       y = 14,
+       z = 44,
+       global = false,
+     )
+  |> translate(z = 58mm, global = true)
+  |> appearance(color = hardwareSteel, metalness = 74, roughness = 30)
+export barbRingSeed = clone(unitCylinder)
+  |> scale(
+       x = 20,
+       y = 20,
+       z = 4,
+       global = false,
+     )
+  |> translate(z = 46mm, global = true)
+  |> appearance(color = hardwareSteel, metalness = 78, roughness = 28)
+export barbRings = patternLinear3d(
+  barbRingSeed,
+  instances = 4,
+  distance = 9mm,
+  axis = Z,
+)
+export strainerCup = clone(unitCylinder)
+  |> scale(
+       x = 42,
+       y = 42,
+       z = 44,
+       global = false,
+     )
+  |> translate(z = -36mm, global = true)
+  |> appearance(
+       color = "#d8e0df",
+       metalness = 4,
+       roughness = 42,
+       opacity = 58,
+     )
+export meshDisk = clone(unitCylinder)
+  |> scale(
+       x = 33,
+       y = 33,
+       z = 2,
+       global = false,
+     )
+  |> translate(z = -57mm, global = true)
+  |> appearance(color = hardwareSteel, metalness = 64, roughness = 46)
+tipHolderBlank = clone(unitCylinder)
+  |> scale(
+       x = 28,
+       y = 28,
+       z = 24,
+       global = false,
+     )
+  |> translate(z = -70mm, global = true)
+tipHolderBore = clone(unitCylinder)
+  |> scale(
+       x = 7,
+       y = 7,
+       z = 28,
+       global = false,
+     )
+  |> translate(z = -70mm, global = true)
+export tipHolder = subtract(tipHolderBlank, tools = [tipHolderBore])
+  |> appearance(color = warningOrange, metalness = 12, roughness = 50)
+orificePlateBlank = clone(unitCylinder)
+  |> scale(
+       x = 22,
+       y = 22,
+       z = 5,
+       global = false,
+     )
+  |> translate(z = -84mm, global = true)
+orificeCutter = clone(unitCylinder)
+  |> scale(
+       x = 1.8,
+       y = 1.8,
+       z = 9,
+       global = false,
+     )
+  |> translate(z = -84mm, global = true)
+export orificePlate = subtract(orificePlateBlank, tools = [orificeCutter])
+  |> appearance(color = hardwareSteel, metalness = 82, roughness = 26)
+export deflector = clone(unitBlock)
+  |> scale(
+       x = 30,
+       y = 6,
+       z = 4,
+       global = false,
+     )
+  |> translate(z = -94mm, global = true)
+  |> appearance(color = warningOrange, metalness = 10, roughness = 52)
+
+export allBodies = flatten([
+  valveBody,
+  inletBarb,
+  barbRings,
+  strainerCup,
+  meshDisk,
+  tipHolder,
+  orificePlate,
+  deflector
+])
+
+hiddenBarbRings = hide(barbRings)

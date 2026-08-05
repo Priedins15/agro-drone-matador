@@ -1,0 +1,53 @@
+// Reference-matched landing gear assembly
+// Front and rear splayed hoops joined by two lower longitudinal runners.
+@settings(defaultLengthUnit = mm, kclVersion = 2.0)
+
+import landingSkid from "landingSkid.kcl"
+import allBodies as runnerSource from "landingCrossbar.kcl"
+import unitCylinder from "unitCylinder.kcl"
+import * from "parameters.kcl"
+
+frontHoop = clone(landingSkid)
+  |> translate(y = -95mm, z = -75mm, global = true)
+rearHoop = clone(landingSkid)
+  |> translate(y = 95mm, z = -75mm, global = true)
+
+leftRunner = clone(runnerSource)
+  |> translate(x = -129.194mm, z = -316.701mm, global = true)
+rightRunner = clone(runnerSource)
+  |> translate(x = 129.194mm, z = -316.701mm, global = true)
+
+frontLeftMountCollar = clone(unitCylinder)
+  |> scale(
+       x = 22,
+       y = 22,
+       z = 18,
+       global = false,
+     )
+  |> translate(
+       x = -120mm,
+       y = -95mm,
+       z = -75mm,
+       global = true,
+     )
+  |> appearance(color = hardwareBlack, metalness = 76, roughness = 34)
+frontRightMountCollar = clone(frontLeftMountCollar)
+  |> translate(x = 240mm, global = true)
+rearLeftMountCollar = clone(frontLeftMountCollar)
+  |> translate(y = 190mm, global = true)
+rearRightMountCollar = clone(frontRightMountCollar)
+  |> translate(y = 190mm, global = true)
+
+export allBodies = flatten([
+  frontHoop,
+  rearHoop,
+  leftRunner,
+  rightRunner,
+  frontLeftMountCollar,
+  frontRightMountCollar,
+  rearLeftMountCollar,
+  rearRightMountCollar
+])
+
+hide(landingSkid)
+hide(runnerSource)

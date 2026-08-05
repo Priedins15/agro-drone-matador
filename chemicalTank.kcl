@@ -1,0 +1,193 @@
+// Side-service chemical tank assembly
+// Hollow tapered reservoir with sealed side filler, outlet, level tube, and mounting clips.
+@settings(defaultLengthUnit = mm, kclVersion = 2.0, experimentalFeatures = allow)
+
+import unitBlock from "unitBlock.kcl"
+import unitCylinder from "unitCylinder.kcl"
+import * from "parameters.kcl"
+
+tankBottomSketch = sketch(on = offsetPlane(XY, offset = -120mm)) {
+  outline = circle(start = [var 48mm, var 0mm], center = [var 0mm, var 0mm])
+  coincident([outline.center, ORIGIN])
+  horizontal([outline.center, outline.start])
+  radius(outline) == 48mm
+}
+tankLowerSketch = sketch(on = offsetPlane(XY, offset = -90mm)) {
+  outline = circle(start = [var 78mm, var 0mm], center = [var 0mm, var 0mm])
+  coincident([outline.center, ORIGIN])
+  horizontal([outline.center, outline.start])
+  radius(outline) == 78mm
+}
+tankMidSketch = sketch(on = offsetPlane(XY, offset = 20mm)) {
+  outline = circle(start = [var 105mm, var 0mm], center = [var 0mm, var 0mm])
+  coincident([outline.center, ORIGIN])
+  horizontal([outline.center, outline.start])
+  radius(outline) == 105mm
+}
+tankShoulderSketch = sketch(on = offsetPlane(XY, offset = 100mm)) {
+  outline = circle(start = [var 92mm, var 0mm], center = [var 0mm, var 0mm])
+  coincident([outline.center, ORIGIN])
+  horizontal([outline.center, outline.start])
+  radius(outline) == 92mm
+}
+tankTopSketch = sketch(on = offsetPlane(XY, offset = 130mm)) {
+  outline = circle(start = [var 55mm, var 0mm], center = [var 0mm, var 0mm])
+  coincident([outline.center, ORIGIN])
+  horizontal([outline.center, outline.start])
+  radius(outline) == 55mm
+}
+
+tankBottomRegion = region(segments = [tankBottomSketch.outline])
+tankLowerRegion = region(segments = [tankLowerSketch.outline])
+tankMidRegion = region(segments = [tankMidSketch.outline])
+tankShoulderRegion = region(segments = [tankShoulderSketch.outline])
+tankTopRegion = region(segments = [tankTopSketch.outline])
+tankRoundOuter = loft(
+  [
+    tankBottomRegion,
+    tankLowerRegion,
+    tankMidRegion,
+    tankShoulderRegion,
+    tankTopRegion
+  ],
+  vDegree = 3,
+  bezApproximateRational = true,
+)
+tankOuter = scale(
+  tankRoundOuter,
+  x = 0.88,
+  y = 1.05,
+  z = 1,
+  global = false,
+)
+tankInner = clone(tankOuter)
+  |> scale(
+       x = 0.90,
+       y = 0.90,
+       z = 0.90,
+       global = false,
+     )
+
+fillerOpeningSketch = sketch(on = offsetPlane(XZ, offset = -102mm)) {
+  openingCircle = circle(start = [var 24mm, var 70mm], center = [var 0mm, var 70mm])
+  horizontalDistance([ORIGIN, openingCircle.center]) == 0mm
+  verticalDistance([ORIGIN, openingCircle.center]) == 70mm
+  horizontal([
+    openingCircle.center,
+    openingCircle.start
+  ])
+  diameter(openingCircle) == 48mm
+}
+fillerOpeningCutter = extrude(region(segments = [fillerOpeningSketch.openingCircle]), length = 35mm, symmetric = true)
+
+tankShell = subtract(tankOuter, tools = [tankInner, fillerOpeningCutter])
+  |> appearance(
+       color = tankWhite,
+       roughness = 62,
+       metalness = 0,
+       opacity = 94,
+     )
+
+neckOuterSketch = sketch(on = offsetPlane(XZ, offset = -108mm)) {
+  outerCircle = circle(start = [var 31mm, var 70mm], center = [var 0mm, var 70mm])
+  horizontalDistance([ORIGIN, outerCircle.center]) == 0mm
+  verticalDistance([ORIGIN, outerCircle.center]) == 70mm
+  horizontal([outerCircle.center, outerCircle.start])
+  diameter(outerCircle) == 62mm
+}
+neckInnerSketch = sketch(on = offsetPlane(XZ, offset = -108mm)) {
+  innerCircle = circle(start = [var 24mm, var 70mm], center = [var 0mm, var 70mm])
+  horizontalDistance([ORIGIN, innerCircle.center]) == 0mm
+  verticalDistance([ORIGIN, innerCircle.center]) == 70mm
+  horizontal([innerCircle.center, innerCircle.start])
+  diameter(innerCircle) == 48mm
+}
+neckBlank = extrude(region(segments = [neckOuterSketch.outerCircle]), length = 28mm, symmetric = true)
+neckBore = extrude(region(segments = [neckInnerSketch.innerCircle]), length = 34mm, symmetric = true)
+fillerNeck = subtract(neckBlank, tools = [neckBore])
+  |> appearance(color = tankWhite, roughness = 58, metalness = 0)
+
+outletOuterSketch = sketch(on = XZ) {
+  outerCircle = circle(start = [var 14mm, var 0mm], center = [var 0mm, var 0mm])
+  coincident([outerCircle.center, ORIGIN])
+  horizontal([outerCircle.center, outerCircle.start])
+  diameter(outerCircle) == 28mm
+}
+outletInnerSketch = sketch(on = XZ) {
+  innerCircle = circle(start = [var 6mm, var 0mm], center = [var 0mm, var 0mm])
+  coincident([innerCircle.center, ORIGIN])
+  horizontal([innerCircle.center, innerCircle.start])
+  diameter(innerCircle) == 12mm
+}
+outletBlank = extrude(region(segments = [outletOuterSketch.outerCircle]), length = 28mm, symmetric = true)
+outletBore = extrude(region(segments = [outletInnerSketch.innerCircle]), length = 34mm, symmetric = true)
+outletFitting = subtract(outletBlank, tools = [outletBore])
+  |> translate(y = 100mm, z = -65mm, global = true)
+  |> appearance(color = tankBlue, roughness = 44, metalness = 8)
+outletSeal = clone(unitCylinder)
+  |> scale(
+       x = 34,
+       y = 34,
+       z = 5,
+       global = false,
+     )
+  |> rotate(axis = X, angle = 90deg, global = true)
+  |> translate(y = 86mm, z = -65mm, global = true)
+  |> appearance(color = "#202020", roughness = 90)
+
+levelTube = clone(unitCylinder)
+  |> scale(
+       x = 12,
+       y = 12,
+       z = 128,
+       global = false,
+     )
+  |> translate(
+       x = 100mm,
+       y = 16mm,
+       z = 2mm,
+       global = true,
+     )
+  |> appearance(
+       color = tankBlue,
+       roughness = 24,
+       metalness = 2,
+       opacity = 60,
+     )
+lowerLevelTubeClip = clone(unitBlock)
+  |> scale(
+       x = 14,
+       y = 22,
+       z = 8,
+       global = false,
+     )
+  |> translate(
+       x = 95mm,
+       y = 16mm,
+       z = -48mm,
+       global = true,
+     )
+  |> appearance(color = hardwareSteel, metalness = 78, roughness = 34)
+upperLevelTubeClip = clone(lowerLevelTubeClip)
+  |> translate(z = 96mm, global = true)
+
+export allBodies = [
+  tankShell,
+  fillerNeck,
+  outletFitting,
+  outletSeal,
+  levelTube,
+  lowerLevelTubeClip,
+  upperLevelTubeClip
+]
+
+hide(tankBottomSketch)
+hide(tankLowerSketch)
+hide(tankMidSketch)
+hide(tankShoulderSketch)
+hide(tankTopSketch)
+hide(fillerOpeningSketch)
+hide(neckOuterSketch)
+hide(neckInnerSketch)
+hide(outletOuterSketch)
+hide(outletInnerSketch)

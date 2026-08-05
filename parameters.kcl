@@ -1,0 +1,38 @@
+// Reference-matched agricultural drone parameters
+// Shared rotor datums, structural dimensions, and appearance values.
+@settings(defaultLengthUnit = mm, kclVersion = 2.0, experimentalFeatures = allow)
+
+export motorX = 570mm
+export motorY = 325mm
+export motorZ = 55mm
+export propellerZ = 110mm
+export armYaw = 29.688deg
+export armTubeLength = 512mm
+export armTubeOuterDiameter = 38mm
+export armTubeInnerDiameter = 32mm
+export armCenterX = 347.982mm
+export armCenterY = 198.411mm
+export innerClampX = 125.963mm
+export innerClampY = 71.821mm
+export outerClampX = 542.945mm
+export outerClampY = 309.574mm
+export escX = 412.638mm
+export escY = 235.276mm
+export armZ = 16mm
+export nozzleX = 535mm
+export nozzleY = 305mm
+export nozzleZ = -90mm
+
+export shellWhite = "#f1f3f2"
+export shellShadow = "#c9ced0"
+export carbonBlack = "#171b1e"
+export hardwareBlack = "#252b2f"
+export hardwareSteel = "#aab1b6"
+export aluminumDark = "#515a60"
+export copperColor = "#b96b32"
+export hoseBlack = "#111719"
+export tankWhite = "#e9eeee"
+export tankBlue = "#6ea5bd"
+export lensBlue = "#1c4963"
+export pcbGreen = "#2b5a45"
+export warningOrange = "#e57d2d"

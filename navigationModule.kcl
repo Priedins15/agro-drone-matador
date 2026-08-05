@@ -1,0 +1,400 @@
+// Detailed navigation, GNSS, telemetry, and smart-antenna module
+// Narrow canopy-mounted radio stack with GNSS/RTK layers, diversity whips, blade antennas, ports, and fasteners.
+@settings(defaultLengthUnit = mm, kclVersion = 2.0)
+
+import unitBlock from "unitBlock.kcl"
+import unitCylinder from "unitCylinder.kcl"
+import unitSphere from "unitSphere.kcl"
+import * from "parameters.kcl"
+
+radioBase = clone(unitBlock)
+  |> scale(
+       x = 84,
+       y = 64,
+       z = 12,
+       global = false,
+     )
+  |> translate(z = 6mm, global = true)
+  |> appearance(color = hardwareBlack, metalness = 38, roughness = 46)
+radioTopShield = clone(unitBlock)
+  |> scale(
+       x = 78,
+       y = 58,
+       z = 3,
+       global = false,
+     )
+  |> translate(z = 13.5mm, global = true)
+  |> appearance(color = aluminumDark, metalness = 74, roughness = 30)
+leftSideHeatSink = clone(unitBlock)
+  |> scale(
+       x = 3,
+       y = 42,
+       z = 7,
+       global = false,
+     )
+  |> translate(x = -43mm, z = 6mm, global = true)
+  |> appearance(color = aluminumDark, metalness = 76, roughness = 32)
+rightSideHeatSink = clone(leftSideHeatSink)
+  |> translate(x = 86mm, global = true)
+
+frontServicePort = clone(unitBlock)
+  |> scale(
+       x = 16,
+       y = 3,
+       z = 7,
+       global = false,
+     )
+  |> translate(
+       x = -25mm,
+       y = -33.5mm,
+       z = 6mm,
+       global = true,
+     )
+  |> appearance(color = "#080b0d", metalness = 24, roughness = 56)
+frontTelemetryPort = clone(unitBlock)
+  |> scale(
+       x = 13,
+       y = 3,
+       z = 7,
+       global = false,
+     )
+  |> translate(
+       x = 25mm,
+       y = -33.5mm,
+       z = 6mm,
+       global = true,
+     )
+  |> appearance(color = "#101416", metalness = 30, roughness = 52)
+statusLedGreen = clone(unitCylinder)
+  |> scale(
+       x = 4.5,
+       y = 4.5,
+       z = 2,
+       global = false,
+     )
+  |> rotate(axis = X, angle = 90deg, global = true)
+  |> translate(
+       x = -10mm,
+       y = -34mm,
+       z = 7mm,
+       global = true,
+     )
+  |> appearance(color = "#2fd465", roughness = 14, opacity = 92)
+statusLedAmber = clone(statusLedGreen)
+  |> translate(x = 10mm, global = true)
+  |> appearance(color = "#f2a43b", roughness = 14, opacity = 92)
+statusLedBlue = clone(statusLedGreen)
+  |> translate(x = 20mm, global = true)
+  |> appearance(color = "#3b9ee8", roughness = 14, opacity = 92)
+
+mountScrewFrontLeft = clone(unitCylinder)
+  |> scale(
+       x = 5,
+       y = 5,
+       z = 3,
+       global = false,
+     )
+  |> translate(
+       x = -35mm,
+       y = -25mm,
+       z = 16.5mm,
+       global = true,
+     )
+  |> appearance(color = hardwareSteel, metalness = 92, roughness = 18)
+mountScrewFrontRight = clone(mountScrewFrontLeft)
+  |> translate(x = 70mm, global = true)
+mountScrewRearLeft = clone(mountScrewFrontLeft)
+  |> translate(y = 50mm, global = true)
+mountScrewRearRight = clone(mountScrewFrontRight)
+  |> translate(y = 50mm, global = true)
+
+radioShieldCan = clone(unitBlock)
+  |> scale(
+       x = 48,
+       y = 38,
+       z = 4,
+       global = false,
+     )
+  |> translate(z = 17mm, global = true)
+  |> appearance(color = "#b8bec1", metalness = 84, roughness = 24)
+gnssLowerCollar = clone(unitCylinder)
+  |> scale(
+       x = 66,
+       y = 66,
+       z = 8,
+       global = false,
+     )
+  |> translate(z = 21mm, global = true)
+  |> appearance(color = hardwareBlack, metalness = 34, roughness = 48)
+gnssIsolationRing = clone(unitCylinder)
+  |> scale(
+       x = 68,
+       y = 68,
+       z = 2,
+       global = false,
+     )
+  |> translate(z = 26mm, global = true)
+  |> appearance(color = "#111719", metalness = 2, roughness = 82)
+gnssRtkRadome = clone(unitCylinder)
+  |> scale(
+       x = 60,
+       y = 60,
+       z = 12,
+       global = false,
+     )
+  |> translate(z = 33mm, global = true)
+  |> appearance(color = shellWhite, metalness = 2, roughness = 50)
+gnssTopCap = clone(unitCylinder)
+  |> scale(
+       x = 48,
+       y = 48,
+       z = 4,
+       global = false,
+     )
+  |> translate(z = 41mm, global = true)
+  |> appearance(color = shellShadow, metalness = 4, roughness = 46)
+gnssSurveyMarker = clone(unitCylinder)
+  |> scale(
+       x = 8,
+       y = 8,
+       z = 1.5,
+       global = false,
+     )
+  |> translate(z = 43.75mm, global = true)
+  |> appearance(color = warningOrange, metalness = 8, roughness = 36)
+
+leftTelemetryBase = clone(unitCylinder)
+  |> scale(
+       x = 12,
+       y = 12,
+       z = 6,
+       global = false,
+     )
+  |> translate(
+       x = -34mm,
+       y = 19mm,
+       z = 18mm,
+       global = true,
+     )
+  |> appearance(color = hardwareBlack, metalness = 44, roughness = 42)
+rightTelemetryBase = clone(leftTelemetryBase)
+  |> translate(x = 68mm, global = true)
+leftTelemetryJoint = clone(unitSphere)
+  |> scale(
+       x = 10,
+       y = 10,
+       z = 10,
+       global = false,
+     )
+  |> translate(
+       x = -34mm,
+       y = 19mm,
+       z = 22mm,
+       global = true,
+     )
+  |> appearance(color = aluminumDark, metalness = 68, roughness = 30)
+rightTelemetryJoint = clone(leftTelemetryJoint)
+  |> translate(x = 68mm, global = true)
+leftTelemetryWhip = clone(unitCylinder)
+  |> scale(
+       x = 4,
+       y = 4,
+       z = 64,
+       global = false,
+     )
+  |> rotate(axis = Y, angle = -28deg, global = true)
+  |> translate(
+       x = -49mm,
+       y = 19mm,
+       z = 50.3mm,
+       global = true,
+     )
+  |> appearance(color = "#15191b", metalness = 8, roughness = 72)
+rightTelemetryWhip = clone(unitCylinder)
+  |> scale(
+       x = 4,
+       y = 4,
+       z = 64,
+       global = false,
+     )
+  |> rotate(axis = Y, angle = 28deg, global = true)
+  |> translate(
+       x = 49mm,
+       y = 19mm,
+       z = 50.3mm,
+       global = true,
+     )
+  |> appearance(color = "#15191b", metalness = 8, roughness = 72)
+leftWhipTip = clone(unitCylinder)
+  |> scale(
+       x = 6,
+       y = 6,
+       z = 8,
+       global = false,
+     )
+  |> rotate(axis = Y, angle = -28deg, global = true)
+  |> translate(
+       x = -65.9mm,
+       y = 19mm,
+       z = 82mm,
+       global = true,
+     )
+  |> appearance(color = hardwareBlack, metalness = 20, roughness = 56)
+rightWhipTip = clone(unitCylinder)
+  |> scale(
+       x = 6,
+       y = 6,
+       z = 8,
+       global = false,
+     )
+  |> rotate(axis = Y, angle = 28deg, global = true)
+  |> translate(
+       x = 65.9mm,
+       y = 19mm,
+       z = 82mm,
+       global = true,
+     )
+  |> appearance(color = hardwareBlack, metalness = 20, roughness = 56)
+
+leftBladeSocket = clone(unitCylinder)
+  |> scale(
+       x = 11,
+       y = 11,
+       z = 6,
+       global = false,
+     )
+  |> translate(
+       x = -33mm,
+       y = -21mm,
+       z = 18mm,
+       global = true,
+     )
+  |> appearance(color = aluminumDark, metalness = 68, roughness = 30)
+rightBladeSocket = clone(leftBladeSocket)
+  |> translate(x = 66mm, global = true)
+leftSmartBladeAntenna = clone(unitBlock)
+  |> scale(
+       x = 10,
+       y = 4,
+       z = 34,
+       global = false,
+     )
+  |> rotate(axis = Y, angle = -15deg, global = true)
+  |> translate(
+       x = -37.4mm,
+       y = -21mm,
+       z = 38.4mm,
+       global = true,
+     )
+  |> appearance(color = hardwareBlack, metalness = 18, roughness = 54)
+rightSmartBladeAntenna = clone(unitBlock)
+  |> scale(
+       x = 10,
+       y = 4,
+       z = 34,
+       global = false,
+     )
+  |> rotate(axis = Y, angle = 15deg, global = true)
+  |> translate(
+       x = 37.4mm,
+       y = -21mm,
+       z = 38.4mm,
+       global = true,
+     )
+  |> appearance(color = hardwareBlack, metalness = 18, roughness = 54)
+leftBladePatch = clone(unitBlock)
+  |> scale(
+       x = 6,
+       y = 1.2,
+       z = 22,
+       global = false,
+     )
+  |> rotate(axis = Y, angle = -15deg, global = true)
+  |> translate(
+       x = -37.4mm,
+       y = -23.6mm,
+       z = 38.4mm,
+       global = true,
+     )
+  |> appearance(color = "#4b555b", metalness = 42, roughness = 40)
+rightBladePatch = clone(unitBlock)
+  |> scale(
+       x = 6,
+       y = 1.2,
+       z = 22,
+       global = false,
+     )
+  |> rotate(axis = Y, angle = 15deg, global = true)
+  |> translate(
+       x = 37.4mm,
+       y = -23.6mm,
+       z = 38.4mm,
+       global = true,
+     )
+  |> appearance(color = "#4b555b", metalness = 42, roughness = 40)
+
+rearCoaxPortLeft = clone(unitCylinder)
+  |> scale(
+       x = 7,
+       y = 7,
+       z = 4,
+       global = false,
+     )
+  |> rotate(axis = X, angle = 90deg, global = true)
+  |> translate(
+       x = -18mm,
+       y = 34mm,
+       z = 7mm,
+       global = true,
+     )
+  |> appearance(color = "#d1b35a", metalness = 82, roughness = 24)
+rearCoaxPortRight = clone(rearCoaxPortLeft)
+  |> translate(x = 36mm, global = true)
+rearPowerConnector = clone(unitBlock)
+  |> scale(
+       x = 14,
+       y = 4,
+       z = 8,
+       global = false,
+     )
+  |> translate(y = 34mm, z = 7mm, global = true)
+  |> appearance(color = "#111416", metalness = 24, roughness = 56)
+
+export allBodies = [
+  radioBase,
+  radioTopShield,
+  leftSideHeatSink,
+  rightSideHeatSink,
+  frontServicePort,
+  frontTelemetryPort,
+  statusLedGreen,
+  statusLedAmber,
+  statusLedBlue,
+  mountScrewFrontLeft,
+  mountScrewFrontRight,
+  mountScrewRearLeft,
+  mountScrewRearRight,
+  radioShieldCan,
+  gnssLowerCollar,
+  gnssIsolationRing,
+  gnssRtkRadome,
+  gnssTopCap,
+  gnssSurveyMarker,
+  leftTelemetryBase,
+  rightTelemetryBase,
+  leftTelemetryJoint,
+  rightTelemetryJoint,
+  leftTelemetryWhip,
+  rightTelemetryWhip,
+  leftWhipTip,
+  rightWhipTip,
+  leftBladeSocket,
+  rightBladeSocket,
+  leftSmartBladeAntenna,
+  rightSmartBladeAntenna,
+  leftBladePatch,
+  rightBladePatch,
+  rearCoaxPortLeft,
+  rearCoaxPortRight,
+  rearPowerConnector
+]

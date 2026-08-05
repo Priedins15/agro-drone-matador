@@ -1,0 +1,171 @@
+// Rail-mounted spray pump and filter module
+// Diaphragm pump, prefilter, regulator, ports, side plate, flange, spacers, bolts, and cable.
+@settings(defaultLengthUnit = mm, kclVersion = 2.0)
+
+import unitBlock from "unitBlock.kcl"
+import unitCylinder from "unitCylinder.kcl"
+import * from "parameters.kcl"
+
+pumpMotor = clone(unitCylinder)
+  |> scale(
+       x = 48,
+       y = 48,
+       z = 78,
+       global = false,
+     )
+  |> rotate(axis = Y, angle = 90deg, global = true)
+  |> appearance(color = hardwareBlack, metalness = 52, roughness = 42)
+pumpHead = clone(unitBlock)
+  |> scale(
+       x = 38,
+       y = 58,
+       z = 50,
+       global = false,
+     )
+  |> translate(x = 55mm, global = true)
+  |> appearance(color = tankBlue, metalness = 12, roughness = 48)
+filterBowl = clone(unitCylinder)
+  |> scale(
+       x = 38,
+       y = 38,
+       z = 48,
+       global = false,
+     )
+  |> translate(x = 67mm, z = -46mm, global = true)
+  |> appearance(
+       color = "#a7c8d1",
+       metalness = 2,
+       roughness = 24,
+       opacity = 58,
+     )
+filterCap = clone(unitCylinder)
+  |> scale(
+       x = 44,
+       y = 44,
+       z = 11,
+       global = false,
+     )
+  |> translate(x = 67mm, z = -18mm, global = true)
+  |> appearance(color = hardwareBlack, metalness = 28, roughness = 54)
+regulator = clone(unitCylinder)
+  |> scale(
+       x = 23,
+       y = 23,
+       z = 28,
+       global = false,
+     )
+  |> translate(x = 64mm, z = 38mm, global = true)
+  |> appearance(color = warningOrange, metalness = 20, roughness = 44)
+
+inletPort = clone(unitCylinder)
+  |> scale(
+       x = 14,
+       y = 14,
+       z = 32,
+       global = false,
+     )
+  |> rotate(axis = X, angle = 90deg, global = true)
+  |> translate(x = 42mm, y = -43mm, global = true)
+  |> appearance(color = hardwareSteel, metalness = 80, roughness = 28)
+outletPort = clone(inletPort)
+  |> translate(y = 86mm, global = true)
+
+mountPlate = clone(unitBlock)
+  |> scale(
+       x = 8,
+       y = 82,
+       z = 110,
+       global = false,
+     )
+  |> translate(x = -45mm, z = -15mm, global = true)
+  |> appearance(color = aluminumDark, metalness = 78, roughness = 34)
+motorFlange = clone(unitCylinder)
+  |> scale(
+       x = 58,
+       y = 58,
+       z = 8,
+       global = false,
+     )
+  |> rotate(axis = Y, angle = 90deg, global = true)
+  |> translate(x = -41mm, global = true)
+  |> appearance(color = hardwareSteel, metalness = 84, roughness = 28)
+frontRailSpacer = clone(unitBlock)
+  |> scale(
+       x = 20,
+       y = 18,
+       z = 18,
+       global = false,
+     )
+  |> translate(
+       x = -54mm,
+       y = -30mm,
+       z = 4mm,
+       global = true,
+     )
+  |> appearance(color = aluminumDark, metalness = 80, roughness = 30)
+rearRailSpacer = clone(frontRailSpacer)
+  |> translate(y = 60mm, global = true)
+frontMountBolt = clone(unitCylinder)
+  |> scale(
+       x = 8,
+       y = 8,
+       z = 28,
+       global = false,
+     )
+  |> rotate(axis = Y, angle = 90deg, global = true)
+  |> translate(
+       x = -54mm,
+       y = -30mm,
+       z = 4mm,
+       global = true,
+     )
+  |> appearance(color = hardwareSteel, metalness = 90, roughness = 22)
+rearMountBolt = clone(frontMountBolt)
+  |> translate(y = 60mm, global = true)
+
+powerCable = clone(unitCylinder)
+  |> scale(
+       x = 6,
+       y = 6,
+       z = 100,
+       global = false,
+     )
+  |> translate(
+       x = -30mm,
+       y = 13mm,
+       z = 50mm,
+       global = true,
+     )
+  |> appearance(color = "#17191a", roughness = 76)
+cableClamp = clone(unitBlock)
+  |> scale(
+       x = 10,
+       y = 16,
+       z = 12,
+       global = false,
+     )
+  |> translate(
+       x = -40mm,
+       y = 13mm,
+       z = 18mm,
+       global = true,
+     )
+  |> appearance(color = hardwareSteel, metalness = 76, roughness = 34)
+
+export allBodies = [
+  pumpMotor,
+  pumpHead,
+  filterBowl,
+  filterCap,
+  regulator,
+  inletPort,
+  outletPort,
+  mountPlate,
+  motorFlange,
+  frontRailSpacer,
+  rearRailSpacer,
+  frontMountBolt,
+  rearMountBolt,
+  powerCable,
+  cableClamp
+]

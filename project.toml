@@ -1,0 +1,8 @@
+title = "Agrofloat"
+default_file = "main.kcl"
+
+[settings.app]
+[settings.meta]
+id = "f8fc4d50-f52e-4513-8825-2b5cd7841e2d"
+
+[settings.modeling]

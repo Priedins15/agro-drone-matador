@@ -1,0 +1,28 @@
+// Landing gear brace tube
+// Vertical chassis-to-skid strut with reinforced end collars.
+@settings(defaultLengthUnit = mm, kclVersion = 2.0)
+
+import unitCylinder from "unitCylinder.kcl"
+import * from "parameters.kcl"
+
+braceTube = clone(unitCylinder)
+  |> scale(
+       x = 12,
+       y = 12,
+       z = 170,
+       global = false,
+     )
+  |> appearance(color = carbonBlack, metalness = 48, roughness = 40)
+upperCollar = clone(unitCylinder)
+  |> scale(
+       x = 20,
+       y = 20,
+       z = 16,
+       global = false,
+     )
+  |> translate(z = 77mm, global = true)
+  |> appearance(color = hardwareBlack, metalness = 76, roughness = 34)
+lowerCollar = clone(upperCollar)
+  |> translate(z = -154mm, global = true)
+
+export allBodies = [braceTube, upperCollar, lowerCollar]

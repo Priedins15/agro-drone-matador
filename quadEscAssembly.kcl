@@ -1,0 +1,147 @@
+// Four compact ESC subassemblies
+// Detailed arm-mounted controllers follow the corrected propulsion axes.
+@settings(defaultLengthUnit = mm, kclVersion = 2.0)
+
+import escCase, escTopPlate, finSeed, capacitorLeft, capacitorRight, phaseLeadSeed, mountEarLeft, mountEarRight, statusLed from "escModule.kcl"
+import * from "parameters.kcl"
+
+frontRightFins = patternLinear3d(
+  clone(finSeed),
+  instances = 8,
+  distance = 4.3mm,
+  axis = Y,
+)
+frontRightLeads = patternLinear3d(
+  clone(phaseLeadSeed),
+  instances = 3,
+  distance = 11.5mm,
+  axis = Y,
+)
+frontRightEsc = flatten([
+  clone(escCase),
+  clone(escTopPlate),
+  frontRightFins,
+  clone(capacitorLeft),
+  clone(capacitorRight),
+  frontRightLeads,
+  clone(mountEarLeft),
+  clone(mountEarRight),
+  clone(statusLed)
+])
+  |> rotate(axis = Z, angle = -armYaw, global = true)
+  |> translate(
+       x = escX,
+       y = -escY,
+       z = 8mm,
+       global = true,
+     )
+
+frontLeftFins = patternLinear3d(
+  clone(finSeed),
+  instances = 8,
+  distance = 4.3mm,
+  axis = Y,
+)
+frontLeftLeads = patternLinear3d(
+  clone(phaseLeadSeed),
+  instances = 3,
+  distance = 11.5mm,
+  axis = Y,
+)
+frontLeftEsc = flatten([
+  clone(escCase),
+  clone(escTopPlate),
+  frontLeftFins,
+  clone(capacitorLeft),
+  clone(capacitorRight),
+  frontLeftLeads,
+  clone(mountEarLeft),
+  clone(mountEarRight),
+  clone(statusLed)
+])
+  |> rotate(axis = Z, angle = -150.312deg, global = true)
+  |> translate(
+       x = -escX,
+       y = -escY,
+       z = 8mm,
+       global = true,
+     )
+
+rearRightFins = patternLinear3d(
+  clone(finSeed),
+  instances = 8,
+  distance = 4.3mm,
+  axis = Y,
+)
+rearRightLeads = patternLinear3d(
+  clone(phaseLeadSeed),
+  instances = 3,
+  distance = 11.5mm,
+  axis = Y,
+)
+rearRightEsc = flatten([
+  clone(escCase),
+  clone(escTopPlate),
+  rearRightFins,
+  clone(capacitorLeft),
+  clone(capacitorRight),
+  rearRightLeads,
+  clone(mountEarLeft),
+  clone(mountEarRight),
+  clone(statusLed)
+])
+  |> rotate(axis = Z, angle = armYaw, global = true)
+  |> translate(
+       x = escX,
+       y = escY,
+       z = 8mm,
+       global = true,
+     )
+
+rearLeftFins = patternLinear3d(
+  clone(finSeed),
+  instances = 8,
+  distance = 4.3mm,
+  axis = Y,
+)
+rearLeftLeads = patternLinear3d(
+  clone(phaseLeadSeed),
+  instances = 3,
+  distance = 11.5mm,
+  axis = Y,
+)
+rearLeftEsc = flatten([
+  clone(escCase),
+  clone(escTopPlate),
+  rearLeftFins,
+  clone(capacitorLeft),
+  clone(capacitorRight),
+  rearLeftLeads,
+  clone(mountEarLeft),
+  clone(mountEarRight),
+  clone(statusLed)
+])
+  |> rotate(axis = Z, angle = 150.312deg, global = true)
+  |> translate(
+       x = -escX,
+       y = escY,
+       z = 8mm,
+       global = true,
+     )
+
+export allBodies = flatten([
+  frontRightEsc,
+  frontLeftEsc,
+  rearRightEsc,
+  rearLeftEsc
+])
+
+hide(escCase)
+hide(escTopPlate)
+hide(finSeed)
+hide(capacitorLeft)
+hide(capacitorRight)
+hide(phaseLeadSeed)
+hide(mountEarLeft)
+hide(mountEarRight)
+hide(statusLed)

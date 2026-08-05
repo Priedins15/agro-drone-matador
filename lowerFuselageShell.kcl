@@ -1,0 +1,69 @@
+// Reference-matched lower fuselage fairings
+// Compact belly deck, side skirts, molded front shroud, rear cover, and camera hardpoint.
+@settings(defaultLengthUnit = mm, kclVersion = 2.0)
+
+import unitSphere from "unitSphere.kcl"
+import unitBlock from "unitBlock.kcl"
+import * from "parameters.kcl"
+
+bellyDeck = clone(unitBlock)
+  |> scale(
+       x = 292,
+       y = 220,
+       z = 24,
+       global = false,
+     )
+  |> translate(z = -48mm, global = true)
+  |> appearance(color = shellShadow, roughness = 52, metalness = 3)
+leftBellyFairing = clone(unitSphere)
+  |> scale(
+       x = 116,
+       y = 176,
+       z = 102,
+       global = false,
+     )
+  |> translate(
+       x = -108mm,
+       y = -5mm,
+       z = -76mm,
+       global = true,
+     )
+  |> appearance(color = shellWhite, roughness = 50, metalness = 3)
+rightBellyFairing = clone(leftBellyFairing)
+  |> translate(x = 216mm, global = true)
+frontEquipmentShroud = clone(unitSphere)
+  |> scale(
+       x = 250,
+       y = 96,
+       z = 90,
+       global = false,
+     )
+  |> translate(y = -112mm, z = -42mm, global = true)
+  |> appearance(color = shellWhite, roughness = 50, metalness = 3)
+rearServiceFairing = clone(unitSphere)
+  |> scale(
+       x = 210,
+       y = 112,
+       z = 72,
+       global = false,
+     )
+  |> translate(y = 108mm, z = -68mm, global = true)
+  |> appearance(color = shellShadow, roughness = 52, metalness = 3)
+forwardSensorMount = clone(unitBlock)
+  |> scale(
+       x = 86,
+       y = 60,
+       z = 6,
+       global = false,
+     )
+  |> translate(y = -177mm, z = 5mm, global = true)
+  |> appearance(color = shellWhite, roughness = 50, metalness = 3)
+
+export allBodies = [
+  bellyDeck,
+  leftBellyFairing,
+  rightBellyFairing,
+  frontEquipmentShroud,
+  rearServiceFairing,
+  forwardSensorMount
+]

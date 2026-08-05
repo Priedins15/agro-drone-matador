@@ -1,0 +1,548 @@
+// Four-motor propulsion subassembly
+// Independently instanced detailed motor components at the four arm-end datums.
+@settings(defaultLengthUnit = mm, kclVersion = 2.0)
+
+import motorBell, bellTopCap, lowerMotorBase, motorMountPlate, statorCore, coilSeed, motorShaft, lowerBearing, upperBearing, propAdapter, propRetainingNut, ventFinSeed, mountScrewSeed from "motorModule.kcl"
+import * from "parameters.kcl"
+
+frontRightBell = clone(motorBell)
+  |> translate(
+       x = motorX,
+       y = -motorY,
+       z = motorZ,
+       global = true,
+     )
+frontLeftBell = clone(motorBell)
+  |> translate(
+       x = -motorX,
+       y = -motorY,
+       z = motorZ,
+       global = true,
+     )
+rearRightBell = clone(motorBell)
+  |> translate(
+       x = motorX,
+       y = motorY,
+       z = motorZ,
+       global = true,
+     )
+rearLeftBell = clone(motorBell)
+  |> translate(
+       x = -motorX,
+       y = motorY,
+       z = motorZ,
+       global = true,
+     )
+
+frontRightTopCap = clone(bellTopCap)
+  |> translate(
+       x = motorX,
+       y = -motorY,
+       z = motorZ,
+       global = true,
+     )
+frontLeftTopCap = clone(bellTopCap)
+  |> translate(
+       x = -motorX,
+       y = -motorY,
+       z = motorZ,
+       global = true,
+     )
+rearRightTopCap = clone(bellTopCap)
+  |> translate(
+       x = motorX,
+       y = motorY,
+       z = motorZ,
+       global = true,
+     )
+rearLeftTopCap = clone(bellTopCap)
+  |> translate(
+       x = -motorX,
+       y = motorY,
+       z = motorZ,
+       global = true,
+     )
+
+frontRightBase = clone(lowerMotorBase)
+  |> translate(
+       x = motorX,
+       y = -motorY,
+       z = motorZ,
+       global = true,
+     )
+frontLeftBase = clone(lowerMotorBase)
+  |> translate(
+       x = -motorX,
+       y = -motorY,
+       z = motorZ,
+       global = true,
+     )
+rearRightBase = clone(lowerMotorBase)
+  |> translate(
+       x = motorX,
+       y = motorY,
+       z = motorZ,
+       global = true,
+     )
+rearLeftBase = clone(lowerMotorBase)
+  |> translate(
+       x = -motorX,
+       y = motorY,
+       z = motorZ,
+       global = true,
+     )
+
+frontRightMountPlate = clone(motorMountPlate)
+  |> translate(
+       x = motorX,
+       y = -motorY,
+       z = motorZ,
+       global = true,
+     )
+frontLeftMountPlate = clone(motorMountPlate)
+  |> translate(
+       x = -motorX,
+       y = -motorY,
+       z = motorZ,
+       global = true,
+     )
+rearRightMountPlate = clone(motorMountPlate)
+  |> translate(
+       x = motorX,
+       y = motorY,
+       z = motorZ,
+       global = true,
+     )
+rearLeftMountPlate = clone(motorMountPlate)
+  |> translate(
+       x = -motorX,
+       y = motorY,
+       z = motorZ,
+       global = true,
+     )
+
+frontRightStator = clone(statorCore)
+  |> translate(
+       x = motorX,
+       y = -motorY,
+       z = motorZ,
+       global = true,
+     )
+frontLeftStator = clone(statorCore)
+  |> translate(
+       x = -motorX,
+       y = -motorY,
+       z = motorZ,
+       global = true,
+     )
+rearRightStator = clone(statorCore)
+  |> translate(
+       x = motorX,
+       y = motorY,
+       z = motorZ,
+       global = true,
+     )
+rearLeftStator = clone(statorCore)
+  |> translate(
+       x = -motorX,
+       y = motorY,
+       z = motorZ,
+       global = true,
+     )
+
+frontRightCoilSeed = clone(coilSeed)
+  |> translate(
+       x = motorX,
+       y = -motorY,
+       z = motorZ,
+       global = true,
+     )
+frontRightWindings = patternCircular3d(
+  frontRightCoilSeed,
+  instances = 12,
+  axis = Z,
+  center = [motorX, -motorY, motorZ - 6mm],
+  arcDegrees = 360deg,
+  rotateDuplicates = true,
+)
+frontLeftCoilSeed = clone(coilSeed)
+  |> translate(
+       x = -motorX,
+       y = -motorY,
+       z = motorZ,
+       global = true,
+     )
+frontLeftWindings = patternCircular3d(
+  frontLeftCoilSeed,
+  instances = 12,
+  axis = Z,
+  center = [-motorX, -motorY, motorZ - 6mm],
+  arcDegrees = 360deg,
+  rotateDuplicates = true,
+)
+rearRightCoilSeed = clone(coilSeed)
+  |> translate(
+       x = motorX,
+       y = motorY,
+       z = motorZ,
+       global = true,
+     )
+rearRightWindings = patternCircular3d(
+  rearRightCoilSeed,
+  instances = 12,
+  axis = Z,
+  center = [motorX, motorY, motorZ - 6mm],
+  arcDegrees = 360deg,
+  rotateDuplicates = true,
+)
+rearLeftCoilSeed = clone(coilSeed)
+  |> translate(
+       x = -motorX,
+       y = motorY,
+       z = motorZ,
+       global = true,
+     )
+rearLeftWindings = patternCircular3d(
+  rearLeftCoilSeed,
+  instances = 12,
+  axis = Z,
+  center = [-motorX, motorY, motorZ - 6mm],
+  arcDegrees = 360deg,
+  rotateDuplicates = true,
+)
+
+frontRightShaft = clone(motorShaft)
+  |> translate(
+       x = motorX,
+       y = -motorY,
+       z = motorZ,
+       global = true,
+     )
+frontLeftShaft = clone(motorShaft)
+  |> translate(
+       x = -motorX,
+       y = -motorY,
+       z = motorZ,
+       global = true,
+     )
+rearRightShaft = clone(motorShaft)
+  |> translate(
+       x = motorX,
+       y = motorY,
+       z = motorZ,
+       global = true,
+     )
+rearLeftShaft = clone(motorShaft)
+  |> translate(
+       x = -motorX,
+       y = motorY,
+       z = motorZ,
+       global = true,
+     )
+
+frontRightLowerBearing = clone(lowerBearing)
+  |> translate(
+       x = motorX,
+       y = -motorY,
+       z = motorZ,
+       global = true,
+     )
+frontLeftLowerBearing = clone(lowerBearing)
+  |> translate(
+       x = -motorX,
+       y = -motorY,
+       z = motorZ,
+       global = true,
+     )
+rearRightLowerBearing = clone(lowerBearing)
+  |> translate(
+       x = motorX,
+       y = motorY,
+       z = motorZ,
+       global = true,
+     )
+rearLeftLowerBearing = clone(lowerBearing)
+  |> translate(
+       x = -motorX,
+       y = motorY,
+       z = motorZ,
+       global = true,
+     )
+
+frontRightUpperBearing = clone(upperBearing)
+  |> translate(
+       x = motorX,
+       y = -motorY,
+       z = motorZ,
+       global = true,
+     )
+frontLeftUpperBearing = clone(upperBearing)
+  |> translate(
+       x = -motorX,
+       y = -motorY,
+       z = motorZ,
+       global = true,
+     )
+rearRightUpperBearing = clone(upperBearing)
+  |> translate(
+       x = motorX,
+       y = motorY,
+       z = motorZ,
+       global = true,
+     )
+rearLeftUpperBearing = clone(upperBearing)
+  |> translate(
+       x = -motorX,
+       y = motorY,
+       z = motorZ,
+       global = true,
+     )
+
+frontRightAdapter = clone(propAdapter)
+  |> translate(
+       x = motorX,
+       y = -motorY,
+       z = motorZ,
+       global = true,
+     )
+frontLeftAdapter = clone(propAdapter)
+  |> translate(
+       x = -motorX,
+       y = -motorY,
+       z = motorZ,
+       global = true,
+     )
+rearRightAdapter = clone(propAdapter)
+  |> translate(
+       x = motorX,
+       y = motorY,
+       z = motorZ,
+       global = true,
+     )
+rearLeftAdapter = clone(propAdapter)
+  |> translate(
+       x = -motorX,
+       y = motorY,
+       z = motorZ,
+       global = true,
+     )
+
+frontRightNut = clone(propRetainingNut)
+  |> translate(
+       x = motorX,
+       y = -motorY,
+       z = motorZ,
+       global = true,
+     )
+frontLeftNut = clone(propRetainingNut)
+  |> translate(
+       x = -motorX,
+       y = -motorY,
+       z = motorZ,
+       global = true,
+     )
+rearRightNut = clone(propRetainingNut)
+  |> translate(
+       x = motorX,
+       y = motorY,
+       z = motorZ,
+       global = true,
+     )
+rearLeftNut = clone(propRetainingNut)
+  |> translate(
+       x = -motorX,
+       y = motorY,
+       z = motorZ,
+       global = true,
+     )
+
+frontRightVentSeed = clone(ventFinSeed)
+  |> translate(
+       x = motorX,
+       y = -motorY,
+       z = motorZ,
+       global = true,
+     )
+frontRightVents = patternCircular3d(
+  frontRightVentSeed,
+  instances = 12,
+  axis = Z,
+  center = [motorX, -motorY, motorZ + 4mm],
+  arcDegrees = 360deg,
+  rotateDuplicates = true,
+)
+frontLeftVentSeed = clone(ventFinSeed)
+  |> translate(
+       x = -motorX,
+       y = -motorY,
+       z = motorZ,
+       global = true,
+     )
+frontLeftVents = patternCircular3d(
+  frontLeftVentSeed,
+  instances = 12,
+  axis = Z,
+  center = [-motorX, -motorY, motorZ + 4mm],
+  arcDegrees = 360deg,
+  rotateDuplicates = true,
+)
+rearRightVentSeed = clone(ventFinSeed)
+  |> translate(
+       x = motorX,
+       y = motorY,
+       z = motorZ,
+       global = true,
+     )
+rearRightVents = patternCircular3d(
+  rearRightVentSeed,
+  instances = 12,
+  axis = Z,
+  center = [motorX, motorY, motorZ + 4mm],
+  arcDegrees = 360deg,
+  rotateDuplicates = true,
+)
+rearLeftVentSeed = clone(ventFinSeed)
+  |> translate(
+       x = -motorX,
+       y = motorY,
+       z = motorZ,
+       global = true,
+     )
+rearLeftVents = patternCircular3d(
+  rearLeftVentSeed,
+  instances = 12,
+  axis = Z,
+  center = [-motorX, motorY, motorZ + 4mm],
+  arcDegrees = 360deg,
+  rotateDuplicates = true,
+)
+
+frontRightScrewSeed = clone(mountScrewSeed)
+  |> translate(
+       x = motorX,
+       y = -motorY,
+       z = motorZ,
+       global = true,
+     )
+frontRightScrews = patternCircular3d(
+  frontRightScrewSeed,
+  instances = 4,
+  axis = Z,
+  center = [motorX, -motorY, motorZ - 45mm],
+  arcDegrees = 360deg,
+  rotateDuplicates = false,
+)
+frontLeftScrewSeed = clone(mountScrewSeed)
+  |> translate(
+       x = -motorX,
+       y = -motorY,
+       z = motorZ,
+       global = true,
+     )
+frontLeftScrews = patternCircular3d(
+  frontLeftScrewSeed,
+  instances = 4,
+  axis = Z,
+  center = [-motorX, -motorY, motorZ - 45mm],
+  arcDegrees = 360deg,
+  rotateDuplicates = false,
+)
+rearRightScrewSeed = clone(mountScrewSeed)
+  |> translate(
+       x = motorX,
+       y = motorY,
+       z = motorZ,
+       global = true,
+     )
+rearRightScrews = patternCircular3d(
+  rearRightScrewSeed,
+  instances = 4,
+  axis = Z,
+  center = [motorX, motorY, motorZ - 45mm],
+  arcDegrees = 360deg,
+  rotateDuplicates = false,
+)
+rearLeftScrewSeed = clone(mountScrewSeed)
+  |> translate(
+       x = -motorX,
+       y = motorY,
+       z = motorZ,
+       global = true,
+     )
+rearLeftScrews = patternCircular3d(
+  rearLeftScrewSeed,
+  instances = 4,
+  axis = Z,
+  center = [-motorX, motorY, motorZ - 45mm],
+  arcDegrees = 360deg,
+  rotateDuplicates = false,
+)
+
+export allBodies = flatten([
+  frontRightBell,
+  frontLeftBell,
+  rearRightBell,
+  rearLeftBell,
+  frontRightTopCap,
+  frontLeftTopCap,
+  rearRightTopCap,
+  rearLeftTopCap,
+  frontRightBase,
+  frontLeftBase,
+  rearRightBase,
+  rearLeftBase,
+  frontRightMountPlate,
+  frontLeftMountPlate,
+  rearRightMountPlate,
+  rearLeftMountPlate,
+  frontRightStator,
+  frontLeftStator,
+  rearRightStator,
+  rearLeftStator,
+  frontRightWindings,
+  frontLeftWindings,
+  rearRightWindings,
+  rearLeftWindings,
+  frontRightShaft,
+  frontLeftShaft,
+  rearRightShaft,
+  rearLeftShaft,
+  frontRightLowerBearing,
+  frontLeftLowerBearing,
+  rearRightLowerBearing,
+  rearLeftLowerBearing,
+  frontRightUpperBearing,
+  frontLeftUpperBearing,
+  rearRightUpperBearing,
+  rearLeftUpperBearing,
+  frontRightAdapter,
+  frontLeftAdapter,
+  rearRightAdapter,
+  rearLeftAdapter,
+  frontRightNut,
+  frontLeftNut,
+  rearRightNut,
+  rearLeftNut,
+  frontRightVents,
+  frontLeftVents,
+  rearRightVents,
+  rearLeftVents,
+  frontRightScrews,
+  frontLeftScrews,
+  rearRightScrews,
+  rearLeftScrews
+])
+
+hide(motorBell)
+hide(bellTopCap)
+hide(lowerMotorBase)
+hide(motorMountPlate)
+hide(statorCore)
+hide(coilSeed)
+hide(motorShaft)
+hide(lowerBearing)
+hide(upperBearing)
+hide(propAdapter)
+hide(propRetainingNut)
+hide(ventFinSeed)
+hide(mountScrewSeed)

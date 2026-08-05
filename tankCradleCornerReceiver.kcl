@@ -1,0 +1,62 @@
+// Upper tank-cradle corner receiver joint
+// Lightweight orthogonal sockets join the longitudinal rail and perimeter cross-tie.
+@settings(defaultLengthUnit = mm, kclVersion = 2.0)
+
+import unitBlock from "unitBlock.kcl"
+import unitCylinder from "unitCylinder.kcl"
+import * from "parameters.kcl"
+
+crossTieSleeveOuter = clone(unitBlock)
+  |> scale(
+       x = 34,
+       y = 14.6,
+       z = 28.6,
+       global = false,
+     )
+  |> translate(x = 15mm, global = true)
+railSleeveOuter = clone(unitBlock)
+  |> scale(
+       x = 24.6,
+       y = 34,
+       z = 28.6,
+       global = false,
+     )
+  |> translate(y = 15mm, global = true)
+
+receiverOuter = crossTieSleeveOuter + railSleeveOuter
+
+crossTieSocketCutter = clone(unitBlock)
+  |> scale(
+       x = 36,
+       y = 8.6,
+       z = 22.6,
+       global = false,
+     )
+  |> translate(x = 17mm, global = true)
+railSocketCutter = clone(unitBlock)
+  |> scale(
+       x = 18.6,
+       y = 36,
+       z = 22.6,
+       global = false,
+     )
+  |> translate(y = 17mm, global = true)
+crossTieBoltHoleCutter = clone(unitCylinder)
+  |> scale(
+       x = 5.5,
+       y = 5.5,
+       z = 32,
+       global = false,
+     )
+  |> translate(x = 22mm, global = true)
+railBoltHoleCutter = clone(unitCylinder)
+  |> scale(
+       x = 5.5,
+       y = 5.5,
+       z = 32,
+       global = false,
+     )
+  |> translate(y = 22mm, global = true)
+
+export cornerReceiver = receiverOuter - crossTieSocketCutter - railSocketCutter - crossTieBoltHoleCutter - railBoltHoleCutter
+  |> appearance(color = hardwareSteel, metalness = 84, roughness = 28)

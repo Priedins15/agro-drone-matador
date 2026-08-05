@@ -1,0 +1,181 @@
+// Two-blade agricultural propeller assembly
+// Replaceable lofted composite blades mounted to a bored central hub.
+@settings(defaultLengthUnit = mm, kclVersion = 2.0, experimentalFeatures = allow)
+
+import unitCylinder from "unitCylinder.kcl"
+import * from "parameters.kcl"
+
+rootSectionSketch = sketch(on = offsetPlane(YZ, offset = 35mm)) {
+  upperArc = arc(start = [var 38mm, var 0mm], end = [var -38mm, var 0mm], center = [var 0mm, var -110mm])
+  lowerArc = arc(start = [var -38mm, var 0mm], end = [var 38mm, var 0mm], center = [var 0mm, var 135mm])
+  coincident([upperArc.end, lowerArc.start])
+  coincident([lowerArc.end, upperArc.start])
+  horizontal([upperArc.start, upperArc.end])
+  horizontalDistance([ORIGIN, upperArc.start]) == 38mm
+  horizontalDistance([upperArc.end, ORIGIN]) == 38mm
+  verticalDistance([ORIGIN, upperArc.start]) == 0mm
+  verticalDistance([ORIGIN, upperArc.end]) == 0mm
+  horizontalDistance([ORIGIN, upperArc.center]) == 0mm
+  verticalDistance([upperArc.center, ORIGIN]) == 110mm
+  horizontalDistance([ORIGIN, lowerArc.center]) == 0mm
+  verticalDistance([ORIGIN, lowerArc.center]) == 135mm
+}
+shoulderSectionSketch = sketch(on = offsetPlane(YZ, offset = 85mm)) {
+  upperArc = arc(start = [var 55mm, var 0mm], end = [var -55mm, var 0mm], center = [var 0mm, var -160mm])
+  lowerArc = arc(start = [var -55mm, var 0mm], end = [var 55mm, var 0mm], center = [var 0mm, var 190mm])
+  coincident([upperArc.end, lowerArc.start])
+  coincident([lowerArc.end, upperArc.start])
+  horizontal([upperArc.start, upperArc.end])
+  horizontalDistance([ORIGIN, upperArc.start]) == 55mm
+  horizontalDistance([upperArc.end, ORIGIN]) == 55mm
+  verticalDistance([ORIGIN, upperArc.start]) == 0mm
+  verticalDistance([ORIGIN, upperArc.end]) == 0mm
+  horizontalDistance([ORIGIN, upperArc.center]) == 0mm
+  verticalDistance([upperArc.center, ORIGIN]) == 160mm
+  horizontalDistance([ORIGIN, lowerArc.center]) == 0mm
+  verticalDistance([ORIGIN, lowerArc.center]) == 190mm
+}
+midSectionSketch = sketch(on = offsetPlane(YZ, offset = 180mm)) {
+  upperArc = arc(start = [var 46mm, var 0mm], end = [var -46mm, var 0mm], center = [var 0mm, var -170mm])
+  lowerArc = arc(start = [var -46mm, var 0mm], end = [var 46mm, var 0mm], center = [var 0mm, var 210mm])
+  coincident([upperArc.end, lowerArc.start])
+  coincident([lowerArc.end, upperArc.start])
+  horizontal([upperArc.start, upperArc.end])
+  horizontalDistance([ORIGIN, upperArc.start]) == 46mm
+  horizontalDistance([upperArc.end, ORIGIN]) == 46mm
+  verticalDistance([ORIGIN, upperArc.start]) == 0mm
+  verticalDistance([ORIGIN, upperArc.end]) == 0mm
+  horizontalDistance([ORIGIN, upperArc.center]) == 0mm
+  verticalDistance([upperArc.center, ORIGIN]) == 170mm
+  horizontalDistance([ORIGIN, lowerArc.center]) == 0mm
+  verticalDistance([ORIGIN, lowerArc.center]) == 210mm
+}
+tipSectionSketch = sketch(on = offsetPlane(YZ, offset = 290mm)) {
+  upperArc = arc(start = [var 25mm, var 0mm], end = [var -25mm, var 0mm], center = [var 0mm, var -140mm])
+  lowerArc = arc(start = [var -25mm, var 0mm], end = [var 25mm, var 0mm], center = [var 0mm, var 170mm])
+  coincident([upperArc.end, lowerArc.start])
+  coincident([lowerArc.end, upperArc.start])
+  horizontal([upperArc.start, upperArc.end])
+  horizontalDistance([ORIGIN, upperArc.start]) == 25mm
+  horizontalDistance([upperArc.end, ORIGIN]) == 25mm
+  verticalDistance([ORIGIN, upperArc.start]) == 0mm
+  verticalDistance([ORIGIN, upperArc.end]) == 0mm
+  horizontalDistance([ORIGIN, upperArc.center]) == 0mm
+  verticalDistance([upperArc.center, ORIGIN]) == 140mm
+  horizontalDistance([ORIGIN, lowerArc.center]) == 0mm
+  verticalDistance([ORIGIN, lowerArc.center]) == 170mm
+}
+endSectionSketch = sketch(on = offsetPlane(YZ, offset = 335mm)) {
+  upperArc = arc(start = [var 4mm, var 0mm], end = [var -4mm, var 0mm], center = [var 0mm, var -20mm])
+  lowerArc = arc(start = [var -4mm, var 0mm], end = [var 4mm, var 0mm], center = [var 0mm, var 24mm])
+  coincident([upperArc.end, lowerArc.start])
+  coincident([lowerArc.end, upperArc.start])
+  horizontal([upperArc.start, upperArc.end])
+  horizontalDistance([ORIGIN, upperArc.start]) == 4mm
+  horizontalDistance([upperArc.end, ORIGIN]) == 4mm
+  verticalDistance([ORIGIN, upperArc.start]) == 0mm
+  verticalDistance([ORIGIN, upperArc.end]) == 0mm
+  horizontalDistance([ORIGIN, upperArc.center]) == 0mm
+  verticalDistance([upperArc.center, ORIGIN]) == 20mm
+  horizontalDistance([ORIGIN, lowerArc.center]) == 0mm
+  verticalDistance([ORIGIN, lowerArc.center]) == 24mm
+}
+
+rootSection = region(
+  segments = [
+    rootSectionSketch.upperArc,
+    rootSectionSketch.lowerArc
+  ],
+  intersectionIndex = -1,
+  direction = CCW,
+)
+shoulderSection = region(
+  segments = [
+    shoulderSectionSketch.upperArc,
+    shoulderSectionSketch.lowerArc
+  ],
+  intersectionIndex = -1,
+  direction = CCW,
+)
+midSection = region(
+  segments = [
+    midSectionSketch.upperArc,
+    midSectionSketch.lowerArc
+  ],
+  intersectionIndex = -1,
+  direction = CCW,
+)
+tipSection = region(
+  segments = [
+    tipSectionSketch.upperArc,
+    tipSectionSketch.lowerArc
+  ],
+  intersectionIndex = -1,
+  direction = CCW,
+)
+endSection = region(
+  segments = [
+    endSectionSketch.upperArc,
+    endSectionSketch.lowerArc
+  ],
+  intersectionIndex = -1,
+  direction = CCW,
+)
+
+bladeRight = loft(
+  [
+    rootSection,
+    shoulderSection,
+    midSection,
+    tipSection,
+    endSection
+  ],
+  vDegree = 3,
+  bezApproximateRational = true,
+)
+  |> appearance(color = "#22282c", metalness = 18, roughness = 36)
+bladeLeft = clone(bladeRight)
+  |> rotate(axis = Z, angle = 180deg, global = true)
+
+hubOuterSketch = sketch(on = XY) {
+  hubCircle = circle(start = [var 46mm, var 0mm], center = [var 0mm, var 0mm])
+  coincident([hubCircle.center, ORIGIN])
+  horizontal([hubCircle.center, hubCircle.start])
+  diameter(hubCircle) == 92mm
+}
+hubBoreSketch = sketch(on = XY) {
+  boreCircle = circle(start = [var 8mm, var 0mm], center = [var 0mm, var 0mm])
+  coincident([boreCircle.center, ORIGIN])
+  horizontal([boreCircle.center, boreCircle.start])
+  diameter(boreCircle) == 16mm
+}
+hubOuterRegion = region(segments = [hubOuterSketch.hubCircle])
+hubBoreRegion = region(segments = [hubBoreSketch.boreCircle])
+hubBlank = extrude(hubOuterRegion, length = 18mm, symmetric = true)
+hubBoreCutter = extrude(hubBoreRegion, length = 24mm, symmetric = true)
+propellerHub = subtract(hubBlank, tools = [hubBoreCutter])
+  |> appearance(color = "#30363a", metalness = 42, roughness = 34)
+hubTopWasher = clone(unitCylinder)
+  |> scale(
+       x = 34,
+       y = 34,
+       z = 4,
+       global = false,
+     )
+  |> translate(z = 11mm, global = true)
+  |> appearance(color = hardwareSteel, metalness = 90, roughness = 20)
+
+export allBodies = [
+  bladeRight,
+  bladeLeft,
+  propellerHub,
+  hubTopWasher
+]
+
+hiddenRootSectionSketch = hide(rootSectionSketch)
+hiddenShoulderSectionSketch = hide(shoulderSectionSketch)
+hiddenMidSectionSketch = hide(midSectionSketch)
+hiddenTipSectionSketch = hide(tipSectionSketch)
+hiddenEndSectionSketch = hide(endSectionSketch)
+hiddenHubOuterSketch = hide(hubOuterSketch)
+hiddenHubBoreSketch = hide(hubBoreSketch)

@@ -1,0 +1,68 @@
+// Compact chemical tank filler cap
+// Ribbed removable cap with gasket and pressure-relief insert.
+@settings(defaultLengthUnit = mm, kclVersion = 2.0)
+
+import unitBlock from "unitBlock.kcl"
+import unitCylinder from "unitCylinder.kcl"
+import * from "parameters.kcl"
+
+capBody = clone(unitCylinder)
+  |> scale(
+       x = 58,
+       y = 58,
+       z = 18,
+       global = false,
+     )
+  |> appearance(color = hardwareBlack, metalness = 16, roughness = 64)
+capTop = clone(unitCylinder)
+  |> scale(
+       x = 53,
+       y = 53,
+       z = 6,
+       global = false,
+     )
+  |> translate(z = 12mm, global = true)
+  |> appearance(color = "#303639", metalness = 20, roughness = 58)
+ribSeed = clone(unitBlock)
+  |> scale(
+       x = 5,
+       y = 9,
+       z = 17,
+       global = false,
+     )
+  |> translate(x = 30mm, global = true)
+  |> appearance(color = "#202426", metalness = 12, roughness = 66)
+capRibs = patternCircular3d(
+  ribSeed,
+  instances = 18,
+  axis = Z,
+  center = [0mm, 0mm, 0mm],
+  arcDegrees = 360deg,
+  rotateDuplicates = true,
+)
+capGasket = clone(unitCylinder)
+  |> scale(
+       x = 50,
+       y = 50,
+       z = 2,
+       global = false,
+     )
+  |> translate(z = -10mm, global = true)
+  |> appearance(color = "#222222", roughness = 88)
+reliefInsert = clone(unitCylinder)
+  |> scale(
+       x = 14,
+       y = 14,
+       z = 3,
+       global = false,
+     )
+  |> translate(z = 15mm, global = true)
+  |> appearance(color = warningOrange, metalness = 8, roughness = 50)
+
+export allBodies = [
+  capBody,
+  capTop,
+  capRibs,
+  capGasket,
+  reliefInsert
+]

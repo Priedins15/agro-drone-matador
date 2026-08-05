@@ -1,0 +1,114 @@
+// Four-nozzle spray subassembly
+// Detailed anti-drip nozzle sets mounted just inboard of the four motors.
+@settings(defaultLengthUnit = mm, kclVersion = 2.0)
+
+import valveBody, inletBarb, barbRingSeed, strainerCup, meshDisk, tipHolder, orificePlate, deflector from "sprayNozzle.kcl"
+import * from "parameters.kcl"
+
+frontRightRings = patternLinear3d(
+  clone(barbRingSeed),
+  instances = 4,
+  distance = 9mm,
+  axis = Z,
+)
+frontRightNozzle = flatten([
+  clone(valveBody),
+  clone(inletBarb),
+  frontRightRings,
+  clone(strainerCup),
+  clone(meshDisk),
+  clone(tipHolder),
+  clone(orificePlate),
+  clone(deflector)
+])
+  |> translate(
+       x = nozzleX,
+       y = -nozzleY,
+       z = nozzleZ,
+       global = true,
+     )
+
+frontLeftRings = patternLinear3d(
+  clone(barbRingSeed),
+  instances = 4,
+  distance = 9mm,
+  axis = Z,
+)
+frontLeftNozzle = flatten([
+  clone(valveBody),
+  clone(inletBarb),
+  frontLeftRings,
+  clone(strainerCup),
+  clone(meshDisk),
+  clone(tipHolder),
+  clone(orificePlate),
+  clone(deflector)
+])
+  |> translate(
+       x = -nozzleX,
+       y = -nozzleY,
+       z = nozzleZ,
+       global = true,
+     )
+
+rearRightRings = patternLinear3d(
+  clone(barbRingSeed),
+  instances = 4,
+  distance = 9mm,
+  axis = Z,
+)
+rearRightNozzle = flatten([
+  clone(valveBody),
+  clone(inletBarb),
+  rearRightRings,
+  clone(strainerCup),
+  clone(meshDisk),
+  clone(tipHolder),
+  clone(orificePlate),
+  clone(deflector)
+])
+  |> translate(
+       x = nozzleX,
+       y = nozzleY,
+       z = nozzleZ,
+       global = true,
+     )
+
+rearLeftRings = patternLinear3d(
+  clone(barbRingSeed),
+  instances = 4,
+  distance = 9mm,
+  axis = Z,
+)
+rearLeftNozzle = flatten([
+  clone(valveBody),
+  clone(inletBarb),
+  rearLeftRings,
+  clone(strainerCup),
+  clone(meshDisk),
+  clone(tipHolder),
+  clone(orificePlate),
+  clone(deflector)
+])
+  |> translate(
+       x = -nozzleX,
+       y = nozzleY,
+       z = nozzleZ,
+       global = true,
+     )
+
+export allBodies = flatten([
+  frontRightNozzle,
+  frontLeftNozzle,
+  rearRightNozzle,
+  rearLeftNozzle
+])
+
+hide(valveBody)
+hide(inletBarb)
+hide(barbRingSeed)
+hide(strainerCup)
+hide(meshDisk)
+hide(tipHolder)
+hide(orificePlate)
+hide(deflector)
