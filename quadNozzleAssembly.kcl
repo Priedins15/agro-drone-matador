@@ -2,7 +2,7 @@
 // Detailed anti-drip nozzle sets, fluid riser interfaces, and three-jet rotor stations.
 @settings(defaultLengthUnit = mm, kclVersion = 2.0)
 
-import valveBody, inletBarb, barbRingSeed, strainerCup, meshDisk, tipHolder, orificePlate, deflector, sprinklerDriveSpindle, sprinklerUpperBearing, sprinklerLowerBearing, sprinklerRotorHub, sprinklerRotorArmSeed, sprinklerJetSeed, sprinklerJetCapSeed from "sprayNozzle.kcl"
+import valveBody, inletBarb, barbRingSeed, strainerCup, meshDisk, tipHolder, orificePlate, deflector, sprinklerDriveSpindle, sprinklerUpperBearing, sprinklerLowerBearing, sprinklerRotorHub, sprinklerRotorArmSeed, sprinklerJetSeed, sprinklerJetCapSeed, sprinklerTangentialOutletSeed, sprinklerSprayConeSeed from "sprayNozzle.kcl"
 import * from "parameters.kcl"
 
 frontRightRings = patternLinear3d(
@@ -35,6 +35,22 @@ frontRightJetCaps = patternCircular3d(
   arcDegrees = 360deg,
   rotateDuplicates = true,
 )
+frontRightTangentialOutlets = patternCircular3d(
+  clone(sprinklerTangentialOutletSeed),
+  instances = 3,
+  axis = Z,
+  center = [0mm, 0mm, -121mm],
+  arcDegrees = 360deg,
+  rotateDuplicates = true,
+)
+frontRightSprayCones = patternCircular3d(
+  clone(sprinklerSprayConeSeed),
+  instances = 3,
+  axis = Z,
+  center = [0mm, 0mm, -121mm],
+  arcDegrees = 360deg,
+  rotateDuplicates = true,
+)
 frontRightNozzle = flatten([
   clone(valveBody),
   clone(inletBarb),
@@ -50,7 +66,9 @@ frontRightNozzle = flatten([
   clone(sprinklerRotorHub),
   frontRightRotorArms,
   frontRightJets,
-  frontRightJetCaps
+  frontRightJetCaps,
+  frontRightTangentialOutlets,
+  frontRightSprayCones
 ])
   |> rotate(axis = Z, angle = 10deg, global = true)
   |> translate(
@@ -90,6 +108,22 @@ frontLeftJetCaps = patternCircular3d(
   arcDegrees = 360deg,
   rotateDuplicates = true,
 )
+frontLeftTangentialOutlets = patternCircular3d(
+  clone(sprinklerTangentialOutletSeed),
+  instances = 3,
+  axis = Z,
+  center = [0mm, 0mm, -121mm],
+  arcDegrees = 360deg,
+  rotateDuplicates = true,
+)
+frontLeftSprayCones = patternCircular3d(
+  clone(sprinklerSprayConeSeed),
+  instances = 3,
+  axis = Z,
+  center = [0mm, 0mm, -121mm],
+  arcDegrees = 360deg,
+  rotateDuplicates = true,
+)
 frontLeftNozzle = flatten([
   clone(valveBody),
   clone(inletBarb),
@@ -105,7 +139,9 @@ frontLeftNozzle = flatten([
   clone(sprinklerRotorHub),
   frontLeftRotorArms,
   frontLeftJets,
-  frontLeftJetCaps
+  frontLeftJetCaps,
+  frontLeftTangentialOutlets,
+  frontLeftSprayCones
 ])
   |> rotate(axis = Z, angle = 130deg, global = true)
   |> translate(
@@ -145,6 +181,22 @@ rearRightJetCaps = patternCircular3d(
   arcDegrees = 360deg,
   rotateDuplicates = true,
 )
+rearRightTangentialOutlets = patternCircular3d(
+  clone(sprinklerTangentialOutletSeed),
+  instances = 3,
+  axis = Z,
+  center = [0mm, 0mm, -121mm],
+  arcDegrees = 360deg,
+  rotateDuplicates = true,
+)
+rearRightSprayCones = patternCircular3d(
+  clone(sprinklerSprayConeSeed),
+  instances = 3,
+  axis = Z,
+  center = [0mm, 0mm, -121mm],
+  arcDegrees = 360deg,
+  rotateDuplicates = true,
+)
 rearRightNozzle = flatten([
   clone(valveBody),
   clone(inletBarb),
@@ -160,7 +212,9 @@ rearRightNozzle = flatten([
   clone(sprinklerRotorHub),
   rearRightRotorArms,
   rearRightJets,
-  rearRightJetCaps
+  rearRightJetCaps,
+  rearRightTangentialOutlets,
+  rearRightSprayCones
 ])
   |> rotate(axis = Z, angle = 250deg, global = true)
   |> translate(
@@ -200,6 +254,22 @@ rearLeftJetCaps = patternCircular3d(
   arcDegrees = 360deg,
   rotateDuplicates = true,
 )
+rearLeftTangentialOutlets = patternCircular3d(
+  clone(sprinklerTangentialOutletSeed),
+  instances = 3,
+  axis = Z,
+  center = [0mm, 0mm, -121mm],
+  arcDegrees = 360deg,
+  rotateDuplicates = true,
+)
+rearLeftSprayCones = patternCircular3d(
+  clone(sprinklerSprayConeSeed),
+  instances = 3,
+  axis = Z,
+  center = [0mm, 0mm, -121mm],
+  arcDegrees = 360deg,
+  rotateDuplicates = true,
+)
 rearLeftNozzle = flatten([
   clone(valveBody),
   clone(inletBarb),
@@ -215,7 +285,9 @@ rearLeftNozzle = flatten([
   clone(sprinklerRotorHub),
   rearLeftRotorArms,
   rearLeftJets,
-  rearLeftJetCaps
+  rearLeftJetCaps,
+  rearLeftTangentialOutlets,
+  rearLeftSprayCones
 ])
   |> rotate(axis = Z, angle = 10deg, global = true)
   |> translate(
@@ -247,3 +319,5 @@ hide(sprinklerRotorHub)
 hide(sprinklerRotorArmSeed)
 hide(sprinklerJetSeed)
 hide(sprinklerJetCapSeed)
+hide(sprinklerTangentialOutletSeed)
+hide(sprinklerSprayConeSeed)

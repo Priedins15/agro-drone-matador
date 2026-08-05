@@ -1,6 +1,6 @@
-// Anti-drip spray nozzle with driven rotary sprinkler head
-// Inlet barb, valve body, strainer envelope, tip holder, orifice, deflector, and rotor detail.
-@settings(defaultLengthUnit = mm, kclVersion = 2.0)
+// Anti-drip spray nozzle with curved driven sprinkler head
+// Inlet barb, valve body, strainer envelope, tapered rotor arms, and adjustable nozzle inserts.
+@settings(defaultLengthUnit = mm, kclVersion = 2.0, experimentalFeatures = allow)
 
 import unitBlock from "unitBlock.kcl"
 import unitCylinder from "unitCylinder.kcl"
@@ -162,14 +162,46 @@ rotorHubBore = clone(unitCylinder)
   |> translate(z = -119mm, global = true)
 export sprinklerRotorHub = subtract(rotorHubBlank, tools = [rotorHubBore])
   |> appearance(color = hardwareBlack, metalness = 60, roughness = 34)
-export sprinklerRotorArmSeed = clone(unitBlock)
-  |> scale(
-       x = 9,
-       y = 58,
-       z = 5,
-       global = false,
-     )
-  |> translate(y = 25mm, z = -121mm, global = true)
+
+// Curved, tapered rotor arm profile. The outer arc bends the arm away from the hub;
+// the drafted extrusion gives the arm a manufacturable taper through its thickness.
+curvedArmRadius = 45mm
+sprinklerArmProfile = sketch(on = XY) {
+  outerArc = arc(start = [var 24mm, var 0mm], end = [var 69mm, var 45mm], center = [var 24mm, var 45mm])
+  tipEdge = line(start = [var 69mm, var 45mm], end = [var 61mm, var 40mm])
+  innerEdge = line(start = [var 61mm, var 40mm], end = [var 24mm, var 8mm])
+  rootEdge = line(start = [var 24mm, var 8mm], end = [var 24mm, var 0mm])
+
+  coincident([outerArc.end, tipEdge.start])
+  coincident([tipEdge.end, innerEdge.start])
+  coincident([innerEdge.end, rootEdge.start])
+  coincident([rootEdge.end, outerArc.start])
+
+  radius(outerArc) == curvedArmRadius
+  horizontalDistance([ORIGIN, outerArc.center]) == 24mm
+  verticalDistance([ORIGIN, outerArc.center]) == 45mm
+  horizontalDistance([ORIGIN, outerArc.start]) == 24mm
+  verticalDistance([ORIGIN, outerArc.start]) == 0mm
+  horizontalDistance([ORIGIN, outerArc.end]) == 69mm
+  verticalDistance([ORIGIN, outerArc.end]) == 45mm
+  horizontalDistance([ORIGIN, tipEdge.end]) == 61mm
+  verticalDistance([ORIGIN, tipEdge.end]) == 40mm
+  horizontalDistance([ORIGIN, rootEdge.start]) == 24mm
+  verticalDistance([ORIGIN, rootEdge.start]) == 8mm
+  vertical(rootEdge)
+}
+sprinklerArmRegion = region(segments = [
+  sprinklerArmProfile.outerArc,
+  sprinklerArmProfile.tipEdge
+])
+export sprinklerRotorArmSeed = extrude(
+  sprinklerArmRegion,
+  length = 5mm,
+  symmetric = true,
+  draftAngle = 4deg,
+  method = NEW,
+)
+  |> translate(z = -121mm, global = true)
   |> appearance(color = warningOrange, metalness = 18, roughness = 44)
 export sprinklerRotorArms = patternCircular3d(
   sprinklerRotorArmSeed,
@@ -179,16 +211,44 @@ export sprinklerRotorArms = patternCircular3d(
   arcDegrees = 360deg,
   rotateDuplicates = true,
 )
-export sprinklerJetSeed = clone(unitCylinder)
-  |> scale(
-       x = 6,
-       y = 6,
-       z = 12,
-       global = false,
-     )
-  |> rotate(axis = X, angle = 90deg, global = true)
-  |> translate(y = 55mm, z = -121mm, global = true)
+
+// Solver-driven adjustable nozzle insert at the tapered arm tip.
+adjustableInsertProfile = sketch(on = XY) {
+  insertCircle = circle(start = [var 65mm, var 40mm], center = [var 61mm, var 40mm])
+  horizontal([
+    insertCircle.center,
+    insertCircle.start
+  ])
+  horizontalDistance([ORIGIN, insertCircle.center]) == 61mm
+  verticalDistance([ORIGIN, insertCircle.center]) == 40mm
+  diameter(insertCircle) == 8mm
+}
+adjustableInsertRegion = region(segments = [adjustableInsertProfile.insertCircle])
+export sprinklerJetSeed = extrude(
+  adjustableInsertRegion,
+  length = 8mm,
+  symmetric = true,
+  method = NEW,
+)
+  |> translate(z = -121mm, global = true)
   |> appearance(color = hardwareSteel, metalness = 82, roughness = 24)
+
+adjustableCapProfile = sketch(on = XY) {
+  capCircle = circle(start = [var 66mm, var 40mm], center = [var 61mm, var 40mm])
+  horizontal([capCircle.center, capCircle.start])
+  horizontalDistance([ORIGIN, capCircle.center]) == 61mm
+  verticalDistance([ORIGIN, capCircle.center]) == 40mm
+  diameter(capCircle) == 10mm
+}
+adjustableCapRegion = region(segments = [adjustableCapProfile.capCircle])
+export sprinklerJetCapSeed = extrude(
+  adjustableCapRegion,
+  length = 3mm,
+  symmetric = true,
+  method = NEW,
+)
+  |> translate(z = -121mm, global = true)
+  |> appearance(color = hardwareSteel, metalness = 86, roughness = 22)
 export sprinklerJets = patternCircular3d(
   sprinklerJetSeed,
   instances = 3,
@@ -197,15 +257,6 @@ export sprinklerJets = patternCircular3d(
   arcDegrees = 360deg,
   rotateDuplicates = true,
 )
-export sprinklerJetCapSeed = clone(unitCylinder)
-  |> scale(
-       x = 8,
-       y = 8,
-       z = 4,
-       global = false,
-     )
-  |> translate(y = 62mm, z = -121mm, global = true)
-  |> appearance(color = hardwareSteel, metalness = 86, roughness = 22)
 export sprinklerJetCaps = patternCircular3d(
   sprinklerJetCapSeed,
   instances = 3,
@@ -214,6 +265,49 @@ export sprinklerJetCaps = patternCircular3d(
   arcDegrees = 360deg,
   rotateDuplicates = true,
 )
+
+// Tangential outlet body. Its 123-degree seed orientation follows the tangent at the 61-by-40-mm tip datum;
+// the circular pattern preserves that tangential relationship around the rotor.
+tangentialOutletAngle = 123deg
+export sprinklerTangentialOutletSeed = clone(unitBlock)
+  |> scale(
+       x = 16,
+       y = 6,
+       z = 7,
+       global = false,
+     )
+  |> rotate(axis = Z, angle = tangentialOutletAngle, global = true)
+  |> translate(
+       x = 68mm,
+       y = 40mm,
+       z = -121mm,
+       global = true,
+     )
+  |> appearance(color = warningOrange, metalness = 22, roughness = 42)
+
+// Transparent tapered bodies communicate the downward water path without changing the solid nozzle design.
+sprayConeProfile = sketch(on = XY) {
+  sprayCircle = circle(start = [var 64mm, var 40mm], center = [var 61mm, var 40mm])
+  horizontal([sprayCircle.center, sprayCircle.start])
+  horizontalDistance([ORIGIN, sprayCircle.center]) == 61mm
+  verticalDistance([ORIGIN, sprayCircle.center]) == 40mm
+  diameter(sprayCircle) == 6mm
+}
+sprayConeRegion = region(segments = [sprayConeProfile.sprayCircle])
+export sprinklerSprayConeSeed = extrude(
+  sprayConeRegion,
+  length = 28mm,
+  symmetric = true,
+  draftAngle = 12deg,
+  method = NEW,
+)
+  |> translate(z = -138mm, global = true)
+  |> appearance(
+       color = "#6ec8e7",
+       metalness = 0,
+       roughness = 18,
+       opacity = 24,
+     )
 
 export allBodies = flatten([
   valveBody,
@@ -234,6 +328,9 @@ export allBodies = flatten([
 ])
 
 hiddenBarbRings = hide(barbRings)
-hiddenSprinklerRotorArmSeed = hide(sprinklerRotorArmSeed)
-hiddenSprinklerJetSeed = hide(sprinklerJetSeed)
-hiddenSprinklerJetCapSeed = hide(sprinklerJetCapSeed)
+hiddenSprinklerArmProfile = hide(sprinklerArmProfile)
+hiddenAdjustableInsertProfile = hide(adjustableInsertProfile)
+hiddenAdjustableCapProfile = hide(adjustableCapProfile)
+hiddenSprinklerTangentialOutletSeed = hide(sprinklerTangentialOutletSeed)
+hiddenSprayConeProfile = hide(sprayConeProfile)
+hiddenSprinklerSprayConeSeed = hide(sprinklerSprayConeSeed)

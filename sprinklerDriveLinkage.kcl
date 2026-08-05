@@ -1,0 +1,73 @@
+// Sprinkler drive linkage
+// Four vertical drive shafts connecting motor regions to sprinkler rotor hubs.
+@settings(defaultLengthUnit = mm, kclVersion = 2.0)
+
+import unitCylinder from "unitCylinder.kcl"
+import * from "parameters.kcl"
+
+shaftLength = 270mm
+shaftCenterZ = -78mm
+
+frontRightDriveShaft = clone(unitCylinder)
+  |> scale(
+       x = 4,
+       y = 4,
+       z = 270,
+       global = false,
+     )
+  |> translate(
+       x = nozzleX,
+       y = -nozzleY,
+       z = shaftCenterZ,
+       global = true,
+     )
+  |> appearance(color = hardwareSteel, metalness = 88, roughness = 22)
+frontLeftDriveShaft = clone(unitCylinder)
+  |> scale(
+       x = 4,
+       y = 4,
+       z = 270,
+       global = false,
+     )
+  |> translate(
+       x = -nozzleX,
+       y = -nozzleY,
+       z = shaftCenterZ,
+       global = true,
+     )
+  |> appearance(color = hardwareSteel, metalness = 88, roughness = 22)
+rearRightDriveShaft = clone(unitCylinder)
+  |> scale(
+       x = 4,
+       y = 4,
+       z = 270,
+       global = false,
+     )
+  |> translate(
+       x = nozzleX,
+       y = nozzleY,
+       z = shaftCenterZ,
+       global = true,
+     )
+  |> appearance(color = hardwareSteel, metalness = 88, roughness = 22)
+rearLeftDriveShaft = clone(unitCylinder)
+  |> scale(
+       x = 4,
+       y = 4,
+       z = 270,
+       global = false,
+     )
+  |> translate(
+       x = -nozzleX,
+       y = nozzleY,
+       z = shaftCenterZ,
+       global = true,
+     )
+  |> appearance(color = hardwareSteel, metalness = 88, roughness = 22)
+
+export allBodies = flatten([
+  frontRightDriveShaft,
+  frontLeftDriveShaft,
+  rearRightDriveShaft,
+  rearLeftDriveShaft
+])

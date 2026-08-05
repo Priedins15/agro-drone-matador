@@ -1,0 +1,115 @@
+// Sprinkler drive coupler details
+// Offset coupler housings, shaft collars, bearing seals, and service rings.
+@settings(defaultLengthUnit = mm, kclVersion = 2.0)
+
+import unitCylinder from "unitCylinder.kcl"
+import unitBlock from "unitBlock.kcl"
+import * from "parameters.kcl"
+
+couplerMidX = (motorX + nozzleX) / 2
+couplerMidY = (motorY + nozzleY) / 2
+couplerMidZ = -12mm
+
+frontRightHousing = clone(unitCylinder)
+  |> scale(
+       x = 28,
+       y = 28,
+       z = 44,
+       global = false,
+     )
+  |> translate(
+       x = couplerMidX,
+       y = -couplerMidY,
+       z = couplerMidZ,
+       global = true,
+     )
+  |> appearance(color = aluminumDark, metalness = 82, roughness = 28)
+frontLeftHousing = clone(frontRightHousing)
+  |> translate(x = -2 * couplerMidX, global = true)
+rearRightHousing = clone(frontRightHousing)
+  |> translate(y = 2 * couplerMidY, global = true)
+rearLeftHousing = clone(frontRightHousing)
+  |> translate(x = -2 * couplerMidX, y = 2 * couplerMidY, global = true)
+
+frontRightBridge = clone(unitBlock)
+  |> scale(
+       x = 70,
+       y = 18,
+       z = 18,
+       global = false,
+     )
+  |> rotate(axis = Z, angle = 0deg, global = true)
+  |> translate(
+       x = couplerMidX,
+       y = -couplerMidY,
+       z = couplerMidZ,
+       global = true,
+     )
+  |> appearance(color = hardwareBlack, metalness = 74, roughness = 34)
+frontLeftBridge = clone(frontRightBridge)
+  |> translate(x = -2 * couplerMidX, global = true)
+rearRightBridge = clone(frontRightBridge)
+  |> translate(y = 2 * couplerMidY, global = true)
+rearLeftBridge = clone(frontRightBridge)
+  |> translate(x = -2 * couplerMidX, y = 2 * couplerMidY, global = true)
+
+frontRightMotorCollar = clone(unitCylinder)
+  |> scale(
+       x = 16,
+       y = 16,
+       z = 12,
+       global = false,
+     )
+  |> translate(
+       x = motorX,
+       y = -motorY,
+       z = motorZ - 48mm,
+       global = true,
+     )
+  |> appearance(color = hardwareSteel, metalness = 90, roughness = 18)
+frontLeftMotorCollar = clone(frontRightMotorCollar)
+  |> translate(x = -2 * motorX, global = true)
+rearRightMotorCollar = clone(frontRightMotorCollar)
+  |> translate(y = 2 * motorY, global = true)
+rearLeftMotorCollar = clone(frontRightMotorCollar)
+  |> translate(x = -2 * motorX, y = 2 * motorY, global = true)
+
+frontRightSeal = clone(unitCylinder)
+  |> scale(
+       x = 12,
+       y = 12,
+       z = 6,
+       global = false,
+     )
+  |> translate(
+       x = nozzleX,
+       y = -nozzleY,
+       z = nozzleZ + 22mm,
+       global = true,
+     )
+  |> appearance(color = hoseBlack, metalness = 18, roughness = 62)
+frontLeftSeal = clone(frontRightSeal)
+  |> translate(x = -2 * nozzleX, global = true)
+rearRightSeal = clone(frontRightSeal)
+  |> translate(y = 2 * nozzleY, global = true)
+rearLeftSeal = clone(frontRightSeal)
+  |> translate(x = -2 * nozzleX, y = 2 * nozzleY, global = true)
+
+export allBodies = flatten([
+  frontRightHousing,
+  frontLeftHousing,
+  rearRightHousing,
+  rearLeftHousing,
+  frontRightBridge,
+  frontLeftBridge,
+  rearRightBridge,
+  rearLeftBridge,
+  frontRightMotorCollar,
+  frontLeftMotorCollar,
+  rearRightMotorCollar,
+  rearLeftMotorCollar,
+  frontRightSeal,
+  frontLeftSeal,
+  rearRightSeal,
+  rearLeftSeal
+])

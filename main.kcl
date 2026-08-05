@@ -2,6 +2,7 @@
 // Clean part-level assembly with compact propulsion, payload, landing gear, avionics, and spray hardware.
 @settings(defaultLengthUnit = mm, kclVersion = 2.0, experimentalFeatures = allow)
 
+import * from "parameters.kcl"
 import allBodies as upperShellSet from "upperFuselageShell.kcl"
 import allBodies as lowerShellSet from "lowerFuselageShell.kcl"
 import allBodies as chassisSet from "chassisAssembly.kcl"
@@ -16,6 +17,9 @@ import allBodies as tankCradleSet from "tankCradle.kcl"
 import allBodies as pumpSet from "pumpModule.kcl"
 import allBodies as nozzleSet from "quadNozzleAssembly.kcl"
 import allBodies as plumbingSet from "sprayPlumbing.kcl"
+import allBodies as driveLinkageSet from "sprinklerDriveLinkage.kcl"
+import allBodies as couplerSet from "sprinklerCouplerDetails.kcl"
+import rotorGuardLower, rotorGuardUpper, guardPostSeed, rotorShaftCollar, rotorRetainingClip from "sprinklerRotorEnhancements.kcl"
 import allBodies as navigationSet from "navigationModule.kcl"
 import allBodies as cameraSet from "cameraModule.kcl"
 import allBodies as batterySet from "batteryPack.kcl"
@@ -57,6 +61,96 @@ sprayPump = pumpSet
      )
 sprayPlumbing = plumbingSet
 sprayNozzles = nozzleSet
+sprinklerDriveLinkage = driveLinkageSet
+sprinklerCouplerDetails = couplerSet
+
+frontRightGuardPosts = patternCircular3d(
+  clone(guardPostSeed),
+  instances = 4,
+  axis = Z,
+  center = [0mm, 0mm, -121mm],
+  arcDegrees = 360deg,
+  rotateDuplicates = true,
+)
+frontRightRotorEnhancements = flatten([
+  clone(rotorGuardLower),
+  clone(rotorGuardUpper),
+  frontRightGuardPosts,
+  clone(rotorShaftCollar),
+  clone(rotorRetainingClip)
+])
+  |> translate(
+       x = nozzleX,
+       y = -nozzleY,
+       z = nozzleZ,
+       global = true,
+     )
+
+frontLeftGuardPosts = patternCircular3d(
+  clone(guardPostSeed),
+  instances = 4,
+  axis = Z,
+  center = [0mm, 0mm, -121mm],
+  arcDegrees = 360deg,
+  rotateDuplicates = true,
+)
+frontLeftRotorEnhancements = flatten([
+  clone(rotorGuardLower),
+  clone(rotorGuardUpper),
+  frontLeftGuardPosts,
+  clone(rotorShaftCollar),
+  clone(rotorRetainingClip)
+])
+  |> translate(
+       x = -nozzleX,
+       y = -nozzleY,
+       z = nozzleZ,
+       global = true,
+     )
+
+rearRightGuardPosts = patternCircular3d(
+  clone(guardPostSeed),
+  instances = 4,
+  axis = Z,
+  center = [0mm, 0mm, -121mm],
+  arcDegrees = 360deg,
+  rotateDuplicates = true,
+)
+rearRightRotorEnhancements = flatten([
+  clone(rotorGuardLower),
+  clone(rotorGuardUpper),
+  rearRightGuardPosts,
+  clone(rotorShaftCollar),
+  clone(rotorRetainingClip)
+])
+  |> translate(
+       x = nozzleX,
+       y = nozzleY,
+       z = nozzleZ,
+       global = true,
+     )
+
+rearLeftGuardPosts = patternCircular3d(
+  clone(guardPostSeed),
+  instances = 4,
+  axis = Z,
+  center = [0mm, 0mm, -121mm],
+  arcDegrees = 360deg,
+  rotateDuplicates = true,
+)
+rearLeftRotorEnhancements = flatten([
+  clone(rotorGuardLower),
+  clone(rotorGuardUpper),
+  rearLeftGuardPosts,
+  clone(rotorShaftCollar),
+  clone(rotorRetainingClip)
+])
+  |> translate(
+       x = -nozzleX,
+       y = nozzleY,
+       z = nozzleZ,
+       global = true,
+     )
 
 landingGear = landingGearSet
 chassisFasteners = fastenerSet
@@ -80,6 +174,12 @@ export agriculturalDroneAssembly = flatten([
   sprayPump,
   sprayPlumbing,
   sprayNozzles,
+  sprinklerDriveLinkage,
+  sprinklerCouplerDetails,
+  frontRightRotorEnhancements,
+  frontLeftRotorEnhancements,
+  rearRightRotorEnhancements,
+  rearLeftRotorEnhancements,
   landingGear,
   chassisFasteners
 ])

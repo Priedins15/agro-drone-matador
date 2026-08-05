@@ -1,0 +1,109 @@
+// Sprinkler rotor protection and retention hardware
+// Guard cage, shaft collar, and retaining clip for the driven rotary head.
+@settings(defaultLengthUnit = mm, kclVersion = 2.0)
+
+import unitBlock from "unitBlock.kcl"
+import unitCylinder from "unitCylinder.kcl"
+import * from "parameters.kcl"
+
+guardLowerBlank = clone(unitCylinder)
+  |> scale(
+       x = 190,
+       y = 190,
+       z = 4,
+       global = false,
+     )
+  |> translate(z = -123mm, global = true)
+guardLowerBore = clone(unitCylinder)
+  |> scale(
+       x = 176,
+       y = 176,
+       z = 8,
+       global = false,
+     )
+  |> translate(z = -123mm, global = true)
+export rotorGuardLower = subtract(guardLowerBlank, tools = [guardLowerBore])
+  |> appearance(color = hardwareBlack, metalness = 62, roughness = 34)
+
+guardUpperBlank = clone(unitCylinder)
+  |> scale(
+       x = 190,
+       y = 190,
+       z = 4,
+       global = false,
+     )
+  |> translate(z = -93mm, global = true)
+guardUpperBore = clone(unitCylinder)
+  |> scale(
+       x = 176,
+       y = 176,
+       z = 8,
+       global = false,
+     )
+  |> translate(z = -93mm, global = true)
+export rotorGuardUpper = subtract(guardUpperBlank, tools = [guardUpperBore])
+  |> appearance(color = hardwareBlack, metalness = 62, roughness = 34)
+
+export guardPostSeed = clone(unitBlock)
+  |> scale(
+       x = 6,
+       y = 6,
+       z = 30,
+       global = false,
+     )
+  |> translate(x = 92mm, z = -108mm, global = true)
+  |> appearance(color = hardwareBlack, metalness = 58, roughness = 38)
+export rotorGuardPosts = patternCircular3d(
+  guardPostSeed,
+  instances = 4,
+  axis = Z,
+  center = [0mm, 0mm, -121mm],
+  arcDegrees = 360deg,
+  rotateDuplicates = true,
+)
+
+shaftCollarBlank = clone(unitCylinder)
+  |> scale(
+       x = 20,
+       y = 20,
+       z = 4,
+       global = false,
+     )
+  |> translate(z = -118mm, global = true)
+shaftCollarBore = clone(unitCylinder)
+  |> scale(
+       x = 12,
+       y = 12,
+       z = 8,
+       global = false,
+     )
+  |> translate(z = -118mm, global = true)
+export rotorShaftCollar = subtract(shaftCollarBlank, tools = [shaftCollarBore])
+  |> appearance(color = hardwareSteel, metalness = 84, roughness = 24)
+
+retainingClipBlank = clone(unitCylinder)
+  |> scale(
+       x = 26,
+       y = 26,
+       z = 3,
+       global = false,
+     )
+  |> translate(z = -127mm, global = true)
+retainingClipBore = clone(unitCylinder)
+  |> scale(
+       x = 18,
+       y = 18,
+       z = 7,
+       global = false,
+     )
+  |> translate(z = -127mm, global = true)
+export rotorRetainingClip = subtract(retainingClipBlank, tools = [retainingClipBore])
+  |> appearance(color = warningOrange, metalness = 36, roughness = 42)
+
+export allBodies = flatten([
+  rotorGuardLower,
+  rotorGuardUpper,
+  rotorGuardPosts,
+  rotorShaftCollar,
+  rotorRetainingClip
+])
