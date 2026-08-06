@@ -1,6 +1,6 @@
 # User Guide
 
-Setup, behavior, use-cases, and troubleshooting for the **Agrofloat** agricultural spray drone project.
+Setup, behavior, use-cases, and troubleshooting for the **Matador** agricultural spray drone project.
 
 ---
 

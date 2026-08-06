@@ -1,4 +1,4 @@
-// Parameter definitions for the Agrofloat configurator.
+// Parameter definitions for the Matador configurator.
 //
 // Each entry describes one line in the bundled KCL (e.g. `motorX = 570mm`).
 // The configurator writes the slider value back into the bundle and re-executes

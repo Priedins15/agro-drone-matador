@@ -1,4 +1,4 @@
-// Agrofloat GLB variant pipeline.
+// Matador GLB variant pipeline.
 // Uses the Zoo Engine API (Modeling WebSocket) to execute the bundled KCL for a
 // sweep of parameter combinations and export each result as a GLB, so the
 // configurator's offline mode has pre-built models to swap between.

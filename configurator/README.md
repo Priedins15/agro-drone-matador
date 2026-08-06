@@ -1,6 +1,6 @@
-# Agrofloat Configurator
+# Matador Configurator
 
-A browser-based 3D configurator for the Agrofloat agricultural spray drone. It has
+A browser-based 3D configurator for the Matador agricultural spray drone. It has
 two modes:
 
 | Mode | How it works | Needs a token? |
@@ -30,7 +30,7 @@ from `cdn.jsdelivr.net` via an import map, so a plain static server is enough).
 4. Use **Export** to download the current scene as GLB, STEP, or STL.
 
 Token safety: your token is only ever stored in the browser's `localStorage`
-(key `agrofloat-zoo-api-token`) and is only sent to `api.zoo.dev`. It is never
+(key `matador-zoo-api-token`) and is only sent to `api.zoo.dev`. It is never
 hard-coded and never committed to the repository.
 
 ## Offline mode

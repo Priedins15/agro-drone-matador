@@ -1,6 +1,6 @@
 # Parameter Reference
 
-Every tunable in **Agrofloat** lives in a single file: [`parameters.kcl`](../parameters.kcl). There are no magic numbers anywhere else in the project — a number you can't find here was either derived from one of these (`rearArmYaw = 180deg - armYaw`) or belongs to a part's own geometry (kept inside its module file).
+Every tunable in **Matador** lives in a single file: [`parameters.kcl`](../parameters.kcl). There are no magic numbers anywhere else in the project — a number you can't find here was either derived from one of these (`rearArmYaw = 180deg - armYaw`) or belongs to a part's own geometry (kept inside its module file).
 
 Units: **millimeters** for lengths, **degrees** for angles, **hex strings** for colors.
 

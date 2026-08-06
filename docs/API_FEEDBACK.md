@@ -1,7 +1,7 @@
 # Zoo API Feedback & Bug Notes
 
 > **About this document**
-> One of the judging criteria for the Zoo API Makeathon asks for *"Information on how to improve Zoo's APIs."* This file is our structured engineering feedback, written while building **Agrofloat** in Zoo Design Studio (KCL 2.0, `kclVersion = 2.0`). Every item below is grounded in a real pattern we hit in this repository, includes a minimal reproduction, and ends with a concrete suggestion and the workaround we shipped. We also include a short "what worked great" list so the Zoo team can see the strengths worth doubling down on.
+> One of the judging criteria for the Zoo API Makeathon asks for *"Information on how to improve Zoo's APIs."* This file is our structured engineering feedback, written while building **Matador** in Zoo Design Studio (KCL 2.0, `kclVersion = 2.0`). Every item below is grounded in a real pattern we hit in this repository, includes a minimal reproduction, and ends with a concrete suggestion and the workaround we shipped. We also include a short "what worked great" list so the Zoo team can see the strengths worth doubling down on.
 
 ---
 
@@ -150,7 +150,7 @@ cornerReceiver |> mirror3d(across = YZ)
 
 ## 6. No built-in interference / clearance check between bodies
 
-**Observation.** Agrofloat is a 21-subsystem assembly positioned entirely by hand-authored coordinates in `main.kcl`. The riskiest class of bugs is two parts interpenetrating (e.g. propeller discs vs tank, nozzle risers vs landing skids). We verified by eyeball in the Studio viewport, because the Engine API exposes no query that returns *which* body pairs intersect.
+**Observation.** Matador is a 21-subsystem assembly positioned entirely by hand-authored coordinates in `main.kcl`. The riskiest class of bugs is two parts interpenetrating (e.g. propeller discs vs tank, nozzle risers vs landing skids). We verified by eyeball in the Studio viewport, because the Engine API exposes no query that returns *which* body pairs intersect.
 
 **Minimal reproduction.** (n/a — the API surface does not exist today)
 
@@ -194,7 +194,7 @@ All three appear in this project. There is no lint that warns if a star import s
 
 ## What we'd love to see next (feature wishes)
 
-We genuinely enjoy working in Zoo Design Studio and with the Zoo APIs. These are ideas we would be excited to have, and we want to say up front that we love the platform. Building Agrofloat this way felt closer to having a conversation with the model than writing CAD by hand, and everything below would make that even better.
+We genuinely enjoy working in Zoo Design Studio and with the Zoo APIs. These are ideas we would be excited to have, and we want to say up front that we love the platform. Building Matador this way felt closer to having a conversation with the model than writing CAD by hand, and everything below would make that even better.
 
 ### 9. Save and return to stages of the project
 

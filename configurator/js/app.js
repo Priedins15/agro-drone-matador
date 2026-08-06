@@ -28,7 +28,7 @@ const el = {
   log: $('log'),
 }
 
-const TOKEN_KEY = 'agrofloat-zoo-api-token'
+const TOKEN_KEY = 'matador-zoo-api-token'
 let mode = 'offline'
 let engine = null
 let currentGroup = null
@@ -321,11 +321,11 @@ async function handleDownload(fmt) {
       setStatus(`exporting ${fmt}…`, 'busy')
       const bytes =
         fmt === 'step' ? await engine.exportStep(lastIds) : fmt === 'stl' ? await engine.exportStl(lastIds) : await engine.exportGltf(lastIds)
-      download(`agrofloat-${fmt}.${fmt === 'gltf' ? 'glb' : fmt}`, bytes, fmt === 'glb' || fmt === 'gltf' ? 'model/gltf-binary' : 'application/octet-stream')
+      download(`matador-${fmt}.${fmt === 'gltf' ? 'glb' : fmt}`, bytes, fmt === 'glb' || fmt === 'gltf' ? 'model/gltf-binary' : 'application/octet-stream')
       log(`exported ${fmt} (${bytes.byteLength} bytes)`)
       setStatus(`exported ${fmt} ✓`, 'ok')
     } else if (lastBytes) {
-      download(`agrofloat-variant.glb`, lastBytes, 'model/gltf-binary')
+      download(`matador-variant.glb`, lastBytes, 'model/gltf-binary')
       log(`downloaded current GLB`)
     }
   } catch (err) {

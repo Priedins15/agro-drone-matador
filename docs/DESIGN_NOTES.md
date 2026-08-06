@@ -1,13 +1,13 @@
 # Engineering Design Notes
 
 > **About this document**
-> Agrofloat is deliberately cross-disciplinary: it is a *fluidics + structures + propulsion + avionics* problem expressed as parametric CAD. This document explains the engineering intent behind the model so that the design is readable by people who are not CAD experts, and so that every dimension in `parameters.kcl` has a "why." It pairs with `docs/PARAMETERS.md` (the dimension reference) and `docs/API_FEEDBACK.md` (Zoo API notes).
+> Matador is deliberately cross-disciplinary: it is a *fluidics + structures + propulsion + avionics* problem expressed as parametric CAD. This document explains the engineering intent behind the model so that the design is readable by people who are not CAD experts, and so that every dimension in `parameters.kcl` has a "why." It pairs with `docs/PARAMETERS.md` (the dimension reference) and `docs/API_FEEDBACK.md` (Zoo API notes).
 
 ---
 
 ## 1. The design in one paragraph
 
-Agrofloat is a reference-matched **agricultural spray quadcopter**: an X4 multirotor with a clamshell fuselage, four carbon-fiber arm tubes carrying motor/ESC/prop clusters, and a payload stack made of a ~4 L chemical tank, a diaphragm pump, and four anti-drip spray nozzles on arm-mounted risers. Everything is defined by ~25 shared parameters in `parameters.kcl`; the twenty-one subsystem files each build one coherent group, and `main.kcl` composes them into a single `agriculturalDroneAssembly`.
+Matador is a reference-matched **agricultural spray quadcopter**: an X4 multirotor with a clamshell fuselage, four carbon-fiber arm tubes carrying motor/ESC/prop clusters, and a payload stack made of a ~4 L chemical tank, a diaphragm pump, and four anti-drip spray nozzles on arm-mounted risers. Everything is defined by ~25 shared parameters in `parameters.kcl`; the twenty-one subsystem files each build one coherent group, and `main.kcl` composes them into a single `agriculturalDroneAssembly`.
 
 ```
                         ~760 mm prop disc (2-blade, lofted)
@@ -29,7 +29,7 @@ Agrofloat is a reference-matched **agricultural spray quadcopter**: an X4 multir
 
 1. **Ag-drones are bought off-the-shelf and can't be tuned.** Field requirements vary wildly (vineyard row spacing, orchard canopy height, rice-paddy area). A fully parametric model lets an operator resize rotor pitch (`motorX`), boom width, or tank volume without redesigning anything.
 2. **A quadcopter is the right reference for a makeathon-scale build.** Quad X-layouts give yaw/roll/pitch control with four independent thrust vectors, the simplest flight controller math, and symmetric load paths — which also maps cleanly to KCL's pattern/clone idioms.
-3. **The payload is the differentiator.** Most open drone designs stop at the airframe. Agrofloat includes the entire *spray path* — tank → filter → pump → manifold → trunk lines → arm risers → nozzles — which is where the actual agronomy happens.
+3. **The payload is the differentiator.** Most open drone designs stop at the airframe. Matador includes the entire *spray path* — tank → filter → pump → manifold → trunk lines → arm risers → nozzles — which is where the actual agronomy happens.
 
 ## 3. Propulsion & aerodynamics (sizing logic)
 

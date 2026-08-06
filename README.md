@@ -1,8 +1,8 @@
-# Agrofloat
+# Matador
 
 A parametric agricultural spray drone (quadcopter) built from scratch in KCL for the [Zoo API Makeathon](https://zoo.dev/events/api-makeathon).
 
-![Agrofloat render](thumbnail.png)
+![Matador render](thumbnail.png)
 
 ## The problem
 
@@ -70,7 +70,7 @@ We love the platform and put together a list of ideas that would make it even be
 Watch the walkthrough video:
 
 <div>
-  <a href="YOUR_DEMO_VIDEO_URL"><img src="thumbnail.png" width="480" alt="Agrofloat demo"></a>
+  <a href="YOUR_DEMO_VIDEO_URL"><img src="thumbnail.png" width="480" alt="Matador demo"></a>
 </div>
 
 > Add your 30 second to 5 minute demo video link above (upload it to this repo by editing `README.md` on GitHub and dragging the file in, or host it and paste the URL).

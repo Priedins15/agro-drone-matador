@@ -1,7 +1,7 @@
 {
   "name": "agrofloat",
   "version": "1.0.0",
-  "description": "Agrofloat — parametric agricultural spray drone (Zoo API Makeathon). KCL source + browser configurator + Engine API variant pipeline.",
+  "description": "Matador — parametric agricultural spray drone (Zoo API Makeathon). KCL source + browser configurator + Engine API variant pipeline.",
   "type": "module",
   "private": true,
   "scripts": {
