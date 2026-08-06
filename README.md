@@ -42,6 +42,15 @@ It was authored in Zoo Design Studio using KCL with Studio's reference and measu
 - **Zoo Engine API** - the KCL is compiled and evaluated against the same Engine API that Zoo Design Studio uses, which produces the renderable, measurable, exportable geometry.
 - **Open and remixable** - because the design is plain-text `.kcl`, anyone can remix it, rebuild it through the Engine API, or drive it programmatically with the Agent API.
 
+## Feedback for the Zoo team
+
+We love the platform and put together a list of ideas that would make it even better. The full details, with minimal reproductions, are in [`docs/API_FEEDBACK.md`](docs/API_FEEDBACK.md). Highlights:
+
+- Save and return to various stages of the project, so you can jump back to any earlier point in a design.
+- Reverse and undo in the chat, so you can rewind the conversation and revert changes made through the Agent.
+- Open and fork a project straight from GitHub, so an old version loads and is usable and easy to remix.
+- Richer design adjustments, including colors, textures, materials, and simple physics and simulation.
+
 ## Setup and installation
 
 1. Install [Zoo Design Studio](https://zoo.dev/design-studio) (the free tier is enough to open and edit this project).
