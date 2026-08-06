@@ -17,6 +17,10 @@
 | 6 | Assembly verification | High | An interference/clearance query between bodies |
 | 7 | Import semantics | Low | Document `import * from` vs named module imports |
 | 8 | Export format clarity | Medium | Clarify `export` vs `export3d` and GLB vs glTF on the Modeling WebSocket |
+| 9 | Studio project checkpoints | Low | Save and jump back to named stages of a project |
+| 10 | Chat rewind / undo | Medium | Step backwards through Agent chat design turns |
+| 11 | Open & fork from GitHub | Medium | Load a git project straight into Studio, fork in a click |
+| 12 | Materials & physics polish | Low | Richer colors/textures/materials plus lightweight simulation |
 
 ---
 
@@ -185,6 +189,28 @@ All three appear in this project. There is no lint that warns if a star import s
 2. Clarify when to use `export` vs `export3d`, and whether `gltf` returns a GLB (binary) or a glTF JSON + buffers.
 
 **Workaround we shipped.** We decode with `@msgpack/msgpack` and consume `format: { type: "gltf" }` output as a GLB for three.js; the exact decode path is documented in `configurator/README.md` and in `scripts/build_variants.mjs`.
+
+---
+
+## What we'd love to see next (feature wishes)
+
+We genuinely enjoy working in Zoo Design Studio and with the Zoo APIs. These are ideas we would be excited to have, and we want to say up front that we love the platform. Building Agrofloat this way felt closer to having a conversation with the model than writing CAD by hand, and everything below would make that even better.
+
+### 9. Save and return to stages of the project
+
+It would be great to checkpoint a design at different points and jump back to any earlier stage. Right now a large project keeps only its current state, so exploring a risky change means losing the path back. Named snapshots, side-by-side comparison, and branching from a past stage would make experimentation feel safe and fun.
+
+### 10. Rewind the chat
+
+The Agent chat is a huge productivity boost. Adding "undo" and "rewind" to the conversation would let us step backwards through the design turns, revert a change made via chat, and restart from a clean point without re-typing the earlier steps. This would make the iterative design loop feel even more like working with a great teammate.
+
+### 11. Open and fork projects straight from GitHub
+
+We would love to load a git-hosted project directly into Studio so it opens and is usable as-is, then fork and remix it in a couple of clicks. That would make sharing parametric designs and building on the community's work seamless, and it fits the open-source spirit of the makeathon perfectly.
+
+### 12. Richer look and feel, plus physics
+
+The PBR `appearance` support is already impressive. Going further with ready-made material and texture libraries, environment lighting presets, and real-time previews would make renders pop even more. Lightweight physics or simulation inside the Engine (center-of-gravity checks, simple flight stability) would turn a great CAD tool into a full design-review tool, which would be a big win for projects like ours.
 
 ---
 
